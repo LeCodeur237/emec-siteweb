@@ -71,68 +71,154 @@
             text-align: center;
         }
 
-        .team-section .line {
+        .team-section .fondateurs {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .team-section .fondateurs .text-team {
+            width: 60%;
+            text-align: start;
+            padding: 2rem 5rem;
+        }
+
+        .team-section .fondateurs .img-team-fondateur {
+            width: 40%;
+            height: 65vh;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .team-section .fondateurs .img-team {
+            width: 60%;
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .team-section .fondateurs .text-team .line {
             height: 2px;
             display: block;
             background-color: rgb(0, 0, 0);
-            width: 60px;
-            margin: 0 auto;
+            width: 50px;
             margin-bottom: 1rem;
         }
 
-        .team-section h2 {
+        .team-section .fondateurs .text-team h2 {
             font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 1rem;
         }
 
-        .team-section .sub {
+        .team-section .fondateurs .text-team .sub {
             font-size: 0.9rem;
             font-weight: normal;
             margin-bottom: 4rem;
-            width: 65%;
-            text-align: center;
             display: block;
-            margin: 0 auto 4rem auto;
         }
 
-        .team-section .team-member {
-            margin-bottom: 2rem;
-            text-align: center;
+        .team-section .fondateurs .text-team .more {
+            background-color: transparent;
+            border: 1px solid #000;
+            text-decoration: none;
+            color: #000;
+            padding: 1.2rem 2rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin-inline: 0.1rem;
+            margin-bottom: 4rem;
         }
 
-        .team-section .team-member .img-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 1.5rem auto;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            border: 5px solid #ffb700;
+        .team-section .fondateurs .text-team .more:hover {
+            border: 1px solid #ffb700;
+            color: #000;
+            transition: all 0.3s ease;
+
         }
 
-        .team-section .team-member h3 {
+        .organes {
+            padding: 4rem 8rem;
+            background-color: #f5f5f5;
+        }
+
+        .organes h2 {
             font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            border-top: 2px solid #000;
+            padding-top: 0.5rem;
+            margin-bottom: 2rem;
         }
 
-        .team-section .team-member p {
-            font-size: 1rem;
-            color: #555;
+        .organes ul {
+            list-style: none;
+            padding: 0;
+            /* Added for consistent spacing between collapse items */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .organes ul li {
+            background-color: white;
+            border: 1px solid #e0e0e0; /* Added for visual definition */
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .organes ul li a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .organes ul li a span {
+            /* This targets the title span */
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .organes ul li .collapse .desc { /* Updated selector for the description span */
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #666;
+            margin-top: 0.5rem; /* Add some spacing above the description */
+            padding-top: 0.5rem; /* Add padding for visual separation */
+            border-top: 1px solid #eee; /* Add a subtle line above the description */
+        }
+
+        .carte-organe {
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
             margin-bottom: 1rem;
         }
 
-        .team-section .team-member .social-links a {
-            color: #ffb700;
-            margin: 0 0.5rem;
-            font-size: 1.5rem;
+        .carte-organe .membre {
+            width: 20%;
+            height: 200px;
         }
-
-        .team-section .team-member .social-links a:hover {
-            color: #e6a200;
+        .carte-organe .membre .img-membre {
+            width: 100%;
+            height: 80%;
+        }
+        .carte-organe .membre h3 {
+            font-size: 0.6rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        .carte-organe .membre p {
+            font-size: 0.3rem;
+            font-weight: normal;
+            margin-top: 0.5rem;
         }
     </style>
 @endpush
@@ -156,89 +242,76 @@
     </section>
 
     <section class="team-section" id="team-section">
-        <div class="line"></div>
-        <h2>Leadership Pastoral</h2>
-        <p class="sub">Notre équipe pastorale est dédiée à la croissance spirituelle et au bien-être de chaque membre de
-            l'EMEC. Ils sont les bergers qui guident notre troupeau.</p>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/home-11.jpeg') }})"></div>
-                    <h3>Apôtre Samuel DALLE</h3>
-                    <p>Pasteur Principal & Fondateur</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+        <div class="fondateurs">
+            <div class="text-team">
+                <div class="line"></div>
+                <h2>Les Fondateurs</h2>
+                <p class="sub">Le Pasteur Samuel Dalle et son épouse, la Pasteur Grâce Dalle, sont les fondateurs et les
+                    piliers spirituels de l'EMEC. Leur vision et leur dévouement ont permis à cette église de devenir un
+                    lieu de croissance spirituelle et d'impact communautaire.
+                </p>
+                <a href="" class="more">Voir les fondateurs</a>
             </div>
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/pastor-2.jpg') }})"></div>
-                    <h3>Pasteur Jean-Pierre</h3>
-                    <p>Co-Pasteur</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/pastor-3.jpg') }})"></div>
-                    <h3>Pasteur Marie Claire</h3>
-                    <p>Responsable des femmes</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="img-team-fondateur">
+                <div class="img-team" style="background-image: url({{ asset('images/home-10.jpg') }})"></div>
             </div>
         </div>
 
-        <div class="line"></div>
-        <h2>Conseil d'Administration</h2>
-        <p class="sub">Le Conseil d'Administration assure la bonne gouvernance et la gestion stratégique de l'EMEC,
-            veillant à ce que nos opérations soient alignées sur notre mission et nos valeurs.</p>
+        <div class="fondateurs">
+            <div class="img-team-fondateur">
+                <div class="img-team" style="background-image: url({{ asset('images/home-10.jpg') }})"></div>
+            </div>
+            <div class="text-team">
+                <div class="line"></div>
+                <h2>Conseil Exécutif</h2>
+                <p class="sub">Le Conseil Exécutif de l'EMEC est composé de leaders dévoués qui travaillent en étroite
+                    collaboration avec les fondateurs pour assurer la bonne marche de l'église. Ils sont responsables de la
+                    mise en œuvre de la vision, de la gestion des affaires de l'église et du soutien aux différents
+                    ministères.
+                </p>
+                <a href="" class="more">Voir le conseil</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="organes">
+        <h2>Autres organes de l'EMEC</h2>
         <div class="row">
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/board-1.jpg') }})"></div>
-                    <h3>M. Alain Dupont</h3>
-                    <p>Président du Conseil</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/board-2.jpg') }})"></div>
-                    <h3>Mme. Sophie Dubois</h3>
-                    <p>Secrétaire Générale</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-member">
-                    <div class="img-container" style="background-image: url({{ asset('images/board-3.jpg') }})"></div>
-                    <h3>M. Marc Lefevre</h3>
-                    <p>Trésorier</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <ul>
+                    <li>
+                        <a class="d-block" data-bs-toggle="collapse" href="#collapseFemmes" role="button" aria-expanded="false" aria-controls="collapseFemmes">
+                            <span>Groupe des Femmes</span>
+                        </a>
+                        <div class="collapse" id="collapseFemmes">
+                            <span class="desc">
+                                Le ministère des femmes de l'EMEC, offrant un espace de croissance spirituelle, de soutien
+                                mutuel et d'engagement communautaire pour toutes les femmes de l'église.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="d-block" data-bs-toggle="collapse" href="#collapseEcodim" role="button" aria-expanded="false" aria-controls="collapseEcodim">
+                            <span>ECODIM</span>
+                        </a>
+                        <div class="collapse" id="collapseEcodim">
+                            <span class="desc">
+                                Le ministère de l'école du dimanche de l'EMEC, offrant un enseignement biblique adapté aux
+                                enfants de tous âges.
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="d-block" data-bs-toggle="collapse" href="#collapseJeunes" role="button" aria-expanded="false" aria-controls="collapseJeunes">
+                            <span>Jeunes Pour Christ</span>
+                        </a>
+                        <div class="collapse" id="collapseJeunes">
+                            <span class="desc">
+                                Le ministère des jeunes de l'EMEC, dédié à l'épanouissement spirituel et social des jeunes.
+                            </span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>

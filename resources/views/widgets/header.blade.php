@@ -23,21 +23,21 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownChurch">
                             <li><a class="dropdown-item" href="/about-us">À propos de nous</a></li>
                             <li><a class="dropdown-item" href="/our-team">Nos organes</a></li>
-                            <li><a class="dropdown-item" href="#">Nos églises</a></li>
+                            <li><a class="dropdown-item" href="/church">Nos églises</a></li>
                             <li><img src="{{ asset('images/home-2.jpg') }}" alt=""></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">The Mandate</a>
+                        <a class="nav-link text-white" href="/mandate">The Mandate</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/get-connected">Get Connected</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Events</a>
+                        <a class="nav-link text-white" href="/events">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Media Center</a>
+                        <a class="nav-link text-white" href="/media-center">Media Center</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Our Projects</a>

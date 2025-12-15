@@ -29,8 +29,28 @@ Route::get('/our-team', function () {
     return view('pages.team');
 });
 
+Route::get('/church', function () {
+    return view('pages.church');
+});
+
 Route::get('/mandate', function () {
     return view('pages.mandate');
+});
+
+Route::get('/events', function () {
+    return view('pages.events');
+});
+
+Route::get('/media-center', function () {
+    return view('pages.media');
+});
+
+Route::get('/contact-us', function () {
+    return view('pages.contact');
+});
+
+Route::get('/donate', function () {
+    return view('pages.donate');
 });
 
 

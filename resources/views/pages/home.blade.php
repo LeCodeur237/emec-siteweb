@@ -486,7 +486,7 @@
         style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.832), rgba(0, 0, 0, 0.75)), url({{ asset('images/home-1.jpg') }})">
         <div class="left-img">
             <h1>Eglise Méssiannique Evangélique du Cameroun.</h1>
-            <p>Un lieu de transformation , de restauration et d'épanouissement. Un lieu où les vies sont bâtis, les miracles
+            <p>Un lieu de transformation , de restauration et d'épanouissement. Un lieu où les vies sont bâties, les miracles
                 sont opérés, les délivrances se vivent. Tout sous la Parole de Dieu et la Conduite du Saint Esprit.
             </p>
             <div class="buttons">
