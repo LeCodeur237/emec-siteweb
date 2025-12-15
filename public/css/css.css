@@ -1,0 +1,106 @@
+blockquote {
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px 10px 40px;
+    border-radius: 4px;
+    font-family: "Bitter", serif;
+    font-size: 10px;
+    color: #333;
+    text-align: left;
+    transition-duration: 0.3s;
+
+    span.author {
+        position: relative;
+        display: block;
+        text-align: right;
+        margin-top: 5px;
+        color: #999;
+
+        i {
+            position: relative;
+            background: #eee;
+            padding-left: 2px;
+            font-style: italic;
+            z-index: 5;
+        }
+
+        &::before {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 80%;
+            height: 1px;
+            background: #ccc;
+            z-index: 1;
+        }
+    }
+
+    &::before {
+        display: block;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        content: '"';
+        font-family: "Bitter", serif;
+        font-size: 60px;
+        color: #999;
+    }
+}
+
+#mainNav .dropdown-menu {
+    min-width: 14rem !important;
+    max-width: 14rem !important;
+    border: none !important;
+    border-radius: 0% !important;
+    border-top: 2px solid #000 !important;
+    padding-bottom: 0% !important;
+}
+
+#mainNav .dropdown-menu .dropdown-item {
+    font-size: 0.7rem !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+}
+
+#mainNav .dropdown-menu img{
+    margin-top: 1rem;
+    width: 100% !important;
+    height: 200px !important;
+    object-fit: cover !important;
+}
+
+/****** Hearder of other pages ******/
+.small-header {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+}
+
+.small-header .line {
+    height: 2px;
+    display: block;
+    background-color: white;
+    width: 60px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+.small-header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.small-header p {
+    font-size: 1rem;
+    width: 70%;
+    margin: 0 auto;
+}
