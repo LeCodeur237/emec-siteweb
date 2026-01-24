@@ -220,6 +220,49 @@
             font-weight: normal;
             margin-top: 0.5rem;
         }
+
+        @media (max-width: 992px) {
+            .team-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .team-content h2,
+            .team-content .subtite {
+                width: 100%;
+            }
+
+            .team-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .team-section .fondateurs {
+                flex-direction: column;
+                margin-bottom: 3rem;
+            }
+
+            .team-section .fondateurs:first-child {
+                flex-direction: column-reverse;
+            }
+
+            .team-section .fondateurs .text-team {
+                width: 100%;
+                padding: 1rem 0;
+            }
+
+            .team-section .fondateurs .img-team-fondateur {
+                width: 100%;
+                height: 50vh;
+                margin-bottom: 1rem;
+            }
+
+            .team-section .fondateurs .img-team {
+                width: 100%;
+            }
+
+            .organes {
+                padding: 4rem 1.5rem;
+            }
+        }
     </style>
 @endpush
 

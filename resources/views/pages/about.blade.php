@@ -235,6 +235,47 @@
             color: #343a40;
             margin-bottom: 1rem;
         }
+
+        @media (max-width: 992px) {
+            .about-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .about-content h2,
+            .about-content .subtite {
+                width: 100%;
+            }
+
+            .about-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .about-section .sub {
+                width: 100%;
+            }
+
+            .about-section .card {
+                height: auto;
+                margin-bottom: 1rem;
+            }
+
+            .vision-mission {
+                padding: 4rem 1.5rem;
+            }
+
+            .vision-mission .item {
+                height: auto;
+            }
+
+            .visionnaire-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .visionnaire-section .desc-vision {
+                padding-left: 0;
+                margin-top: 2rem;
+            }
+        }
     </style>
 @endpush
 
@@ -263,42 +304,42 @@
             identité et notre engagement envers Dieu et envers les autres. Ces valeurs sont le pilier de notre communauté
             et de notre ministère.</p>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>La Foi en Jésus-Christ</h3>
                     <p>Nous croyons en Jésus-Christ comme notre Seigneur et Sauveur, et notre foi est le fondement de tout
                         ce que nous faisons.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>La Parole de Dieu</h3>
                     <p>La Bible est notre guide infaillible, la source de toute vérité et l'autorité finale pour notre foi
                         et notre vie.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>L'Amour Fraternel</h3>
                     <p>Nous nous engageons à vivre dans l'amour, l'unité et le respect mutuel, reflétant ainsi l'amour de
                         Christ pour son Église.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>Le Service et la Compassion</h3>
                     <p>Nous sommes appelés à servir Dieu et notre prochain avec compassion, en répondant aux besoins
                         spirituels et physiques de notre communauté.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>L'Évangélisation et la Mission</h3>
                     <p>Nous avons à cœur de partager l'Évangile et de faire des disciples de toutes les nations, en
                         accomplissant le grand mandat de Christ.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-3">
                 <div class="card">
                     <h3>La Sainteté et l'Intégrité</h3>
                     <p>Nous aspirons à une vie de sainteté et d'intégrité, cherchant à honorer Dieu dans toutes nos actions
@@ -313,14 +354,14 @@
                     rgba(0, 0, 0, 0.644),
                     rgba(0, 0, 0, 0.527)), url({{ asset('images/home-10.jpg') }})">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6 col-12 mb-4">
                 <div class="item">
                     <h3>Notre Vision</h3>
                     <p>Devenir une église dynamique et influente, transformant des vies et des communautés par la puissance
                         de l'Évangile, et rayonnant l'amour de Christ dans le monde entier.</p>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6 col-12">
                 <div class="item bg-black">
                     <h3 class="text-white">Notre Mission</h3>
                     <p class="text-white">Proclamer la bonne nouvelle de Jésus-Christ, faire des disciples de toutes les
@@ -334,10 +375,10 @@
 
     <section class="visionnaire-section" id="visionnaire-section">
         <div class="row align-items-center">
-            <div class="col-md-5">
+            <div class="col-lg-5 col-12 mb-4">
                 <div class="img-visionnaire" style="background-image: url({{ asset('images/home-11.jpeg') }})"></div>
             </div>
-            <div class="col-md-7">
+            <div class="col-lg-7 col-12">
                 <div class="desc-vision">
                     <span class="subtitle">Le visionnaire</span>
                     <h2>Apôtre Samuel DALLE</h2>

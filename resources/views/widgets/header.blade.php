@@ -1,4 +1,29 @@
 
+@push('styles')
+    <style>
+        @media (max-width: 992px) {
+            .navbar-collapse {
+                background-color: rgba(0, 0, 0, 0.95);
+                padding: 1rem;
+                margin-top: 10px;
+                border-radius: 5px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            .navbar-nav {
+                font-size: 0.9rem !important;
+            }
+            .nav-item {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+            .dropdown-menu img {
+                display: none;
+            }
+        }
+    </style>
+@endpush
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top" id="mainNav">
         <div class="container">

@@ -127,6 +127,25 @@
         .church-list .card:hover {
             border-color: #ffb700;
         }
+
+        @media (max-width: 992px) {
+            .church-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .church-content h2,
+            .church-content .subtite {
+                width: 100%;
+            }
+
+            .church-list {
+                padding: 4rem 1.5rem;
+            }
+
+            .church-list .sub {
+                width: 100%;
+            }
+        }
     </style>
 @endpush
 

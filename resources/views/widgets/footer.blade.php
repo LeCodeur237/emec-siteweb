@@ -62,18 +62,32 @@
             align-items: flex-start;
             justify-content: center;
         }
+
+        @media (max-width: 992px) {
+            footer .gived {
+                padding: 3rem 1.5rem;
+            }
+            footer .gived h2, footer .gived p {
+                width: 100%;
+            }
+            footer .gived .col-12-mobile {
+                width: 100%;
+                padding-left: 0 !important;
+                margin-bottom: 2rem;
+            }
+        }
     </style>
 <footer
     style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.243), rgba(0, 0, 0, 0.75)),  url({{ asset('images/home-3.jpg') }})">
     <div class="row gived">
-        <div class="col-6">
+        <div class="col-lg-6 col-12 col-12-mobile">
             <span class="top-border">Give</span>
             <h2>Your Generosity. Our Mission.</h2>
             <p>Your support fuels our mission to spread the Gospel, serve our community, and make a lasting impact.
             </p>
             <a href="" class="call-to-action">Donate now</a>
         </div>
-        <div class="col-6" style="padding-left: 3rem">
+        <div class="col-lg-6 col-12 col-12-mobile" style="padding-left: 3rem">
             <span>Hours & address</span>
             <h2>Tous les jours de 08:00 à 18:00</h2>
             <p>Entrée OPEP, Minboman Yaoundé, Cameroun</p>

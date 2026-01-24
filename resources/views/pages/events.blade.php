@@ -147,6 +147,25 @@
             font-weight: normal;
             margin-bottom: 0;
         }
+
+        @media (max-width: 992px) {
+            .event-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .event-content h2,
+            .event-content .subtite {
+                width: 100%;
+            }
+
+            .event-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .event-section .sub {
+                width: 100%;
+            }
+        }
     </style>
 @endpush
 
@@ -176,7 +195,7 @@
             et les détails. Nous serions ravis de vous compter parmi nous !</p>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="event-card">
                     <div class="event-image" style="background-image: url({{ asset('images/event-1.jpg') }});"></div>
                     <div class="event-info">
@@ -190,7 +209,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="event-card">
                     <div class="event-image" style="background-image: url({{ asset('images/event-2.jpg') }});"></div>
                     <div class="event-info">
@@ -204,7 +223,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="event-card">
                     <div class="event-image" style="background-image: url({{ asset('images/event-3.jpg') }});"></div>
                     <div class="event-info">

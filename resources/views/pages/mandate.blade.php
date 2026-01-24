@@ -139,6 +139,43 @@
             padding: 0 4rem;
             text-align: right;
         }
+
+        @media (max-width: 992px) {
+            .mandate-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .mandate-content h2,
+            .mandate-content .subtite {
+                width: 100%;
+            }
+
+            .mandate-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .mandate-section .sub {
+                width: 100%;
+            }
+
+            .mandate-section .mandate-item {
+                flex-direction: column;
+            }
+
+            .mandate-section .mandate-item .mandate-item-img {
+                width: 100%;
+                height: 300px;
+                margin-bottom: 1rem;
+            }
+
+            .mandate-section .mandate-item .mandate-item-text,
+            .mandate-section .mandate-item:nth-child(even) .mandate-item-text {
+                width: 100%;
+                padding: 0;
+                text-align: left;
+                order: 0;
+            }
+        }
     </style>
 @endpush
 

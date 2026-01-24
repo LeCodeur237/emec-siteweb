@@ -479,6 +479,129 @@
             color: #343a40;
             margin-bottom: 1rem;
         }
+
+        @media (max-width: 992px) {
+            .header-home {
+                flex-direction: column;
+                height: auto;
+                padding: 6rem 1.5rem;
+                background-attachment: scroll;
+            }
+
+            .left-img,
+            .announce {
+                flex: 0 0 100%;
+                width: 100%;
+            }
+
+            .left-img h1 {
+                font-size: 2.5rem;
+            }
+
+            .buttons {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .buttons .call-to-action {
+                width: 100%;
+                text-align: center;
+                margin-inline: 0;
+                margin-bottom: 1rem;
+            }
+
+            .announce {
+                justify-content: center;
+                margin-top: 3rem;
+            }
+
+            .block-announce {
+                width: 100%;
+            }
+
+            .about-us {
+                padding: 4rem 1.5rem;
+            }
+
+            .about-us .img-presentation .img-about {
+                width: 100%;
+                height: 50vh;
+                margin-top: 2rem;
+            }
+
+            .getconnected {
+                padding: 4rem 1.5rem;
+            }
+
+            .imgs-church {
+                display: none;
+            }
+
+            .mandate {
+                padding: 4rem 1.5rem;
+            }
+
+            .mandate p {
+                width: 100%;
+            }
+
+            .mandate .mandate-right,
+            .mandate .mandate-left {
+                margin-top: 2rem;
+                flex-direction: column;
+            }
+
+            .mandate .mandate-item {
+                width: 100% !important;
+                flex-direction: column-reverse !important;
+                height: auto !important;
+                margin-bottom: 2rem;
+            }
+
+            .mandate .mandate-right .mandate-item .mandate-item-img,
+            .mandate .mandate-left .mandate-item .mandate-item-img {
+                width: 100% !important;
+                height: 300px !important;
+                margin-bottom: 1rem;
+            }
+
+            .mandate .mandate-item-text {
+                width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .mandate .postion {
+                top: 0;
+            }
+
+            .church-day {
+                padding: 4rem 1.5rem;
+            }
+
+            .church-day .d-flex {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 2rem;
+            }
+
+            .church-day .d-flex .call-to-action {
+                margin-top: 1rem;
+            }
+
+            .church-day p {
+                width: 100%;
+            }
+
+            .visionnaire {
+                padding: 4rem 1.5rem;
+            }
+
+            .visionnaire .desc-vision {
+                padding-left: 0;
+                margin-top: 2rem;
+            }
+        }
     </style>
 @endpush
 @section('content')
@@ -507,7 +630,7 @@
 
     <section class="about-us" id="aboutus">
         <div class="row">
-            <div class="col-5 conten">
+            <div class="col-lg-5 col-12 conten">
                 <div class="text-about">
                     <h2 class="title">Qui sommes-nous ?</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis cumque fugit libero excepturi debitis
@@ -527,7 +650,7 @@
                     </blockquote>
                 </div>
             </div>
-            <div class="col-7">
+            <div class="col-lg-7 col-12">
                 <div class="img-presentation">
                     <div class="img-about" style="background-image: url({{ asset('images/home-7.jpg') }})"></div>
                 </div>
@@ -538,17 +661,17 @@
     <section class="getconnected"
         style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.832), rgba(0, 0, 0, 0.75)), url({{ asset('images/home-2.jpg') }})">
         <div class="row">
-            <div class="col-6 ss">
+            <div class="col-lg-6 col-12 ss">
                 <div class="text-connect">
                     <h2>Come and Let's Live Our Faith Together!</h2>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum officiis quae veniam porro aliquid?
                         Doloribus, ut distinctio itaque laudantium aliquid laborum. Alias asperiores consequatur ex
                         incidunt,
                         voluptatem consequuntur eligendi magni!</p>
-                    <a href="" class="call-to-action">Nous Rejoindre</a>
+                    <a href="" class="call-to-action mb-3">Nous Rejoindre</a>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-lg-6 col-12">
                 <div class="imgs-church">
                     <div class="img-church" style="background-image: url({{ asset('images/home-4.jpg') }})"></div>
                     <div class="img-church mt-5" style="background-image: url({{ asset('images/home-6.jpg') }})"></div>
@@ -598,7 +721,7 @@
             <a class="call-to-action">Rejoindre une eglise</a>
         </div>
         <div class="row">
-            <div class="col-3">
+            <div class="col-lg-3 col-md-6 col-12 mb-4">
                 <div class="carte">
                     <div class="img-carte" style="background-image: url({{ asset('images/home-1.jpg') }})"></div>
                     <h3>Dimanche</h3>
@@ -606,7 +729,7 @@
                     <div class="divider"></div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-md-6 col-12 mb-4">
                 <div class="carte">
                     <div class="img-carte" style="background-image: url({{ asset('images/home-2.jpg') }})"></div>
                     <h3>Lundi</h3>
@@ -614,7 +737,7 @@
                     <div class="divider"></div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-md-6 col-12 mb-4">
                 <div class="carte">
                     <div class="img-carte" style="background-image: url({{ asset('images/home-3.jpg') }})"></div>
                     <h3>Mercredi</h3>
@@ -622,7 +745,7 @@
                     <div class="divider"></div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-lg-3 col-md-6 col-12 mb-4">
                 <div class="carte">
                     <div class="img-carte" style="background-image: url({{ asset('images/home-4.jpg') }})"></div>
                     <h3>Vendredi</h3>
@@ -635,10 +758,10 @@
 
     <section class="visionnaire" id="visionnaire">
         <div class="row align-items-center">
-            <div class="col-md-5">
+            <div class="col-lg-5 col-md-12">
                 <div class="img-visionnaire" style="background-image: url({{ asset('images/home-11.jpeg') }})"></div>
             </div>
-            <div class="col-md-7">
+            <div class="col-lg-7 col-md-12">
                 <div class="desc-vision">
                     <span class="subtitle">Le visionnaire</span>
                     <h2>Apôtre Samuel DALLE</h2>

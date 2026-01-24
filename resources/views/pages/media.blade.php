@@ -140,6 +140,25 @@
             font-size: 0.8rem;
             color: #777;
         }
+
+        @media (max-width: 992px) {
+            .media-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .media-content h2,
+            .media-content .subtite {
+                width: 100%;
+            }
+
+            .media-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .media-section .sub {
+                width: 100%;
+            }
+        }
     </style>
 @endpush
 
@@ -170,7 +189,7 @@
             avec la vie de l'église et laissez-vous inspirer par la Parole de Dieu.</p>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="media-card">
                     <div class="media-image" style="background-image: url({{ asset('images/media-1.jpg') }});"></div>
                     <div class="media-info">
@@ -181,7 +200,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="media-card">
                     <div class="media-image" style="background-image: url({{ asset('images/media-2.jpg') }});"></div>
                     <div class="media-info">
@@ -192,7 +211,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6 col-12 mb-4">
                 <div class="media-card">
                     <div class="media-image" style="background-image: url({{ asset('images/media-3.jpg') }});"></div>
                     <div class="media-info">

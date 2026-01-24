@@ -194,6 +194,46 @@
             line-height: 1.6;
             color: #555;
         }
+
+        @media (max-width: 992px) {
+            .get-connected-content {
+                padding: 4rem 1.5rem;
+            }
+
+            .get-connected-content h2,
+            .get-connected-content .subtite {
+                width: 100%;
+            }
+
+            .form {
+                padding: 4rem 1.5rem;
+                flex-direction: column-reverse;
+            }
+
+            .img-form-connected {
+                width: 100%;
+                height: 300px;
+                min-height: auto;
+                margin-bottom: 2rem;
+            }
+
+            .form-connected {
+                width: 100%;
+            }
+
+            .form-connected .form-container {
+                width: 100%;
+                padding: 2rem;
+            }
+
+            .actions {
+                padding: 4rem 1.5rem;
+            }
+
+            .actions .sub {
+                width: 100%;
+            }
+        }
     </style>
 @endpush
 
@@ -271,7 +311,7 @@
             vous.
         </p>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6 col-12 mb-4">
                 <a href="tel:+237699765435" class="card">
                         <h3>Demande de Prière</h3>
                         <p>Confiez-nous vos sujets de prière. Notre équipe d'intercesseurs sont là pour vous
@@ -279,7 +319,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-6 col-12">
                     <a href="/donate" class="card">
                         <h3>Dons et Offrandes</h3>
                         <p>Soutenez la mission de l'EMEC par vos dons et offrandes. Votre générosité nous aide à poursuivre
