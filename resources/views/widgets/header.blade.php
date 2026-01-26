@@ -65,13 +65,13 @@
                         <a class="nav-link text-white" href="/media-center">Media Center</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Our Projects</a>
+                        <a class="nav-link text-white" href="/our-projects">Our Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact us</a>
+                        <a class="nav-link text-white" href="/contact-us">Contact us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#" id="donate-link">Donate</a>
+                        <a class="nav-link text-white" href="/donate" id="donate-link">Donate</a>
                     </li>
                 </ul>
             </div>

@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{asset('css/css.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/css.css') }}">
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap);
 
@@ -74,6 +74,59 @@
                         link.classList.remove('text-dark');
                         link.classList.add('text-white');
                     });
+                }
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMoneyModalEl = document.getElementById('mobileMoneyModal');
+            const cardPaymentModalEl = document.getElementById('cardPaymentModal');
+
+            const donationForm = document.getElementById('donation-form');
+            const paymentOptions = document.querySelectorAll('.payment-method-option');
+            const mobileMoneyInputs = mobileMoneyModalEl.querySelectorAll('input');
+            const cardInputs = cardPaymentModalEl.querySelectorAll('input');
+            const continueBtn = document.getElementById('continue-btn');
+
+            // Sélection visuelle de l'option de paiement
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+
+            continueBtn.addEventListener('click', function() {
+                if (!donationForm.checkValidity()) {
+                    donationForm.reportValidity();
+                    return;
+                }
+
+                const selectedOption = document.querySelector('input[name="payment_method"]:checked');
+                if (!selectedOption) {
+                    alert('Veuillez choisir une méthode de paiement avant de continuer.');
+                    return;
+                }
+
+                const paymentType = selectedOption.closest('.payment-method-option').dataset.payment;
+                const paymentName = selectedOption.nextElementSibling.innerText;
+
+                if (paymentType === 'mobile') {
+                    cardInputs.forEach(input => input.required = false);
+                    mobileMoneyInputs.forEach(input => input.required = true);
+
+                    // Mettre à jour le titre de la modale
+                    mobileMoneyModalEl.querySelector('.modal-title').innerText =
+                        `Paiement par ${paymentName}`;
+
+                    document.getElementById('trigger-mobile-money').click();
+                } else if (paymentType === 'card') {
+                    mobileMoneyInputs.forEach(input => input.required = false);
+                    cardInputs.forEach(input => input.required = true);
+
+                    document.getElementById('trigger-card-payment').click();
                 }
             });
         });
