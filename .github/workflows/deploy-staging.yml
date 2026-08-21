@@ -11,7 +11,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Debug repository structure
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 3 \( -name artisan -o -name composer.json \)
 
       - name: Upload backend to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -23,6 +29,7 @@ jobs:
           source: "emec-back/*"
           target: "/home/projects/emec-projects/emec-siteweb"
           strip_components: 1
+          overwrite: true
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
@@ -34,12 +41,24 @@ jobs:
           script: |
             cd /home/projects/emec-projects/emec-siteweb
 
-            composer install --no-dev --optimize-autoloader
-
-            if [ ! -f .env ]; then
-              echo ".env manquant sur le serveur"
+            if [ ! -f artisan ]; then
+              echo "artisan introuvable. Verifie le dossier source GitHub et strip_components."
+              ls -la
               exit 1
             fi
+
+            if [ ! -f composer.json ]; then
+              echo "composer.json introuvable."
+              ls -la
+              exit 1
+            fi
+
+            if [ ! -f .env ]; then
+              echo ".env manquant sur le serveur."
+              exit 1
+            fi
+
+            composer install --no-dev --optimize-autoloader
 
             php artisan migrate --force
             php artisan storage:link || true
