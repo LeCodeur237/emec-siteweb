@@ -17,7 +17,7 @@ jobs:
         run: |
           pwd
           ls -la
-          find . -maxdepth 3 \( -name artisan -o -name composer.json \)
+          find . -maxdepth 2 \( -name artisan -o -name composer.json \)
 
       - name: Upload backend to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -28,8 +28,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "."
           target: "/home/projects/emec-projects/emec-siteweb"
-          strip_components: 1
           overwrite: true
+          rm: false
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
@@ -42,13 +42,16 @@ jobs:
             cd /home/projects/emec-projects/emec-siteweb
 
             if [ ! -f artisan ]; then
-              echo "artisan introuvable. Verifie le dossier source GitHub et strip_components."
+              echo "artisan introuvable apres copie."
+              echo "Contenu du dossier:"
               ls -la
+              echo "Recherche artisan:"
+              find . -maxdepth 3 -name artisan
               exit 1
             fi
 
             if [ ! -f composer.json ]; then
-              echo "composer.json introuvable."
+              echo "composer.json introuvable apres copie."
               ls -la
               exit 1
             fi
