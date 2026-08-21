@@ -40,8 +40,8 @@
         }
 
         footer .gived .call-to-action {
-            background-color: #fffb00;
-            color: #000;
+            background-color: var(--color-sky);
+            color: var(--color-black);
             padding: 1.2rem 2rem;
             text-decoration: none;
             font-weight: bold;
@@ -81,20 +81,19 @@
     style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.243), rgba(0, 0, 0, 0.75)),  url({{ asset('images/home-3.jpg') }})">
     <div class="row gived">
         <div class="col-lg-6 col-12 col-12-mobile">
-            <span class="top-border">Give</span>
-            <h2>Your Generosity. Our Mission.</h2>
-            <p>Your support fuels our mission to spread the Gospel, serve our community, and make a lasting impact.
-            </p>
-            <a href="" class="call-to-action">Donate now</a>
+            <span class="top-border">Don</span>
+            <h2>Votre générosité, notre mission.</h2>
+            <p>Votre soutien permet de porter l'Évangile, servir la communauté et créer un impact durable.</p>
+            <a href="/donate" class="call-to-action">Faire un don</a>
         </div>
         <div class="col-lg-6 col-12 col-12-mobile" style="padding-left: 3rem">
-            <span>Hours & address</span>
-            <h2>Tous les jours de 08:00 à 18:00</h2>
-            <p>Entrée OPEP, Minboman Yaoundé, Cameroun</p>
+            <span>Heures & adresse</span>
+            <h2>Tous les jours · 08:00–18:00</h2>
+            <p>Entrée OPEP, Minboman — Yaoundé, Cameroun</p>
             <div class="divider"></div>
             <span class="top-border">Contact</span>
-            <h2>(00237) 699 76 54 35</h2>
-            <p>www.egliseemec.org</p>
+            <h2>(+237) 699 76 54 35</h2>
+            <p>https://egliseemec.org</p>
             <div class="social-links d-flex">
                 <a href="https://www.facebook.com/emec.eglise" target="_blank" class="text-white me-3"><i
                         class="fa fa-facebook-square fa-2x"></i></a>

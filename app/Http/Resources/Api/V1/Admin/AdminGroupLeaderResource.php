@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Resources\Api\V1\Admin;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class AdminGroupLeaderResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'group_id' => $this->group_id,
+            'name' => $this->name,
+            'responsibility' => $this->responsibility,
+            'image' => $this->image,
+            'active' => $this->active,
+            'created_at' => $this->created_at?->toISOString(),
+            'updated_at' => $this->updated_at?->toISOString(),
+            'group' => $this->whenLoaded('group', fn () => $this->group ? [
+                'id' => $this->group->id,
+                'name' => $this->group->name,
+                'slug' => $this->group->slug,
+            ] : null),
+        ];
+    }
+}

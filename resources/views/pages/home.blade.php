@@ -1,785 +1,672 @@
-@extends('index')
+﻿@extends('index')
 
 @push('styles')
     <style>
-        .header-home {
-            display: flex;
-            justify-content: space-around;
-            align-items: stretch;
-            height: 95vh;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: top;
-            /* Ajouté pour un meilleur centrage de l'image */
-            padding: 10rem 5.5rem;
-            background-attachment: fixed;
-            color: #fff;
+        .hero .hero-bg {
+            background-image: url({{ asset('images/home-2.jpg') }});
         }
 
-        .left-img {
-            display: flex;
-            flex-direction: column;
-            justify-content: stretch;
-            align-items: flex-start;
-            text-align: start;
-            flex: 0 0 50%;
-        }
-
-        .left-img h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .buttons {
+        .ticker {
+            background: var(--color-sky);
+            padding: 1rem 10vw;
             display: flex;
             align-items: center;
-            width: 75%;
-            margin-block: 2rem;
+            gap: 1rem;
+            color: var(--color-black);
         }
 
-        .buttons .call-to-action {
-            color: #000;
-            padding: 1.2rem 2rem;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        .ticker-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            font-size: 14px;
-            margin-inline: 0.1rem;
-        }
-
-        .buttons .call-to-action:first-child {
-            background-color: #fffb00;
-            color: #000;
-        }
-
-        .buttons .call-to-action:last-child {
-            background-color: #ffffff;
-            color: #000;
-        }
-
-        .announce {
-            flex: 0 0 50%;
-            display: flex;
-            justify-content: end;
-            align-items: center
-        }
-
-        .block-announce {
-            display: flex;
-            flex-direction: column;
-            width: 65%;
-        }
-
-        .block-announce .title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #fffb00;
-            padding-bottom: 0.2rem;
-            border-bottom: 2px solid #fffb00;
-            width: 40%;
-        }
-
-        .block-announce .carte {
-            width: 100%;
-            padding: 1rem 2rem;
-            color: white;
-            background-color: transparent;
-            border-top-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            border-color: white;
-            border-style: solid;
-            border-width: 1px;
-        }
-
-        .block-announce .sign {
-            font-size: 0.8rem;
-            text-align: end;
-            margin-top: 1rem;
-            font-weight: bold;
-            display: block;
-        }
-
-        .about-us {
-            padding: 10rem 8rem;
-        }
-
-        .about-us .text-about {
-            display: block;
-        }
-
-        .about-us .text-about .title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .about-us .text-about p {
-            font-size: 1rem;
-        }
-
-        .about-us .img-presentation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .about-us .conten {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .about-us .img-presentation .img-about {
-            width: 75%;
-            height: 120vh;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: block;
-            border-radius: 10px;
-        }
-
-        .getconnected {
-            padding: 4rem 8rem;
-            margin-top: 1rem;
-            color: #fff;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .getconnected .ss {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            justify-content: center;
-        }
-
-        .getconnected .text-connect {
-            width: 90%;
-        }
-
-        .getconnected .text-connect h2 {
-            font-size: 25px;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
             font-weight: 700;
-            margin-bottom: 1rem;
         }
 
-        .getconnected .text-connect p {
-            font-size: 14px;
-            font-weight: normal;
-            margin-bottom: 2rem;
+        .ticker-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
         }
 
-        .getconnected .text-connect .call-to-action {
-            padding: 1rem 1.5rem;
-            text-transform: uppercase;
-            background: #fffb00;
-            text-decoration: none;
-            font-weight: 500;
-            color: #000;
-        }
-
-        .imgs-church {
-            width: 100%;
-            display: flex;
+        .about {
+            padding: 100px 10vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
             align-items: center;
-            justify-content: space-around;
         }
 
-        .imgs-church .img-church {
-            width: 30%;
-            height: 50vh;
-            border-radius: 10px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .mandate {
-            padding: 6rem 8rem;
-        }
-
-        .mandate .postion {
-            top: -80px;
+        .about-image {
             position: relative;
         }
 
-        .mandate .postion2 {
-            top: -120px;
-            position: relative;
-        }
-
-        .mandate h2 {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .mandate p {
-            width: 40%;
-            font-size: 15px;
-            font-weight: normal;
-            margin-bottom: 2rem;
-        }
-
-        .mandate .call-to-action {
-            padding: 0.8rem 1.5rem;
-            text-transform: uppercase;
-            background: transparent;
-            border: 2px solid #000;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-            color: #000;
-        }
-
-        .mandate .mandate-right {
+        .about-image img {
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            margin-top: 4rem;
-        }
-
-        .mandate .mandate-left {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-            margin-top: 4rem;
-        }
-
-        .mandate .mandate-right .mandate-item {
-            width: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 65vh;
-        }
-
-        .mandate .mandate-left .mandate-item {
-            width: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 65vh;
-        }
-
-        .mandate .mandate-right .mandate-item .mandate-item-img {
-            width: 50%;
-            height: 100%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            display: block;
-        }
-
-        .mandate .mandate-left .mandate-item .mandate-item-img {
-            width: 50%;
-            height: 100%;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            display: block;
-        }
-
-        .mandate .mandate-right .mandate-item .mandate-item-text {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 1rem;
-        }
-
-        .mandate .mandate-left .mandate-item .mandate-item-text {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 1rem;
-        }
-
-        .mandate .mandate-right .mandate-item .mandate-item-text h3 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-
-        .mandate .mandate-left .mandate-item .mandate-item-text h3 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-
-        .mandate .mandate-right .mandate-item .mandate-item-text p {
-            font-size: 15px;
-            font-weight: normal;
-            margin-bottom: 2rem;
-            width: 100%;
-        }
-
-        .mandate .mandate-left .mandate-item .mandate-item-text p {
-            font-size: 15px;
-            font-weight: normal;
-            margin-bottom: 2rem;
-            width: 100%;
-        }
-
-        .church-day {
-            padding: 6rem 8rem;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: #fff;
-        }
-
-        .church-day .d-flex {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 5rem;
-        }
-
-        .church-day .call-to-action {
-            padding: 1rem 1.5rem;
-            text-transform: uppercase;
-            background: #fffb00;
-            text-decoration: none;
-            font-weight: 500;
-            color: #000;
-        }
-
-        .church-day h2 {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .church-day p {
-            width: 60%;
-            font-size: 15px;
-            font-weight: normal;
-        }
-
-        .church-day .carte {
-            width: 100%;
-            padding: 3rem 2rem;
-            border-radius: 10px;
-            background-color: rgba(2, 31, 90, 0.356);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .church-day .carte .divider {
-            width: 100%;
-            height: 1px;
-            background-color: #fff;
-            margin-top: 0.5rem;
-        }
-
-
-        .church-day .carte:hover {
-            background-color: rgba(2, 31, 90, 0.86);
-            transition: all 0.3s ease;
-        }
-
-        .church-day .carte .img-carte {
-            width: 80px;
-            height: 80px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            border-radius: 50%;
-            display: block;
-            margin-bottom: 2rem;
-        }
-
-        .church-day .carte h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .church-day .carte p {
-            font-size: 15px;
-            font-weight: normal;
-            margin-bottom: 2rem;
-            width: 100%;
-            text-align: center;
-        }
-
-        .visionnaire {
-            padding: 6rem 8rem;
-            background-color: #f8f9fa;
-            /* Ajout d'un fond léger */
-        }
-
-        .visionnaire .img-visionnaire {
-            width: 100%;
-            padding-top: 125%;
-            /* Ratio d'aspect pour une image portrait */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            height: 520px;
+            object-fit: cover;
             border-radius: 12px;
             display: block;
         }
 
-        .visionnaire .desc-vision {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            padding-left: 4rem;
+        .about-image-accent {
+            position: absolute;
+            bottom: -22px;
+            right: -22px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--color-sky);
+            border-radius: 12px;
+            opacity: 0.45;
+            z-index: -1;
         }
 
-        .visionnaire .desc-vision .subtitle {
+        .about-badge {
+            position: absolute;
+            top: 32px;
+            left: -32px;
+            background: var(--color-black);
+            color: var(--color-sky);
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-style: italic;
+            padding: 14px 20px;
+            max-width: 180px;
+        }
+
+        .about-text p {
             font-size: 1rem;
-            font-weight: bold;
-            color: #6c757d;
+            line-height: 1.85;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-verse {
+            margin: 2.5rem 0;
+            padding: 1.5rem 1.75rem;
+            border-left: 3px solid var(--color-sky);
+            background: rgba(69, 189, 253, 0.08);
+        }
+
+        .about-verse blockquote {
+            font-family: 'Libre Baskerville', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .about-verse cite {
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            color: var(--color-sky);
         }
 
-        .visionnaire .desc-vision h2 {
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-item {
+            background: #fff;
+            padding: 1.5rem;
+            border: 1px solid rgba(69, 189, 253, 0.15);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
-            font-weight: bold;
+            color: var(--color-sky-dark);
             margin-bottom: 0.5rem;
         }
 
-        .visionnaire .desc-vision .title-visionnaire {
-            font-size: 15px;
-            font-weight: normal;
-            color: #495057;
-            margin-bottom: 2rem;
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
         }
 
-        .visionnaire .vision-text {
-            margin-top: 2rem;
-            border-left: 3px solid #fffb00;
-            padding-left: 1.5rem;
+        .programs {
+            background: var(--color-black);
+            color: #fff;
+            padding: 100px 10vw;
         }
 
-        .visionnaire .vision-text p {
-            font-size: 1rem;
-            line-height: 1.6;
-            text-align: justify;
-            color: #343a40;
+        .programs-grid {
+            margin-top: 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .program-card {
+            position: relative;
+            padding: 2.5rem 2rem;
+            background: var(--color-black);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .program-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-3px);
+        }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-sky);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .program-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .program-day {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-sky);
             margin-bottom: 1rem;
         }
 
-        @media (max-width: 992px) {
-            .header-home {
+        .program-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            line-height: 1.3;
+            color: #fff;
+            margin-bottom: 0.8rem;
+        }
+
+        .program-time {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .program-number {
+            position: absolute;
+            bottom: 1.35rem;
+            right: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: rgba(69, 189, 253, 0.1);
+            line-height: 1;
+        }
+
+        .mandate {
+            background: var(--color-offwhite);
+            padding: 100px 10vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .mandate-text p {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .mandate-list {
+            list-style: none;
+            margin-top: 2rem;
+            display: grid;
+            gap: 1rem;
+            padding: 0;
+        }
+
+        .mandate-list li {
+            display: flex;
+            gap: 1rem;
+            padding: 1.3rem 1rem;
+            border: 1px solid rgba(69, 189, 253, 0.15);
+            border-radius: 12px;
+            background: #fff;
+            align-items: flex-start;
+        }
+
+        .mandate-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--color-sky);
+            color: var(--color-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .mandate-list h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mandate-list p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .pastor {
+            background: var(--color-offwhite);
+            padding: 100px 10vw;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .pastor-image {
+            position: relative;
+        }
+
+        .pastor-image img {
+            width: 100%;
+            height: 560px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            filter: grayscale(15%);
+        }
+
+        .pastor-tag {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            background: var(--color-sky);
+            color: var(--color-black);
+            padding: 0.9rem 1.2rem;
+            border-radius: 10px;
+        }
+
+        .pastor-tag strong {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+        }
+
+        .pastor-tag span {
+            font-size: 0.75rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .pastor-text p {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .pastor-quote {
+            margin: 2rem 0 0;
+            padding: 1.5rem 1.6rem;
+            border-top: 2px solid var(--color-sky);
+            border-bottom: 1px solid rgba(69, 189, 253, 0.25);
+        }
+
+        .pastor-quote p {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .events {
+            background: var(--color-black);
+            color: #fff;
+            padding: 100px 10vw;
+        }
+
+        .events-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .events-link {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-sky);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(69, 189, 253, 0.4);
+            padding-bottom: 0.25rem;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .event-card {
+            background: #111;
+            border: 1px solid rgba(69, 189, 253, 0.12);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .event-card:hover {
+            border-color: rgba(69, 189, 253, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .event-date {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--color-sky);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-month {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 1.25rem;
+        }
+
+        .event-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .event-location {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .give {
+            background: var(--color-sky);
+            text-align: center;
+            padding: 100px 10vw;
+        }
+
+        .give p {
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.75);
+            max-width: 560px;
+            margin: 20px auto 40px;
+            line-height: 1.8;
+        }
+
+        .give-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .give-method {
+            background: rgba(0, 0, 0, 0.08);
+            padding: 0.9rem 1.4rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            color: var(--color-black);
+        }
+
+        .btn-give {
+            background: var(--color-black);
+            color: var(--color-sky);
+            min-width: 180px;
+        }
+
+        @media (max-width: 900px) {
+            .about,
+            .mandate,
+            .pastor {
+                grid-template-columns: 1fr;
+            }
+            .programs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            .hero-buttons {
                 flex-direction: column;
-                height: auto;
-                padding: 6rem 1.5rem;
-                background-attachment: scroll;
+                align-items: stretch;
             }
-
-            .left-img,
-            .announce {
-                flex: 0 0 100%;
-                width: 100%;
-            }
-
-            .left-img h1 {
-                font-size: 2.5rem;
-            }
-
-            .buttons {
-                width: 100%;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .buttons .call-to-action {
-                width: 100%;
-                text-align: center;
-                margin-inline: 0;
-                margin-bottom: 1rem;
-            }
-
-            .announce {
-                justify-content: center;
-                margin-top: 3rem;
-            }
-
-            .block-announce {
-                width: 100%;
-            }
-
-            .about-us {
-                padding: 4rem 1.5rem;
-            }
-
-            .about-us .img-presentation .img-about {
-                width: 100%;
-                height: 50vh;
-                margin-top: 2rem;
-            }
-
-            .getconnected {
-                padding: 4rem 1.5rem;
-            }
-
-            .imgs-church {
+            .about-image-accent {
                 display: none;
             }
-
-            .mandate {
-                padding: 4rem 1.5rem;
+            .about-image img {
+                height: 420px;
             }
-
-            .mandate p {
-                width: 100%;
+            .about-stats {
+                grid-template-columns: 1fr;
             }
-
-            .mandate .mandate-right,
-            .mandate .mandate-left {
-                margin-top: 2rem;
-                flex-direction: column;
+            .programs-grid {
+                grid-template-columns: 1fr;
             }
-
-            .mandate .mandate-item {
-                width: 100% !important;
-                flex-direction: column-reverse !important;
-                height: auto !important;
-                margin-bottom: 2rem;
+            .mandate-list {
+                display: grid;
             }
-
-            .mandate .mandate-right .mandate-item .mandate-item-img,
-            .mandate .mandate-left .mandate-item .mandate-item-img {
-                width: 100% !important;
-                height: 300px !important;
-                margin-bottom: 1rem;
-            }
-
-            .mandate .mandate-item-text {
-                width: 100% !important;
-                padding: 0 !important;
-            }
-
-            .mandate .postion {
-                top: 0;
-            }
-
-            .church-day {
-                padding: 4rem 1.5rem;
-            }
-
-            .church-day .d-flex {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 2rem;
-            }
-
-            .church-day .d-flex .call-to-action {
-                margin-top: 1rem;
-            }
-
-            .church-day p {
-                width: 100%;
-            }
-
-            .visionnaire {
-                padding: 4rem 1.5rem;
-            }
-
-            .visionnaire .desc-vision {
-                padding-left: 0;
-                margin-top: 2rem;
+            .events-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 @endpush
+
 @section('content')
-    <section class="header-home"
-        style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.832), rgba(0, 0, 0, 0.75)), url({{ asset('images/home-1.jpg') }})">
-        <div class="left-img">
-            <h1>Eglise Méssiannique Evangélique du Cameroun.</h1>
-            <p>Un lieu de transformation , de restauration et d'épanouissement. Un lieu où les vies sont bâties, les miracles
-                sont opérés, les délivrances se vivent. Tout sous la Parole de Dieu et la Conduite du Saint Esprit.
-            </p>
-            <div class="buttons">
-                <a href="#aboutus" class="call-to-action scroll-to">En Savoir plus</a>
-                <a href="/get-connected" class="call-to-action">Je veux suivre Christ</a>
-            </div>
-        </div>
-        <div class="announce">
-            <div class="block-announce">
-                <span class="title">Annonce</span>
-                <div class="carte">
-                    <p>Le PCE annonce une grande Campagne d'évangélisation dans la ville de Bertoua du 12 au 18 Janvier
-                        2026.</p>
-                </div>
-                <span class="sign">Le Sécrétariat</span>
-            </div>
-    </section>
-
-    <section class="about-us" id="aboutus">
-        <div class="row">
-            <div class="col-lg-5 col-12 conten">
-                <div class="text-about">
-                    <h2 class="title">Qui sommes-nous ?</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis cumque fugit libero excepturi debitis
-                        natus porro expedita quia blanditiis amet odio hic, vero omnis itaque a illo repellendus quos
-                        aliquid.</p>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis cumque fugit libero excepturi debitis
-                        natus porro expedita quia blanditiis amet odio hic, vero omnis itaque a illo repellendus quos
-                        aliquid.</p>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis cumque fugit libero excepturi debitis
-                        natus porro expedita quia blanditiis amet odio hic, vero omnis itaque a illo repellendus quos
-                        aliquid.</p>
-                    <blockquote>
-                        Mais vous, vous êtes une race choisie, un sacerdoce royal, une nation sainte,
-                        un peuple acquis, afin que vous annonciez les vertus de celui qui vous a appelés des
-                        ténèbres à son admirable lumière.
-                        <span class="author"><i>1 Pierre 2:9</i></span>
-                    </blockquote>
-                </div>
-            </div>
-            <div class="col-lg-7 col-12">
-                <div class="img-presentation">
-                    <div class="img-about" style="background-image: url({{ asset('images/home-7.jpg') }})"></div>
-                </div>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow"><span>Église Messianique Évangélique du Cameroun</span></div>
+            <h1>Un lieu de <em>transformation,</em><br>de restauration<br>et d'espérance.</h1>
+            <p class="hero-sub">Là où les vies sont bâties, les miracles se manifestent et les délivrances se vivent — sous la Parole de Dieu et la conduite du Saint-Esprit.</p>
+            <p class="hero-verse">« Mais vous, vous êtes une race choisie, un sacerdoce royal, une nation sainte. » — 1 Pierre 2:9</p>
+            <div class="hero-buttons">
+                <a href="/about-us" class="btn-primary">Découvrir l'EMEC</a>
+                <a href="/get-connected" class="btn-outline">Rejoindre la famille</a>
             </div>
         </div>
     </section>
 
-    <section class="getconnected"
-        style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.832), rgba(0, 0, 0, 0.75)), url({{ asset('images/home-2.jpg') }})">
-        <div class="row">
-            <div class="col-lg-6 col-12 ss">
-                <div class="text-connect">
-                    <h2>Come and Let's Live Our Faith Together!</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum officiis quae veniam porro aliquid?
-                        Doloribus, ut distinctio itaque laudantium aliquid laborum. Alias asperiores consequatur ex
-                        incidunt,
-                        voluptatem consequuntur eligendi magni!</p>
-                    <a href="" class="call-to-action mb-3">Nous Rejoindre</a>
-                </div>
+    <div class="ticker">
+        <span class="ticker-label">Annonce</span>
+        <p class="ticker-text">Le PCE annonce une grande campagne d'évangélisation à Bertoua — Janvier 2026. Rejoignez-nous !</p>
+    </div>
+
+    <section class="about" id="about">
+        <div class="about-image reveal">
+            <img src="{{ asset('images/home-2.jpg') }}" alt="Communauté EMEC en adoration" />
+            <div class="about-image-accent"></div>
+            <div class="about-badge">Fondée sur la Parole de Dieu</div>
+        </div>
+        <div class="about-text reveal">
+            <p class="section-eyebrow">Qui sommes-nous</p>
+            <h2 class="section-title">Une communauté de <em>foi vivante</em> au cœur du Cameroun</h2>
+            <p>L'Église Messianique Évangélique du Cameroun (EMEC) est une communauté dynamique et multigénérationnelle, fondée sur des principes solides de foi, de dévotion et d'amour fraternel. Depuis ses humbles débuts, elle s'est développée pour rayonner bien au-delà des frontières du Cameroun.</p>
+            <p>Nous croyons que chaque personne a une destinée divine. Notre mission est de vous aider à la découvrir, à travers l'enseignement de la Parole, la louange et le service envers les autres.</p>
+            <div class="about-verse">
+                <blockquote>« Mais vous, vous êtes une race choisie, un sacerdoce royal, une nation sainte, un peuple acquis, afin que vous annonciez les vertus de celui qui vous a appelés des ténèbres à son admirable lumière. »</blockquote>
+                <cite>1 Pierre 2:9</cite>
             </div>
-            <div class="col-lg-6 col-12">
-                <div class="imgs-church">
-                    <div class="img-church" style="background-image: url({{ asset('images/home-4.jpg') }})"></div>
-                    <div class="img-church mt-5" style="background-image: url({{ asset('images/home-6.jpg') }})"></div>
-                    <div class="img-church" style="background-image: url({{ asset('images/home-5.jpg') }})"></div>
-                </div>
+            <div class="about-stats">
+                <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Années de ministère</div></div>
+                <div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">Villes atteintes</div></div>
+                <div class="stat-item"><div class="stat-number">∞</div><div class="stat-label">Vies transformées</div></div>
             </div>
         </div>
     </section>
 
-    <section class="mandate">
-        <h2>The Mandate</h2>
-        <p>Notre mandat est d’annoncer l’Évangile, faire des disciples, les baptiser, les enseigner, et manifester l’amour
-            de Dieu par la compassion, la justice et la paix afin de glorifier Christ.
-        </p>
-        <a href="" class="call-to-action">En savoir plus</a>
-        <div class="mandate-right">
-            <div class="mandate-item">
-                <div class="mandate-item-text">
-                    <h3>Annoncer l'Évangile de Jésus-Christ</h3>
-                    <p>Nous sommes appelés à proclamer la bonne nouvelle du salut par Jésus-Christ à toutes les nations, en
-                        invitant chacun à la repentance et à la foi.</p>
-                </div>
-                <div class="mandate-item-img" style="background-image: url({{ asset('images/home-8.jpg') }})"></div>
-            </div>
+    <section class="programs" id="programs">
+        <div class="reveal">
+            <p class="section-eyebrow">Nos Programmes</p>
+            <h2 class="section-title">Venez vivre votre foi<br>avec nous chaque semaine</h2>
         </div>
-        <div class="mandate-left postion">
-            <div class="mandate-item">
-                <div class="mandate-item-text">
-                    <h3>Les baptiser au nom du Père, du Fils et du Saint-Esprit</h3>
-                    <p>Le baptême est un acte d'obéissance et un témoignage public de notre foi en Jésus-Christ, symbolisant
-                        notre identification avec sa mort, son ensevelissement et sa résurrection.</p>
-                </div>
-                <div class="mandate-item-img" style="background-image: url({{ asset('images/home-9.jpg') }})"></div>
+        <div class="programs-grid">
+            <div class="program-card reveal">
+                <p class="program-day">Dimanche</p>
+                <h3 class="program-title">Culte de Célébration</h3>
+                <p class="program-time">9h00 — 12h30</p>
+                <div class="program-number">01</div>
             </div>
-        </div>
-    </section>
-
-    <section class="church-day"
-        style="background-image: linear-gradient(to top, rgba(0, 3, 43, 0.949), rgba(0, 5, 32, 0.897)), url({{ asset('images/home-2.jpg') }})">
-        <div class="d-flex">
-            <div class="titre">
-                <h2>Nos programmes</h2>
-                <p>
-                    Découvrez un programme riche en enseignements bibliques, en prières ferventes et en partages fraternels.
-                </p>
+            <div class="program-card reveal">
+                <p class="program-day">Lundi</p>
+                <h3 class="program-title">École de Sion</h3>
+                <p class="program-time">17h30 — 20h00</p>
+                <div class="program-number">02</div>
             </div>
-            <a class="call-to-action">Rejoindre une eglise</a>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
-                <div class="carte">
-                    <div class="img-carte" style="background-image: url({{ asset('images/home-1.jpg') }})"></div>
-                    <h3>Dimanche</h3>
-                    <p>Culte de Célébration de 9h00 à 12h30</p>
-                    <div class="divider"></div>
-                </div>
+            <div class="program-card reveal">
+                <p class="program-day">Mercredi</p>
+                <h3 class="program-title">Jour d'Enseignements</h3>
+                <p class="program-time">17h30 — 20h00</p>
+                <div class="program-number">03</div>
             </div>
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
-                <div class="carte">
-                    <div class="img-carte" style="background-image: url({{ asset('images/home-2.jpg') }})"></div>
-                    <h3>Lundi</h3>
-                    <p>Ecole de Sion de 17h30 à 20h00</p>
-                    <div class="divider"></div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
-                <div class="carte">
-                    <div class="img-carte" style="background-image: url({{ asset('images/home-3.jpg') }})"></div>
-                    <h3>Mercredi</h3>
-                    <p>Jour d'enseignements de 17h30 à 20h00</p>
-                    <div class="divider"></div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-12 mb-4">
-                <div class="carte">
-                    <div class="img-carte" style="background-image: url({{ asset('images/home-4.jpg') }})"></div>
-                    <h3>Vendredi</h3>
-                    <p>Jour de prières de 17h30 à 20h00</p>
-                    <div class="divider"></div>
-                </div>
+            <div class="program-card reveal">
+                <p class="program-day">Vendredi</p>
+                <h3 class="program-title">Jour de Prières</h3>
+                <p class="program-time">17h30 — 20h00</p>
+                <div class="program-number">04</div>
             </div>
         </div>
     </section>
 
-    <section class="visionnaire" id="visionnaire">
-        <div class="row align-items-center">
-            <div class="col-lg-5 col-md-12">
-                <div class="img-visionnaire" style="background-image: url({{ asset('images/home-11.jpeg') }})"></div>
-            </div>
-            <div class="col-lg-7 col-md-12">
-                <div class="desc-vision">
-                    <span class="subtitle">Le visionnaire</span>
-                    <h2>Apôtre Samuel DALLE</h2>
-                    <p class="title-visionnaire">Fondateur de la communauté EMEC</p>
-
-                    <div class="vision-text">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi officiis fugit repellendus dolore
-                            laudantium itaque et, labore at iusto adipisci eum ab maiores nostrum eos deserunt quasi
-                            corrupti quas ea.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi officiis fugit repellendus dolore
-                            laudantium itaque et, labore at iusto adipisci eum ab maiores nostrum eos deserunt quasi
-                            corrupti quas ea.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi officiis fugit repellendus dolore
-                            laudantium itaque et, labore at iusto adipisci eum ab maiores nostrum eos deserunt quasi
-                            corrupti quas ea.</p>
-                    </div>
+    <section class="mandate" id="mandate">
+        <div>
+            <p class="section-eyebrow">Notre Mandat</p>
+            <h2 class="section-title">Appelés à <em>annoncer,</em> former et servir</h2>
+            <p>Notre mandat est d'annoncer l'Évangile, faire des disciples de toutes les nations, les baptiser, les enseigner, et manifester l'amour de Dieu par la compassion, la justice et la paix — afin de glorifier Christ en toutes choses.</p>
+            <a href="/mandate" class="btn-primary">En savoir plus</a>
+        </div>
+        <ul class="mandate-list reveal">
+            <li>
+                <div class="mandate-icon">✝</div>
+                <div>
+                    <h4>Annoncer l'Évangile</h4>
+                    <p>Proclamer la bonne nouvelle du salut par Jésus-Christ et inviter chacun à la repentance et à la foi.</p>
                 </div>
+            </li>
+            <li>
+                <div class="mandate-icon">💧</div>
+                <div>
+                    <h4>Le Baptême</h4>
+                    <p>Un acte d'obéissance symbolisant l'identification à la mort, l'ensevelissement et la résurrection de Jésus.</p>
+                </div>
+            </li>
+            <li>
+                <div class="mandate-icon">📖</div>
+                <div>
+                    <h4>L'Enseignement</h4>
+                    <p>Former des disciples matures par des enseignements bibliques solides et un accompagnement spirituel.</p>
+                </div>
+            </li>
+            <li>
+                <div class="mandate-icon">🤝</div>
+                <div>
+                    <h4>Service et Compassion</h4>
+                    <p>Manifester l'amour de Dieu par des actions concrètes au service des plus vulnérables.</p>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="pastor" id="pastor">
+        <div class="pastor-image reveal">
+            <img src="{{ asset('images/home-11.jpeg') }}" alt="Apôtre Samuel Dalle" />
+            <div class="pastor-tag">
+                <strong>Apôtre Samuel Dalle</strong>
+                <span>Fondateur & Berger Principal</span>
             </div>
         </div>
+        <div class="pastor-text reveal">
+            <p class="section-eyebrow">Le Visionnaire</p>
+            <h2 class="section-title">Un homme de foi,<br>une vision <em>apostolique</em></h2>
+            <p>L'Apôtre Samuel Dalle guide la communauté avec une vision de renouveau spirituel, d'enseignement solide et d'engagement social. Il encourage la transformation personnelle par la prière et la formation biblique.</p>
+            <p>Sous sa direction, l'EMEC développe des actions communautaires visant à soutenir les plus vulnérables et à renforcer la fraternité entre les membres.</p>
+            <div class="pastor-quote">
+                <p>« Ma vision est de voir chaque membre de l'EMEC devenir un disciple mature de Christ, équipé pour impacter positivement son environnement. »</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="events" id="events">
+        <div class="events-header reveal">
+            <div>
+                <p class="section-eyebrow">Agenda</p>
+                <h2 class="section-title" style="color:#fff;">Prochains <em>événements</em></h2>
+            </div>
+            <a href="/events" class="events-link">Voir tout le calendrier →</a>
+        </div>
+        <div class="events-grid">
+            <div class="event-card reveal">
+                <div class="event-date">12</div>
+                <div class="event-month">Janvier 2026</div>
+                <h3 class="event-title">Campagne d'Évangélisation — Bertoua</h3>
+                <p class="event-location">📍 Bertoua, Cameroun · 12 au 18 Janvier</p>
+            </div>
+            <div class="event-card reveal">
+                <div class="event-date">31</div>
+                <div class="event-month">Mars 2026</div>
+                <h3 class="event-title">Culte Spécial de Pâques</h3>
+                <p class="event-location">📍 EMEC Siège, Yaoundé</p>
+            </div>
+            <div class="event-card reveal">
+                <div class="event-date">12</div>
+                <div class="event-month">Avril 2026</div>
+                <h3 class="event-title">Conférence Annuelle des Femmes</h3>
+                <p class="event-location">📍 EMEC Yaoundé · 12–14 Avril</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="give" id="give">
+        <p class="section-eyebrow">Votre Générosité</p>
+        <h2 class="section-title">Votre offrande. Notre mission.</h2>
+        <p>Votre soutien finance la proclamation de l'Évangile, le service à la communauté et un impact durable pour la gloire de Dieu.</p>
+        <div class="give-methods">
+            <span class="give-method">📱 MTN Mobile Money</span>
+            <span class="give-method">📱 Orange Money</span>
+            <span class="give-method">🏦 Virement bancaire</span>
+        </div>
+        <a href="/donate" class="btn-give">Faire un don</a>
     </section>
 @endsection

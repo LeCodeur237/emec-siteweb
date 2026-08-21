@@ -1,407 +1,550 @@
-@extends('index')
+﻿@extends('index')
 
 @push('styles')
     <style>
-        .small-header {
-            background-image: linear-gradient(to top,
-                    rgba(0, 0, 0, 0.832),
-                    rgba(0, 0, 0, 0.75)),
-                url({{ asset('images/home-2.jpg') }});
+        .hero .hero-bg {
+            background-image: url({{ asset('images/home-2.jpg') }});
         }
 
-        .about-content {
-            padding: 4rem 8rem;
-            text-align: center;
+        .breadcrumb {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.2s forwards;
         }
 
-        .about-content span {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .about-content h2 {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            text-align: center;
-            width: 50%;
-        }
-
-        .about-content .subtite {
-            font-size: 1rem;
-            font-weight: normal;
-            margin-bottom: 2rem;
-            text-align: center;
-            width: 60%;
-        }
-
-        .about-content .more {
-            background-color: transparent;
-            border: 1px solid #000;
-            text-decoration: none;
-            color: #000;
-            padding: 1.2rem 2rem;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        .breadcrumb a {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            font-size: 14px;
-            margin-inline: 0.1rem;
-            margin-bottom: 4rem;
-        }
-
-        .about-content .more:hover {
-            border: 1px solid #ffb700;
-            color: #000;
-            transition: all 0.3s ease;
-        }
-
-        .about-section {
-            padding: 4rem 8rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .about-section .line {
-            height: 2px;
-            display: block;
-            background-color: rgb(0, 0, 0);
-            width: 60px;
-            margin: 0 auto;
-            margin-bottom: 1rem;
-        }
-
-        .about-section h2 {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .about-section .sub {
-            font-size: 0.9rem;
-            font-weight: normal;
-            margin-bottom: 4rem;
-            width: 65%;
-            text-align: center;
-            display: block;
-            margin: 0 auto 4rem auto;
-        }
-
-        .about-section .col-md-4 {
-            padding: 0.2rem;
-        }
-
-        .about-section .card {
-            border: 1px solid #e0e0e0;
-            border-radius: 1px;
-            padding: 1rem 2rem;
-            margin-bottom: 4 rem;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.75);
             text-decoration: none;
-            color: #000;
-            height: 35vh;
+            transition: color 0.2s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--color-sky);
+        }
+
+        .breadcrumb span,
+        .breadcrumb .current {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-sky);
+        }
+
+        .subnav {
+            position: sticky;
+            top: 72px;
+            z-index: 150;
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(69, 189, 253, 0.2);
+        }
+
+        .subnav-inner {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 0 10vw;
         }
 
-        .about-section .card h3 {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 1.2rem;
-            color: #000;
+        .subnav-inner::-webkit-scrollbar {
+            display: none;
         }
 
-        .about-section .card p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #555;
-        }
-
-        .about-section .card:hover {
-            border-color: #ffb700;
-        }
-
-        .vision-mission {
-            padding: 4rem 8rem;
+        .subnav-btn {
+            flex-shrink: 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: color 0.25s ease, border-color 0.25s ease;
+            white-space: nowrap;
         }
 
-        .vision-mission .item {
-            padding: 5rem 4rem;
-            text-align: center;
-            background-color: white;
-            margin: 0;
-            height: 60vh;
+        .subnav-btn.active {
+            color: #fff;
+            border-bottom-color: var(--color-sky);
         }
 
-        .vision-mission .bg-black {
-            background-color: #000;
-            color: #fff !important;
+        .histoire-grid,
+        .vision-mission,
+        .founders,
+        .conseil-grid,
+        .ministeres-grid,
+        .eglises-grid {
+            display: grid;
+            gap: 2rem;
         }
 
-        .vision-mission .text-white {
-            color: #fff !important;
+        .histoire-grid,
+        .vision-mission,
+        .eglises-grid {
+            grid-template-columns: 1fr 1fr;
+            align-items: start;
         }
 
-        .vision-mission .item h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #000;
-        }
-
-        .vision-mission .item p {
+        .histoire-text p,
+        .conseil-desc,
+        .eglises-header p,
+        .piliers-header-right p {
             font-size: 1rem;
-            line-height: 1.6;
-            color: #000;
+            line-height: 1.85;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
         }
 
-        .visionnaire-section {
-            padding: 4rem 8rem;
+        .verse-block {
+            margin: 2rem 0;
+            padding: 1.5rem 1.75rem;
+            border-left: 3px solid var(--color-sky);
+            background: rgba(69, 189, 253, 0.07);
+        }
+
+        .verse-block blockquote {
+            font-family: 'Libre Baskerville', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .verse-block cite {
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-sky);
+        }
+
+        .valeur-item,
+        .conseil-card,
+        .ministere-card,
+        .eglise-card,
+        .implantation-cta,
+        .bridge {
+            border-radius: 12px;
+        }
+
+        .valeur-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(69, 189, 253, 0.15);
         }
 
-        .visionnaire-section .img-visionnaire {
+        .valeur-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--color-sky);
+            min-width: 24px;
+            margin-top: 0.4rem;
+        }
+
+        .valeur-body h4,
+        .conseil-card h4,
+        .ministere-card h4,
+        .eglise-body h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .founders,
+        .conseil-grid,
+        .ministeres-grid,
+        .eglises-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .founder-card,
+        .conseil-card,
+        .ministere-card,
+        .eglise-card {
+            overflow: hidden;
+        }
+
+        .founder-card img,
+        .eglise-img {
             width: 100%;
-            padding-top: 125%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            height: 320px;
+            object-fit: cover;
             border-radius: 12px;
             display: block;
         }
 
-        .visionnaire-section .desc-vision {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .founder-info,
+        .eglise-body {
+            padding: 1.5rem;
+        }
+
+        .founder-tag,
+        .eglise-badge,
+        .ministeicard,
+        .pilier-tag {
+            color: var(--color-sky);
+        }
+
+        .conseil-card {
+            background: #fff;
+            border: 1px solid rgba(69, 189, 253, 0.12);
+            padding: 1.5rem;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .conseil-card:hover {
+            border-color: rgba(69, 189, 253, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .ministere-card {
+            background: var(--color-black);
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(69, 189, 253, 0.15);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--color-sky);
+        }
+
+        .ministere-card:hover::after {
             height: 100%;
-            padding-left: 4rem;
         }
 
-        .visionnaire-section .desc-vision .subtitle {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #6c757d;
+        .ministere-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: rgba(69, 189, 253, 0.05);
+            transition: height 0.3s ease;
+        }
+
+        .ministere-card p,
+        .conseil-card p,
+        .eglise-body p {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.65;
+        }
+
+        .eglise-card {
+            background: #fff;
+            border: 1px solid rgba(69, 189, 253, 0.15);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .eglise-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .eglise-img {
+            background: var(--color-black) center/cover no-repeat;
+            position: relative;
+        }
+
+        .eglise-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        }
+
+        .eglise-city {
+            position: absolute;
+            bottom: 16px;
+            left: 20px;
+            z-index: 2;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .eglise-address span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .implantation-cta {
+            background: var(--color-black);
+            padding: 3.5rem 4rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            color: #fff;
+        }
+
+        .implantation-cta h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.2;
+            color: #fff;
+            margin: 0;
+        }
+
+        .implantation-cta p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin: 0.75rem 0 0;
+        }
+
+        .btn-gold {
+            background: var(--color-sky);
+            color: var(--color-black);
+            border-radius: 999px;
+            padding: 0.85rem 1.75rem;
+            text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
         }
 
-        .visionnaire-section .desc-vision h2 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .bridge {
+            background: var(--color-black);
+            padding: 3.5rem 10vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            color: #fff;
+            margin: 4rem 0;
+            border-radius: 12px;
         }
 
-        .visionnaire-section .desc-vision .title-visionnaire {
-            font-size: 15px;
-            font-weight: normal;
-            color: #495057;
-            margin-bottom: 2rem;
+        .bridge-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.2;
+            margin: 0;
         }
 
-        .visionnaire-section .vision-text {
-            margin-top: 2rem;
-            border-left: 3px solid #ffb700;
-            padding-left: 1.5rem;
+        .bridge-text h3 em {
+            color: var(--color-sky-light);
         }
 
-        .visionnaire-section .vision-text p {
-            font-size: 1rem;
-            line-height: 1.6;
-            text-align: justify;
-            color: #343a40;
-            margin-bottom: 1rem;
+        .btn-outline-gold {
+            border: 1px solid rgba(69, 189, 253, 0.5);
+            color: var(--color-sky);
+            background: transparent;
+            padding: 0.85rem 1.75rem;
+            text-decoration: none;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
         }
 
-        @media (max-width: 992px) {
-            .about-content {
-                padding: 4rem 1.5rem;
+        @media (max-width: 960px) {
+            .histoire-grid,
+            .vision-mission,
+            .founders,
+            .eglises-grid,
+            .implantation-cta,
+            .bridge {
+                grid-template-columns: 1fr;
             }
-
-            .about-content h2,
-            .about-content .subtite {
-                width: 100%;
+            .conseil-grid,
+            .ministeres-grid {
+                grid-template-columns: 1fr 1fr;
             }
-
-            .about-section {
-                padding: 4rem 1.5rem;
+            nav .nav-links {
+                display: none;
             }
-
-            .about-section .sub {
-                width: 100%;
+            .bridge {
+                flex-direction: column;
+                text-align: center;
             }
+        }
 
-            .about-section .card {
-                height: auto;
-                margin-bottom: 1rem;
+        @media (max-width: 600px) {
+            section,
+            #histoire,
+            #equipe,
+            #eglises {
+                padding: 72px 6vw;
             }
-
-            .vision-mission {
-                padding: 4rem 1.5rem;
+            .subnav-btn {
+                padding: 0.9rem 1rem;
             }
-
-            .vision-mission .item {
-                height: auto;
-            }
-
-            .visionnaire-section {
-                padding: 4rem 1.5rem;
-            }
-
-            .visionnaire-section .desc-vision {
-                padding-left: 0;
-                margin-top: 2rem;
+            .footer-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 @endpush
 
 @section('content')
-    <section class="small-header">
-        <div>
-            <div class="line"></div>
-            <h1>À propos de nous</h1>
-            <p>Découvrez notre histoire, notre mission et les valeurs qui nous animent.</p>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <nav class="breadcrumb" aria-label="Fil d'ariane">
+                <a href="/">Accueil</a>
+                <span>›</span>
+                <span class="current">À Propos</span>
+            </nav>
+            <h1>Qui sommes-nous ?<br><em>Notre histoire,<br>nos visages, notre famille.</em></h1>
+            <p class="hero-sub">Une communauté fondée sur la foi, unie par l'amour, envoyée pour transformer le Cameroun et le monde.</p>
         </div>
     </section>
 
-    <section class="about-content">
-        <span>Notre Histoire</span>
-        <h2>L'EMEC : Une Histoire de Foi, de Croissance et d'Impact</h2>
-        <p class="subtite">L'Église Messianique Évangélique du Cameroun (EMEC) a été fondée sur des principes solides de
-            foi et de dévotion. Depuis ses humbles débuts, elle s'est développée pour devenir une communauté dynamique,
-            dédiée à la propagation de l'Évangile et au service de ses membres et de la société.</p>
-        <a href="#visionnaire-section" class="more">En savoir plus</a>
-    </section>
-
-    <section class="about-section">
-        <div class="line"></div>
-        <h2>Nos Valeurs Fondamentales</h2>
-        <p class="sub">À l'EMEC, nos actions sont guidées par des valeurs chrétiennes profondes qui façonnent notre
-            identité et notre engagement envers Dieu et envers les autres. Ces valeurs sont le pilier de notre communauté
-            et de notre ministère.</p>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>La Foi en Jésus-Christ</h3>
-                    <p>Nous croyons en Jésus-Christ comme notre Seigneur et Sauveur, et notre foi est le fondement de tout
-                        ce que nous faisons.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>La Parole de Dieu</h3>
-                    <p>La Bible est notre guide infaillible, la source de toute vérité et l'autorité finale pour notre foi
-                        et notre vie.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>L'Amour Fraternel</h3>
-                    <p>Nous nous engageons à vivre dans l'amour, l'unité et le respect mutuel, reflétant ainsi l'amour de
-                        Christ pour son Église.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>Le Service et la Compassion</h3>
-                    <p>Nous sommes appelés à servir Dieu et notre prochain avec compassion, en répondant aux besoins
-                        spirituels et physiques de notre communauté.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>L'Évangélisation et la Mission</h3>
-                    <p>Nous avons à cœur de partager l'Évangile et de faire des disciples de toutes les nations, en
-                        accomplissant le grand mandat de Christ.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
-                    <h3>La Sainteté et l'Intégrité</h3>
-                    <p>Nous aspirons à une vie de sainteté et d'intégrité, cherchant à honorer Dieu dans toutes nos actions
-                        et nos pensées.</p>
-                </div>
-            </div>
+    <div class="subnav" id="subnav">
+        <div class="subnav-inner">
+            <button class="subnav-btn active" onclick="document.querySelector('#histoire').scrollIntoView({behavior:'smooth', block:'start'});">01 Notre Histoire & Valeurs</button>
+            <button class="subnav-btn" onclick="document.querySelector('#equipe').scrollIntoView({behavior:'smooth', block:'start'});">02 Notre Équipe</button>
+            <button class="subnav-btn" onclick="document.querySelector('#eglises').scrollIntoView({behavior:'smooth', block:'start'});">03 Nos Implantations</button>
         </div>
-    </section>
+    </div>
 
-    <section class="vision-mission"
-        style="background-image: linear-gradient(to right,
-                    rgba(0, 0, 0, 0.644),
-                    rgba(0, 0, 0, 0.527)), url({{ asset('images/home-10.jpg') }})">
-        <div class="row">
-            <div class="col-lg-6 col-12 mb-4">
-                <div class="item">
+    <section id="histoire">
+        <div class="reveal">
+            <p class="section-eyebrow">01 — Notre Histoire</p>
+            <h2 class="section-title">L'EMEC : une histoire de <em>foi,</em><br>de croissance et d'impact</h2>
+        </div>
+
+        <div class="histoire-grid">
+            <div class="histoire-text reveal">
+                <p>L'Église Messianique Évangélique du Cameroun (EMEC) a été fondée sur des principes solides de foi et de dévotion. Depuis ses humbles débuts, elle s'est développée pour devenir une communauté dynamique, dédiée à la proclamation de l'Évangile et au service de la société.</p>
+                <p>Sous la vision apostolique de l'Apôtre Samuel Dalle, l'EMEC est aujourd'hui un phare d'espoir et de transformation, touchant d'innombrables vies à travers le Cameroun et au-delà — par l'enseignement profond de la Parole, le service concret aux plus démunis et une présence forte dans les cités.</p>
+                <div class="verse-block">
+                    <blockquote>« Mais vous, vous êtes une race choisie, un sacerdoce royal, une nation sainte, un peuple acquis, afin que vous annonciez les vertus de celui qui vous a appelés des ténèbres à son admirable lumière. »</blockquote>
+                    <cite>1 Pierre 2:9</cite>
+                </div>
+            </div>
+            <div class="vision-mission reveal">
+                <div class="vm-card">
                     <h3>Notre Vision</h3>
-                    <p>Devenir une église dynamique et influente, transformant des vies et des communautés par la puissance
-                        de l'Évangile, et rayonnant l'amour de Christ dans le monde entier.</p>
+                    <p>Devenir une église dynamique et influente, transformant des vies et des communautés par la puissance de l'Évangile, et rayonnant l'amour de Christ dans le monde entier.</p>
                 </div>
-            </div>
-            <div class="col-lg-6 col-12">
-                <div class="item bg-black">
-                    <h3 class="text-white">Notre Mission</h3>
-                    <p class="text-white">Proclamer la bonne nouvelle de Jésus-Christ, faire des disciples de toutes les
-                        nations, les baptiser et les enseigner à observer tout ce qu'il a
-                        prescrit, tout en manifestant l'amour de Dieu par des œuvres de compassion, de justice et de
-                        paix.</p>
+                <div class="vm-card">
+                    <h3>Notre Mission</h3>
+                    <p>Proclamer la bonne nouvelle de Jésus-Christ, faire des disciples de toutes les nations, les baptiser et les enseigner — tout en manifestant l'amour de Dieu par des œuvres de compassion, de justice et de paix.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="visionnaire-section" id="visionnaire-section">
-        <div class="row align-items-center">
-            <div class="col-lg-5 col-12 mb-4">
-                <div class="img-visionnaire" style="background-image: url({{ asset('images/home-11.jpeg') }})"></div>
-            </div>
-            <div class="col-lg-7 col-12">
-                <div class="desc-vision">
-                    <span class="subtitle">Le visionnaire</span>
-                    <h2>Apôtre Samuel DALLE</h2>
-                    <p class="title-visionnaire">Fondateur de la communauté EMEC</p>
-
-                    <div class="vision-text">
-                        <p>L'Apôtre Samuel Dalle est le berger principal et le visionnaire derrière l'Église Messianique
-                            Évangélique du Cameroun (EMEC). Animé par une passion inébranlable pour l'Évangile et un cœur
-                            dévoué au service de Dieu, il a fondé l'EMEC avec une vision claire : établir un lieu où la
-                            Parole de Dieu est prêchée avec puissance, où les vies sont transformées et où la communauté
-                            grandit dans la foi et l'amour.</p>
-                        <p>Sous sa direction inspirée, l'EMEC est devenue un phare d'espoir et de transformation, touchant
-                            d'innombrables vies à travers le Cameroun et au-delà. Son enseignement profond et pratique de la
-                            Bible, combiné à son leadership charismatique, a permis à l'église de prospérer et d'étendre son
-                            influence spirituelle.</p>
-                        <p>L'Apôtre Samuel Dalle est également reconnu pour son engagement envers la justice sociale et la
-                            compassion. Il incarne les valeurs de l'EMEC en œuvrant activement pour le bien-être des
-                            communautés, en soutenant les initiatives éducatives et en apportant de laide aux plus démunis.
-                            Sa vision est de voir chaque membre de l'EMEC devenir un disciple mature de Christ, équipé pour
-                            impacter positivement son environnement et glorifier Dieu.</p>
-                    </div>
+    <section id="equipe">
+        <div class="reveal">
+            <p class="section-eyebrow">02 — Notre Équipe</p>
+            <h2 class="section-title">Les visages dévoués<br>de <em>l'EMEC</em></h2>
+        </div>
+        <div class="founders reveal">
+            <div class="founder-card">
+                <img src="{{ asset('images/home-11.jpeg') }}" alt="Apôtre Samuel Dalle" />
+                <div class="founder-info">
+                    <p class="founder-tag">Berger Principal & Fondateur</p>
+                    <h3 class="founder-name">Apôtre Samuel Dalle</h3>
+                    <p class="founder-role">Fondateur de la communauté EMEC</p>
+                    <p class="founder-quote">« Ma vision est de voir chaque membre de l'EMEC devenir un disciple mature de Christ, équipé pour impacter positivement son environnement. »</p>
                 </div>
             </div>
+            <div class="founder-card">
+                <img src="{{ asset('images/home-7.jpg') }}" alt="Pasteur Grâce Dalle" />
+                <div class="founder-info">
+                    <p class="founder-tag">Co-Fondatrice</p>
+                    <h3 class="founder-name">Pasteure Grâce Dalle</h3>
+                    <p class="founder-role">Pilier spirituel de l'EMEC</p>
+                    <p class="founder-quote">« Ensemble, nous bâtissons un lieu où chaque vie trouve sa restauration et sa destinée en Dieu. »</p>
+                </div>
+            </div>
+        </div>
+        <div class="conseil-title reveal">Conseil Exécutif</div>
+        <p class="conseil-desc reveal">Le Conseil Exécutif travaille en étroite collaboration avec les fondateurs pour assurer la vision et soutenir les différents ministères.</p>
+        <div class="conseil-grid reveal">
+            <div class="conseil-card">
+                <div class="conseil-avatar">SG</div>
+                <h4>Secrétaire Général</h4>
+                <p>Administration & Gouvernance</p>
+            </div>
+            <div class="conseil-card">
+                <div class="conseil-avatar">TR</div>
+                <h4>Trésorier</h4>
+                <p>Finances & Ressources</p>
+            </div>
+            <div class="conseil-card">
+                <div class="conseil-avatar">CO</div>
+                <h4>Coordinateur de Ministères</h4>
+                <p>Coordination & Stratégie</p>
+            </div>
+        </div>
+        <div class="ministeres-title reveal">Les Organes de l'EMEC</div>
+        <div class="ministeres-grid reveal">
+            <div class="ministere-card"><span class="min-icon">🌸</span><h4>Groupe des Femmes</h4><p>Un espace de croissance spirituelle, de soutien mutuel et d'engagement communautaire.</p></div>
+            <div class="ministere-card"><span class="min-icon">📖</span><h4>ECODIM</h4><p>L'école du dimanche de l'EMEC — un enseignement biblique vivant et adapté aux enfants.</p></div>
+            <div class="ministere-card"><span class="min-icon">⚡</span><h4>Jeunes Pour Christ</h4><p>Le ministère des jeunes — dédié à l'épanouissement spirituel et social d'une génération engagée.</p></div>
+        </div>
+    </section>
+
+    <div class="bridge reveal">
+        <div class="bridge-text">
+            <p class="eyebrow">Ensuite</p>
+            <h3>Trouvez <em>une église EMEC</em> près de chez vous et rejoignez votre famille locale.</h3>
+        </div>
+        <a href="#eglises" class="btn-outline-gold">Voir les implantations</a>
+    </div>
+
+    <section id="eglises">
+        <div class="reveal">
+            <p class="section-eyebrow">03 — Nos Implantations</p>
+            <h2 class="section-title">Une famille en pleine<br><em>croissance</em> à travers le Cameroun</h2>
+        </div>
+        <div class="eglises-grid reveal">
+            <div class="eglise-card">
+                <div class="eglise-img" style="background-image: url({{ asset('images/home-2.jpg') }});"></div>
+                <div class="eglise-body">
+                    <span class="eglise-badge">Siège National</span>
+                    <h4>EMEC Yaoundé — Siège</h4>
+                    <p>L'église mère, cœur battant de toute la vision EMEC. Cultes, formations et administration centrale.</p>
+                    <div class="eglise-address"><span>📍 Entrée OPEP, Minboman, Yaoundé</span></div>
+                </div>
+            </div>
+            <div class="eglise-card">
+                <div class="eglise-img" style="background-image: url({{ asset('images/home-4.jpg') }});"></div>
+                <div class="eglise-body">
+                    <span class="eglise-badge">Église Locale</span>
+                    <h4>EMEC Douala</h4>
+                    <p>Une communauté dynamique au cœur de la capitale économique — portes ouvertes à tous.</p>
+                    <div class="eglise-address"><span>📍 Douala, Cameroun</span></div>
+                </div>
+            </div>
+            <div class="eglise-card">
+                <div class="eglise-img" style="background-image: url({{ asset('images/home-6.jpg') }});"></div>
+                <div class="eglise-body">
+                    <span class="eglise-badge">Église Locale</span>
+                    <h4>EMEC Bertoua</h4>
+                    <p>En pleine expansion dans l'Est Cameroun — rejoignez la campagne d'évangélisation en cours.</p>
+                    <div class="eglise-address"><span>📍 Bertoua, Est Cameroun</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="implantation-cta reveal">
+            <div>
+                <h3>Votre ville n'est pas encore couverte ?<br><em>Devenez un pionnier.</em></h3>
+                <p>Contactez-nous pour implanter une cellule ou une église EMEC dans votre quartier ou ville.</p>
+            </div>
+            <a href="/contact-us" class="btn-gold">Nous contacter</a>
         </div>
     </section>
 @endsection

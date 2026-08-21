@@ -1,5 +1,19 @@
 <?php
 
+$allowedOrigins = env('CORS_ALLOWED_ORIGINS');
+
+if ($allowedOrigins === null || trim($allowedOrigins) === '') {
+    $allowedOrigins = implode(',', array_filter([
+        env('FRONTEND_URL', 'https://egliseemec.org'),
+        env('FRONTEND_WWW_URL', 'https://www.egliseemec.org'),
+        env('MESSAGES_FRONTEND_URL', 'https://messages.egliseemec.org'),
+        env('DOSC_FRONTEND_URL', 'https://dosc.egliseemec.org'),
+        env('ADMIN_FRONTEND_URL'),
+        env('LOCAL_FRONTEND_URL', 'http://localhost:5173'),
+        env('LOCAL_REACT_FRONTEND_URL', 'http://localhost:3000'),
+    ]));
+}
+
 return [
 
     /*
@@ -19,7 +33,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => array_values(array_filter(array_map(
+        'trim',
+        explode(',', $allowedOrigins)
+    ))),
 
     'allowed_origins_patterns' => [],
 

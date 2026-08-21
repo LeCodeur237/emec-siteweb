@@ -57,7 +57,6 @@ Route::get('/our-projects', function () {
     return view('pages.projects');
 })->name('projects');
 
-
 Route::post('/donate', function () {
     // Handle donation logic
 })->name('donate.store');
