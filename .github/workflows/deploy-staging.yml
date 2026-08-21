@@ -30,6 +30,13 @@ jobs:
           target: "/home/projects/emec-projects/emec-siteweb"
           overwrite: true
           rm: false
+          exclude: |
+            .git
+            .github
+            .env
+            vendor
+            node_modules
+            storage/logs/*
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
