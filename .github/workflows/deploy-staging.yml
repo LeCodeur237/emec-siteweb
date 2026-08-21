@@ -21,7 +21,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "emec-back/*"
-          target: "/home/projects/emec-projects/emec-back"
+          target: "/home/projects/emec-projects/emec-siteweb"
           strip_components: 1
 
       - name: Run Laravel deployment commands
@@ -32,7 +32,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/projects/emec-projects/emec-back
+            cd /home/projects/emec-projects/emec-siteweb
 
             composer install --no-dev --optimize-autoloader
 
