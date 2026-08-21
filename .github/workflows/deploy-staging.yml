@@ -1,0 +1,52 @@
+name: Deploy EMEC Backend Staging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload backend to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "emec-back/*"
+          target: "/home/projects/emec-projects/emec-back"
+          strip_components: 1
+
+      - name: Run Laravel deployment commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/projects/emec-projects/emec-back
+
+            composer install --no-dev --optimize-autoloader
+
+            if [ ! -f .env ]; then
+              echo ".env manquant sur le serveur"
+              exit 1
+            fi
+
+            php artisan migrate --force
+            php artisan storage:link || true
+
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            chmod -R ug+rw storage bootstrap/cache
