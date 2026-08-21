@@ -15,8 +15,10 @@ jobs:
 
       - name: Prepare deployment package
         run: |
+          rm -rf deploy-package
           mkdir -p deploy-package
           rsync -a \
+            --exclude='deploy-package' \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='.env' \
