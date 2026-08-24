@@ -89,55 +89,57 @@
             </div>
         </footer>
 
-        <form v-if="editing" class="crud-form" @submit.prevent="save">
-            <header>
-                <h3>{{ editing.id ? 'Modifier' : 'Creer' }} {{ resource.singular }}</h3>
-                <button type="button" @click="cancelEdit">Fermer</button>
-            </header>
+        <div v-if="editing" class="modal-backdrop" @click.self="cancelEdit">
+            <form class="crud-form modal-panel" @submit.prevent="save">
+                <header>
+                    <h3>{{ editing.id ? 'Modifier' : 'Creer' }} {{ resource.singular }}</h3>
+                    <button type="button" @click="cancelEdit">Fermer</button>
+                </header>
 
-            <div class="form-grid">
-                <label v-for="field in resource.fields" :key="field.key" :class="{ wide: field.type === 'textarea' }">
-                    {{ field.label }}
-                    <textarea
-                        v-if="field.type === 'textarea'"
-                        v-model="form[field.key]"
-                        rows="4"
-                    />
-                    <select
-                        v-else-if="field.type === 'multiselect'"
-                        v-model="form[field.key]"
-                        multiple
-                        size="6"
-                    >
-                        <option v-for="option in fieldOptions(field)" :key="option.value" :value="option.value">
-                            {{ option.label }}
-                        </option>
-                    </select>
-                    <select v-else-if="field.type === 'select'" v-model="form[field.key]">
-                        <option :value="field.nullable ? null : ''">{{ field.placeholder || 'Selectionner' }}</option>
-                        <option v-for="option in fieldOptions(field)" :key="option.value" :value="option.value">
-                            {{ option.label }}
-                        </option>
-                    </select>
-                    <input
-                        v-else-if="field.type === 'checkbox'"
-                        v-model="form[field.key]"
-                        type="checkbox"
-                    >
-                    <input
-                        v-else
-                        v-model="form[field.key]"
-                        :type="field.type || 'text'"
-                    >
-                </label>
-            </div>
+                <div class="form-grid">
+                    <label v-for="field in resource.fields" :key="field.key" :class="{ wide: field.type === 'textarea' }">
+                        {{ field.label }}
+                        <textarea
+                            v-if="field.type === 'textarea'"
+                            v-model="form[field.key]"
+                            rows="4"
+                        />
+                        <select
+                            v-else-if="field.type === 'multiselect'"
+                            v-model="form[field.key]"
+                            multiple
+                            size="6"
+                        >
+                            <option v-for="option in fieldOptions(field)" :key="option.value" :value="option.value">
+                                {{ option.label }}
+                            </option>
+                        </select>
+                        <select v-else-if="field.type === 'select'" v-model="form[field.key]">
+                            <option :value="field.nullable ? null : ''">{{ field.placeholder || 'Selectionner' }}</option>
+                            <option v-for="option in fieldOptions(field)" :key="option.value" :value="option.value">
+                                {{ option.label }}
+                            </option>
+                        </select>
+                        <input
+                            v-else-if="field.type === 'checkbox'"
+                            v-model="form[field.key]"
+                            type="checkbox"
+                        >
+                        <input
+                            v-else
+                            v-model="form[field.key]"
+                            :type="field.type || 'text'"
+                        >
+                    </label>
+                </div>
 
-            <p v-if="formError" class="form-error">{{ formError }}</p>
-            <div class="form-actions">
-                <button type="button" @click="cancelEdit">Annuler</button>
-                <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
-            </div>
-        </form>
+                <p v-if="formError" class="form-error">{{ formError }}</p>
+                <div class="form-actions">
+                    <button type="button" @click="cancelEdit">Annuler</button>
+                    <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
+                </div>
+            </form>
+        </div>
     </section>
 </template>
 

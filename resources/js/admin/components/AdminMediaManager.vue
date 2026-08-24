@@ -5,58 +5,58 @@
                 <h2>Medias</h2>
                 <p>Importer, filtrer et maintenir les images et documents du site.</p>
             </div>
-            <button type="button" @click="showUpload = !showUpload">
-                {{ showUpload ? 'Fermer' : 'Ajouter' }}
-            </button>
+            <button type="button" @click="showUpload = true">Ajouter</button>
         </header>
 
-        <form v-if="showUpload" class="crud-form" @submit.prevent="uploadMedia">
-            <header>
-                <h3>Nouveau media</h3>
-                <button type="button" @click="showUpload = false">Fermer</button>
-            </header>
+        <div v-if="showUpload" class="modal-backdrop" @click.self="closeUpload">
+            <form class="crud-form modal-panel" @submit.prevent="uploadMedia">
+                <header>
+                    <h3>Nouveau media</h3>
+                    <button type="button" @click="closeUpload">Fermer</button>
+                </header>
 
-            <div class="form-grid">
-                <label>
-                    Fichier
-                    <input type="file" required @change="onFileChange">
-                </label>
-                <label>
-                    Titre
-                    <input v-model="upload.title" type="text">
-                </label>
-                <label>
-                    Texte alternatif
-                    <input v-model="upload.alt_text" type="text">
-                </label>
-                <label>
-                    Type rattachement
-                    <select v-model="upload.mediaable_type">
-                        <option value="">Aucun</option>
-                        <option value="message">Message</option>
-                        <option value="preacher">Predicateur</option>
-                        <option value="church">Eglise</option>
-                        <option value="social_project">Projet DOSC</option>
-                        <option value="social_action">Action DOSC</option>
-                        <option value="user">Utilisateur</option>
-                    </select>
-                </label>
-                <label>
-                    ID rattachement
-                    <input v-model="upload.mediaable_id" type="number" min="1">
-                </label>
-                <label class="wide">
-                    Description
-                    <textarea v-model="upload.description" rows="3" />
-                </label>
-            </div>
+                <div class="form-grid">
+                    <label>
+                        Fichier
+                        <input type="file" required @change="onFileChange">
+                    </label>
+                    <label>
+                        Titre
+                        <input v-model="upload.title" type="text">
+                    </label>
+                    <label>
+                        Texte alternatif
+                        <input v-model="upload.alt_text" type="text">
+                    </label>
+                    <label>
+                        Type rattachement
+                        <select v-model="upload.mediaable_type">
+                            <option value="">Aucun</option>
+                            <option value="message">Message</option>
+                            <option value="preacher">Predicateur</option>
+                            <option value="church">Eglise</option>
+                            <option value="social_project">Projet DOSC</option>
+                            <option value="social_action">Action DOSC</option>
+                            <option value="user">Utilisateur</option>
+                        </select>
+                    </label>
+                    <label>
+                        ID rattachement
+                        <input v-model="upload.mediaable_id" type="number" min="1">
+                    </label>
+                    <label class="wide">
+                        Description
+                        <textarea v-model="upload.description" rows="3" />
+                    </label>
+                </div>
 
-            <p v-if="error" class="form-error">{{ error }}</p>
-            <div class="form-actions">
-                <button type="button" @click="resetUpload">Annuler</button>
-                <button type="submit" :disabled="saving">{{ saving ? 'Upload...' : 'Uploader' }}</button>
-            </div>
-        </form>
+                <p v-if="error" class="form-error">{{ error }}</p>
+                <div class="form-actions">
+                    <button type="button" @click="closeUpload">Annuler</button>
+                    <button type="submit" :disabled="saving">{{ saving ? 'Upload...' : 'Uploader' }}</button>
+                </div>
+            </form>
+        </div>
 
         <div class="crud-toolbar">
             <input v-model="filters.search" type="search" placeholder="Rechercher un media" @keyup.enter="loadMedia(1)">
@@ -118,33 +118,35 @@
             </div>
         </footer>
 
-        <form v-if="editing" class="crud-form" @submit.prevent="updateMedia">
-            <header>
-                <h3>Modifier media</h3>
-                <button type="button" @click="editing = null">Fermer</button>
-            </header>
+        <div v-if="editing" class="modal-backdrop" @click.self="closeEdit">
+            <form class="crud-form modal-panel" @submit.prevent="updateMedia">
+                <header>
+                    <h3>Modifier media</h3>
+                    <button type="button" @click="closeEdit">Fermer</button>
+                </header>
 
-            <div class="form-grid">
-                <label>
-                    Titre
-                    <input v-model="editForm.title" type="text">
-                </label>
-                <label>
-                    Texte alternatif
-                    <input v-model="editForm.alt_text" type="text">
-                </label>
-                <label class="wide">
-                    Description
-                    <textarea v-model="editForm.description" rows="3" />
-                </label>
-            </div>
+                <div class="form-grid">
+                    <label>
+                        Titre
+                        <input v-model="editForm.title" type="text">
+                    </label>
+                    <label>
+                        Texte alternatif
+                        <input v-model="editForm.alt_text" type="text">
+                    </label>
+                    <label class="wide">
+                        Description
+                        <textarea v-model="editForm.description" rows="3" />
+                    </label>
+                </div>
 
-            <p v-if="error" class="form-error">{{ error }}</p>
-            <div class="form-actions">
-                <button type="button" @click="editing = null">Annuler</button>
-                <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
-            </div>
-        </form>
+                <p v-if="error" class="form-error">{{ error }}</p>
+                <div class="form-actions">
+                    <button type="button" @click="closeEdit">Annuler</button>
+                    <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
+                </div>
+            </form>
+        </div>
     </section>
 </template>
 
@@ -270,6 +272,16 @@ function startEdit(item) {
     editForm.description = item.description ?? '';
 }
 
+function closeEdit() {
+    editing.value = null;
+    error.value = '';
+}
+
+function closeUpload() {
+    resetUpload();
+    showUpload.value = false;
+}
+
 async function updateMedia() {
     saving.value = true;
     error.value = '';
@@ -284,7 +296,7 @@ async function updateMedia() {
             }),
         });
 
-        editing.value = null;
+        closeEdit();
         await loadMedia(meta.value.current_page || 1);
     } catch (err) {
         error.value = err.message || 'Enregistrement impossible.';

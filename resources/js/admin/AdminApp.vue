@@ -69,16 +69,19 @@
                 </div>
 
                 <nav>
-                    <button
-                        v-for="item in navigation"
-                        :key="item.key"
-                        type="button"
-                        :class="{ active: activeSection === item.key }"
-                        @click="activeSection = item.key"
-                    >
-                        <span>{{ item.icon }}</span>
-                        {{ item.label }}
-                    </button>
+                    <div v-for="group in navigationGroups" :key="group.label" class="nav-section">
+                        <span v-if="group.label" class="nav-section-title">{{ group.label }}</span>
+                        <button
+                            v-for="item in group.items"
+                            :key="item.key"
+                            type="button"
+                            :class="{ active: activeSection === item.key }"
+                            @click="activeSection = item.key"
+                        >
+                            <i :class="item.icon" aria-hidden="true"></i>
+                            {{ item.label }}
+                        </button>
+                    </div>
                 </nav>
 
                 <button class="logout-button" type="button" @click="logout">Deconnexion</button>
@@ -350,19 +353,33 @@ const credentials = reactive({
 });
 
 const navigation = [
-    { key: 'dashboard', label: 'Dashboard', eyebrow: 'Vue globale', icon: '01', description: 'Indicateurs principaux du back-office EMEC.' },
-    { key: 'messages', label: 'Messages', eyebrow: 'Contenu', icon: '02', description: 'Messages, predicateurs, categories et series.' },
-    { key: 'emec', label: 'EMEC', eyebrow: 'Vie de l Eglise', icon: '03', description: 'Eglises, responsables, groupes, evenements et programmes.' },
-    { key: 'dosc', label: 'DOSC', eyebrow: 'Action sociale', icon: '04', description: 'Projets sociaux, actions, temoignages et statistiques.' },
-    { key: 'donations', label: 'Dons', eyebrow: 'Finance', icon: '05', description: 'Campagnes, methodes de don et donations enregistrees.' },
-    { key: 'communication', label: 'Communication', eyebrow: 'Relations', icon: '06', description: 'Messages de contact et abonnes newsletter.' },
-    { key: 'settings', label: 'Configuration', eyebrow: 'Parametres', icon: '07', description: 'Parametres fonctionnels du site et de l API.' },
-    { key: 'rbac', label: 'Utilisateurs', eyebrow: 'Acces', icon: '08', description: 'Utilisateurs, roles et permissions.' },
-    { key: 'media', label: 'Medias', eyebrow: 'Bibliotheque', icon: '09', description: 'Images, documents et metadonnees.' },
-    { key: 'notifications', label: 'Notifications', eyebrow: 'Alertes', icon: '10', description: 'Notifications administrateur et etat de lecture.' },
+    { key: 'dashboard', label: 'Dashboard', eyebrow: 'Vue globale', icon: 'ti ti-layout-dashboard', description: 'Indicateurs principaux du back-office EMEC.' },
+    { key: 'messages', label: 'Messages', eyebrow: 'Contenu', icon: 'ti ti-message', description: 'Messages, predicateurs, categories et series.', group: 'Sites web' },
+    { key: 'emec', label: 'EMEC', eyebrow: 'Vie de l Eglise', icon: 'ti ti-building-church', description: 'Eglises, responsables, groupes, evenements et programmes.', group: 'Sites web' },
+    { key: 'dosc', label: 'DOSC', eyebrow: 'Action sociale', icon: 'ti ti-heart-handshake', description: 'Projets sociaux, actions, temoignages et statistiques.', group: 'Sites web' },
+    { key: 'donations', label: 'Dons', eyebrow: 'Finance', icon: 'ti ti-cash-banknote', description: 'Campagnes, methodes de don et donations enregistrees.' },
+    { key: 'communication', label: 'Communication', eyebrow: 'Relations', icon: 'ti ti-mail', description: 'Messages de contact et abonnes newsletter.' },
+    { key: 'settings', label: 'Configuration', eyebrow: 'Parametres', icon: 'ti ti-settings', description: 'Parametres fonctionnels du site et de l API.' },
+    { key: 'rbac', label: 'Utilisateurs', eyebrow: 'Acces', icon: 'ti ti-users', description: 'Utilisateurs, roles et permissions.' },
+    { key: 'media', label: 'Medias', eyebrow: 'Bibliotheque', icon: 'ti ti-photo', description: 'Images, documents et metadonnees.' },
+    { key: 'notifications', label: 'Notifications', eyebrow: 'Alertes', icon: 'ti ti-bell', description: 'Notifications administrateur et etat de lecture.' },
 ];
 
 const activeNav = computed(() => navigation.find((item) => item.key === activeSection.value));
+const navigationGroups = computed(() => [
+    {
+        label: '',
+        items: navigation.filter((item) => !item.group && item.key === 'dashboard'),
+    },
+    {
+        label: 'Sites web',
+        items: navigation.filter((item) => item.group === 'Sites web'),
+    },
+    {
+        label: 'Administration',
+        items: navigation.filter((item) => !item.group && item.key !== 'dashboard'),
+    },
+]);
 
 const dashboardBlueprint = [
     { key: 'messages_count', label: 'Nombre message' },
