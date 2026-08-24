@@ -19,6 +19,23 @@ jobs:
           ls -la
           find . -maxdepth 2 \( -name artisan -o -name composer.json \)
 
+      - name: Prepare deployment package
+        run: |
+          rm -rf deploy-package
+          mkdir -p deploy-package
+          rsync -a \
+            --exclude='deploy-package' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.env' \
+            --exclude='vendor' \
+            --exclude='node_modules' \
+            --exclude='storage/logs/*' \
+            --exclude='storage/api-docs/*' \
+            --exclude='emec-back-github-actions' \
+            --exclude='emec-back-github-actions.pub' \
+            ./ deploy-package/
+
       - name: Upload backend to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -26,20 +43,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "."
+          source: "deploy-package/*"
           target: "/home/projects/emec-projects/emec-siteweb"
+          strip_components: 1
           overwrite: true
           rm: false
-          exclude: |
-            .git
-            .github
-            .env
-            vendor
-            node_modules
-            storage/logs/*
-            storage/api-docs/*
-            emec-back-github-actions
-            emec-back-github-actions.pub
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
