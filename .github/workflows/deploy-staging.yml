@@ -89,11 +89,11 @@ jobs:
 
             composer install --no-dev --optimize-autoloader
 
+            php artisan optimize:clear
             php artisan migrate --force
             EMEC_ADMIN_EMAIL="$EMEC_ADMIN_EMAIL" EMEC_ADMIN_PASSWORD="$EMEC_ADMIN_PASSWORD" php artisan db:seed --class=AdminUserSeeder --force
             php artisan storage:link || true
 
-            php artisan optimize:clear
             php artisan l5-swagger:generate
             php artisan config:cache
             php artisan route:cache
