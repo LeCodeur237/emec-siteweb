@@ -1,11 +1,15 @@
+@tailwind components;
+@tailwind utilities;
+
 :root {
-    --admin-bg: #f5f7f8;
-    --admin-ink: #17211d;
-    --admin-muted: #66736d;
-    --admin-line: #dce3df;
+    --admin-bg: #f5f7fb;
+    --admin-ink: #101828;
+    --admin-muted: #64748b;
+    --admin-line: #d7deea;
     --admin-panel: #ffffff;
-    --admin-primary: #126b4f;
-    --admin-primary-dark: #0d4f3b;
+    --admin-primary: #142857;
+    --admin-primary-dark: #0f1b3d;
+    --admin-primary-soft: #e8eefc;
     --admin-warn: #b42318;
 }
 
@@ -133,9 +137,9 @@ button:disabled {
     margin: 0;
     padding: clamp(34px, 5vw, 64px);
     background: var(--admin-panel);
-    border: 1px solid rgba(18, 107, 79, .16);
+    border: 1px solid rgba(20, 40, 87, .16);
     border-radius: 8px;
-    box-shadow: 0 24px 80px rgba(12, 31, 24, .2);
+    box-shadow: 0 24px 80px rgba(15, 27, 61, .18);
 }
 
 .login-heading {
@@ -171,7 +175,7 @@ button:disabled {
 
 .input-shell:focus-within {
     border-color: var(--admin-primary);
-    box-shadow: 0 0 0 3px rgba(18, 107, 79, .12);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, .12);
     outline: 0;
 }
 
@@ -216,7 +220,7 @@ button:disabled {
 }
 
 .password-toggle:hover {
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-primary-dark);
 }
 
@@ -251,7 +255,7 @@ button:disabled {
 }
 
 .login-panel .password-toggle:hover {
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-primary-dark);
 }
 
@@ -266,7 +270,7 @@ button:disabled {
     flex-direction: column;
     gap: 24px;
     padding: 22px;
-    background: #12251f;
+    background: var(--admin-primary-dark);
     color: #ffffff;
 }
 
@@ -329,7 +333,7 @@ button:disabled {
 
 .sidebar nav button.active,
 .sidebar nav button:hover {
-    background: #21453a;
+    background: #1d3469;
     color: #ffffff;
 }
 
@@ -487,7 +491,7 @@ button:disabled {
     align-items: end;
     overflow: hidden;
     border-radius: 6px;
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
 }
 
 .bar-track span {
@@ -526,7 +530,7 @@ button:disabled {
     min-height: 34px;
     border-radius: 6px;
     padding: 0 12px;
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-primary-dark);
     font-size: 13px;
     font-weight: 800;
@@ -534,7 +538,7 @@ button:disabled {
 }
 
 .list-panel header button:hover {
-    background: #dce9e4;
+    background: #dbe6fb;
 }
 
 .list-panel header span {
@@ -560,7 +564,7 @@ button:disabled {
     align-items: center;
     gap: 14px;
     min-height: 58px;
-    border: 1px solid #edf2ef;
+    border: 1px solid var(--admin-primary-soft);
     border-radius: 6px;
     padding: 11px 12px;
     background: #fbfcfb;
@@ -792,7 +796,7 @@ button:disabled {
     align-items: center;
     border-radius: 999px;
     padding: 0 9px;
-    background: #e8f3ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-primary-dark);
     font-size: 12px;
     font-weight: 800;
@@ -807,7 +811,7 @@ button:disabled {
     min-height: 32px;
     border-radius: 6px;
     padding: 0 10px;
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-ink);
     font-weight: 700;
 }
@@ -851,14 +855,14 @@ button:disabled {
     justify-content: center;
     overflow-y: auto;
     padding: 24px;
-    background: rgba(10, 22, 18, .48);
+    background: rgba(15, 27, 61, .52);
 }
 
 .modal-panel {
     width: min(980px, 100%);
     max-height: min(86vh, 900px);
     overflow-y: auto;
-    box-shadow: 0 24px 90px rgba(10, 22, 18, .28);
+    box-shadow: 0 24px 90px rgba(15, 27, 61, .28);
 }
 
 .crud-form header .modal-close {
@@ -870,7 +874,7 @@ button:disabled {
     justify-content: center;
     border-radius: 50%;
     padding: 0;
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
     color: var(--admin-ink);
 }
 
@@ -880,7 +884,7 @@ button:disabled {
 }
 
 .crud-form header .modal-close:hover {
-    background: #dce9e4;
+    background: #dbe6fb;
     color: var(--admin-primary-dark);
 }
 
@@ -929,7 +933,7 @@ button:disabled {
     border: 1px solid var(--admin-line);
     border-radius: 6px;
     object-fit: cover;
-    background: #edf2ef;
+    background: var(--admin-primary-soft);
 }
 
 .upload-field small {
