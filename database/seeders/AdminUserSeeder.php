@@ -13,8 +13,8 @@ class AdminUserSeeder extends Seeder
     {
         $password = env('EMEC_ADMIN_PASSWORD');
 
-        if (! is_string($password) || strlen($password) < 8) {
-            throw new RuntimeException('EMEC_ADMIN_PASSWORD must be defined and contain at least 8 characters.');
+        if (! is_string($password) || strlen($password) < 12 || strtolower($password) === 'password') {
+            throw new RuntimeException('EMEC_ADMIN_PASSWORD must be defined, secure, and contain at least 12 characters.');
         }
 
         $user = User::updateOrCreate(
