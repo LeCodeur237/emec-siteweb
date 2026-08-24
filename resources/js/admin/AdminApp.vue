@@ -99,9 +99,18 @@
                 </header>
 
                 <section v-if="activeSection === 'dashboard'" class="dashboard-grid">
-                    <article v-for="metric in dashboardCards" :key="metric.key" class="metric-tile">
-                        <span>{{ metric.label }}</span>
+                    <article
+                        v-for="metric in dashboardCards"
+                        :key="metric.key"
+                        class="metric-tile"
+                        :class="`metric-tile-${metric.tone}`"
+                    >
+                        <div class="metric-head">
+                            <span>{{ metric.label }}</span>
+                            <i :class="metric.icon" aria-hidden="true"></i>
+                        </div>
                         <strong>{{ formatMetricValue(metric) }}</strong>
+                        <small>{{ metric.help }}</small>
                     </article>
                     <article v-if="dashboardCards.length === 0" class="module-panel">
                         <div>
@@ -121,7 +130,7 @@
                         </header>
                         <div class="bar-chart">
                             <div v-for="point in chart.points" :key="point.date" class="bar-column">
-                                <div class="bar-track">
+                                <div class="bar-track" :title="`${point.label}: ${formatChartValue(chart, point.value)}`">
                                     <span :style="{ height: barHeight(point.value, chartMax(chart)) }"></span>
                                 </div>
                                 <small>{{ point.label }}</small>
@@ -382,11 +391,11 @@ const navigationGroups = computed(() => [
 ]);
 
 const dashboardBlueprint = [
-    { key: 'messages_count', label: 'Nombre message' },
-    { key: 'main_site_publications_count', label: 'Publication site principal' },
-    { key: 'churches_count', label: 'Nombre d eglise' },
-    { key: 'preachings_count', label: 'Nombre de predication' },
-    { key: 'paid_donations_amount', label: 'Montant dons', format: 'money' },
+    { key: 'messages_count', label: 'Nombre message', help: 'Messages enregistres', icon: 'ti ti-message-2', tone: 'messages' },
+    { key: 'main_site_publications_count', label: 'Publication site principal', help: 'Contenus publics', icon: 'ti ti-world-www', tone: 'publications' },
+    { key: 'churches_count', label: 'Nombre d eglise', help: 'Eglises repertoriees', icon: 'ti ti-building-church', tone: 'churches' },
+    { key: 'preachings_count', label: 'Nombre de predication', help: 'Predications publiees', icon: 'ti ti-microphone-2', tone: 'preachings' },
+    { key: 'paid_donations_amount', label: 'Montant dons', help: 'Dons confirmes', icon: 'ti ti-cash-banknote', tone: 'donations', format: 'money' },
 ];
 
 const dashboardCards = computed(() => dashboardBlueprint
@@ -408,12 +417,8 @@ const dashboardCharts = computed(() => [
     },
 ].filter((chart) => chart.points.length > 0));
 
-const latestMessages = computed(() => dashboard.value.latest_messages ?? []);
-const dashboardPreachers = computed(() => dashboard.value.dashboard_preachers ?? []);
-const dashboardLists = computed(() => [
-    latestMessages.value,
-    dashboardPreachers.value,
-].filter((items) => items.length > 0));
+const latestMessages = computed(() => (dashboard.value.latest_messages ?? []).slice(0, 10));
+const dashboardPreachers = computed(() => (dashboard.value.dashboard_preachers ?? []).slice(0, 10));
 
 const messageResources = [
     {

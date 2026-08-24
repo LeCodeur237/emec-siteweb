@@ -462,35 +462,95 @@ button:disabled {
 }
 
 .metric-tile {
+    position: relative;
     display: grid;
-    gap: 9px;
-    min-height: 118px;
+    align-content: space-between;
+    gap: 14px;
+    min-height: 136px;
+    overflow: hidden;
     padding: 18px;
-    background: #fbfcfb;
+    background: #ffffff;
+}
+
+.metric-tile::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: var(--metric-accent, var(--admin-primary));
+}
+
+.metric-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.metric-head i {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--metric-soft, var(--admin-primary-soft));
+    color: var(--metric-accent, var(--admin-primary));
+    font-size: 22px;
+    line-height: 1;
 }
 
 .metric-tile span {
     color: var(--admin-muted);
     font-size: 13px;
     font-weight: 700;
+    line-height: 1.35;
 }
 
 .metric-tile strong {
     overflow-wrap: anywhere;
-    font-size: 30px;
+    color: var(--admin-primary-dark);
+    font-size: clamp(25px, 2.4vw, 34px);
     line-height: 1.05;
 }
 
 .metric-tile small {
     color: var(--admin-muted);
     font-size: 12px;
+    font-weight: 700;
+}
+
+.metric-tile-messages {
+    --metric-accent: #142857;
+    --metric-soft: #e8eefc;
+}
+
+.metric-tile-publications {
+    --metric-accent: #1d4ed8;
+    --metric-soft: #dbeafe;
+}
+
+.metric-tile-churches {
+    --metric-accent: #7c3aed;
+    --metric-soft: #ede9fe;
+}
+
+.metric-tile-preachings {
+    --metric-accent: #0f766e;
+    --metric-soft: #ccfbf1;
+}
+
+.metric-tile-donations {
+    --metric-accent: #d9b35f;
+    --metric-soft: #fff4d6;
 }
 
 .chart-panel {
     display: grid;
-    gap: 18px;
-    min-height: 260px;
-    padding: 18px;
+    gap: 22px;
+    min-height: 286px;
+    padding: 20px;
 }
 
 .chart-panel header {
@@ -509,6 +569,7 @@ button:disabled {
 
 .chart-panel header h2 {
     margin: 4px 0 0;
+    color: var(--admin-primary-dark);
     font-size: 20px;
 }
 
@@ -522,8 +583,8 @@ button:disabled {
 .bar-chart {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 10px;
-    min-height: 156px;
+    gap: 12px;
+    min-height: 166px;
     align-items: end;
 }
 
@@ -536,18 +597,25 @@ button:disabled {
 .bar-track {
     position: relative;
     display: flex;
-    height: 126px;
+    height: 136px;
     align-items: end;
     overflow: hidden;
-    border-radius: 6px;
+    border: 1px solid var(--admin-primary-soft);
+    border-radius: 8px;
     background: var(--admin-primary-soft);
 }
 
 .bar-track span {
     display: block;
     width: 100%;
-    border-radius: 6px 6px 0 0;
-    background: var(--admin-primary);
+    min-height: 4px;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, var(--admin-primary) 0, var(--admin-primary-dark) 100%);
+    transition: height .2s ease;
+}
+
+.bar-track:hover span {
+    background: linear-gradient(180deg, #d9b35f 0, var(--admin-primary) 100%);
 }
 
 .bar-column small {
@@ -563,9 +631,9 @@ button:disabled {
 .list-panel {
     display: grid;
     align-content: start;
-    gap: 14px;
+    gap: 16px;
     min-height: 260px;
-    padding: 18px;
+    padding: 20px;
 }
 
 .list-panel header {
@@ -599,12 +667,13 @@ button:disabled {
 
 .list-panel header h2 {
     margin: 4px 0 0;
+    color: var(--admin-primary-dark);
     font-size: 20px;
 }
 
 .dashboard-list {
     display: grid;
-    gap: 10px;
+    gap: 9px;
 }
 
 .dashboard-list-row {
@@ -612,11 +681,16 @@ button:disabled {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 14px;
-    min-height: 58px;
+    min-height: 62px;
     border: 1px solid var(--admin-primary-soft);
-    border-radius: 6px;
-    padding: 11px 12px;
-    background: #fbfcfb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: #ffffff;
+}
+
+.dashboard-list-row:hover {
+    border-color: var(--admin-line-strong);
+    background: #f8fbff;
 }
 
 .dashboard-list-row strong,
