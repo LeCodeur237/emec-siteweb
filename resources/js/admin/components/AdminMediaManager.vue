@@ -12,7 +12,9 @@
             <form class="crud-form modal-panel" @submit.prevent="uploadMedia">
                 <header>
                     <h3>Nouveau media</h3>
-                    <button type="button" @click="closeUpload">Fermer</button>
+                    <button class="modal-close" type="button" aria-label="Fermer" @click="closeUpload">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                    </button>
                 </header>
 
                 <div class="form-grid">
@@ -122,7 +124,9 @@
             <form class="crud-form modal-panel" @submit.prevent="updateMedia">
                 <header>
                     <h3>Modifier media</h3>
-                    <button type="button" @click="closeEdit">Fermer</button>
+                    <button class="modal-close" type="button" aria-label="Fermer" @click="closeEdit">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                    </button>
                 </header>
 
                 <div class="form-grid">

@@ -93,17 +93,28 @@
             <form class="crud-form modal-panel" @submit.prevent="save">
                 <header>
                     <h3>{{ editing.id ? 'Modifier' : 'Creer' }} {{ resource.singular }}</h3>
-                    <button type="button" @click="cancelEdit">Fermer</button>
+                    <button class="modal-close" type="button" aria-label="Fermer" @click="cancelEdit">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                    </button>
                 </header>
 
                 <div class="form-grid">
-                    <label v-for="field in resource.fields" :key="field.key" :class="{ wide: field.type === 'textarea' }">
+                    <label v-for="field in resource.fields" :key="field.key" :class="{ wide: field.type === 'textarea' || field.type === 'image-upload' }">
                         {{ field.label }}
                         <textarea
                             v-if="field.type === 'textarea'"
                             v-model="form[field.key]"
                             rows="4"
                         />
+                        <span v-else-if="field.type === 'image-upload'" class="upload-field">
+                            <img v-if="form[field.key]" :src="form[field.key]" :alt="field.label">
+                            <small v-if="form[field.key]">{{ form[field.key] }}</small>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                @change="setUploadFile(field.key, $event)"
+                            >
+                        </span>
                         <select
                             v-else-if="field.type === 'multiselect'"
                             v-model="form[field.key]"
@@ -164,6 +175,7 @@ const loading = ref(false);
 const saving = ref(false);
 const editing = ref(null);
 const form = reactive({});
+const uploadFiles = reactive({});
 const formError = ref('');
 const optionCache = reactive({});
 
@@ -275,6 +287,10 @@ function fillForm(item) {
         delete form[key];
     }
 
+    for (const key of Object.keys(uploadFiles)) {
+        delete uploadFiles[key];
+    }
+
     for (const field of props.resource.fields) {
         if (field.type === 'checkbox') {
             form[field.key] = Boolean(item[field.key] ?? field.default ?? false);
@@ -298,7 +314,10 @@ async function save() {
         const payload = {};
 
         for (const field of props.resource.fields) {
-            const value = form[field.key];
+            const value = uploadFiles[field.key]
+                ? await uploadImage(field, uploadFiles[field.key])
+                : form[field.key];
+
             payload[field.key] = payloadValue(value, field);
         }
 
@@ -318,6 +337,23 @@ async function save() {
     } finally {
         saving.value = false;
     }
+}
+
+function setUploadFile(key, event) {
+    uploadFiles[key] = event.target.files?.[0] ?? null;
+}
+
+async function uploadImage(field, file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', field.label);
+
+    const response = await props.api('/admin/media', {
+        method: 'POST',
+        body: formData,
+    });
+
+    return response.data?.url ?? response.url ?? null;
 }
 
 async function deleteItem(item) {
