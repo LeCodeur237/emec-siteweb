@@ -56,6 +56,9 @@ jobs:
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          EMEC_ADMIN_EMAIL: egliseemec.cm@gmail.com
+          EMEC_ADMIN_PASSWORD: ${{ secrets.EMEC_ADMIN_PASSWORD }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
@@ -87,6 +90,7 @@ jobs:
             composer install --no-dev --optimize-autoloader
 
             php artisan migrate --force
+            EMEC_ADMIN_EMAIL="$EMEC_ADMIN_EMAIL" EMEC_ADMIN_PASSWORD="$EMEC_ADMIN_PASSWORD" php artisan db:seed --class=AdminUserSeeder --force
             php artisan storage:link || true
 
             php artisan optimize:clear

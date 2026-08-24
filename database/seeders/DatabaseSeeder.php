@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolePermissionSeeder::class);
 
+        if (env('EMEC_ADMIN_PASSWORD')) {
+            $this->call(AdminUserSeeder::class);
+        }
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
