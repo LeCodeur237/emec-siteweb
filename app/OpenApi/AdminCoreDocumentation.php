@@ -41,6 +41,8 @@ namespace App\OpenApi;
  *     @OA\Property(property="published_messages_count", type="integer", example=9),
  *     @OA\Property(property="draft_messages_count", type="integer", example=3),
  *     @OA\Property(property="featured_messages_count", type="integer", example=2),
+ *     @OA\Property(property="preachings_count", type="integer", example=10),
+ *     @OA\Property(property="main_site_publications_count", type="integer", example=21),
  *     @OA\Property(property="preachers_count", type="integer", example=4),
  *     @OA\Property(property="message_categories_count", type="integer", example=5),
  *     @OA\Property(property="message_series_count", type="integer", example=3),

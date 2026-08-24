@@ -95,23 +95,12 @@
                     </button>
                 </header>
 
-                <section v-if="activeSection === 'dashboard'" class="dashboard-sections">
-                    <article v-for="group in dashboardGroups" :key="group.key" class="dashboard-section">
-                        <header>
-                            <div>
-                                <span>{{ group.eyebrow }}</span>
-                                <h2>{{ group.title }}</h2>
-                            </div>
-                        </header>
-                        <div class="dashboard-grid">
-                            <div v-for="metric in group.metrics" :key="metric.key" class="metric-tile">
-                                <span>{{ metric.label }}</span>
-                                <strong>{{ formatMetricValue(metric) }}</strong>
-                                <small v-if="metric.note">{{ metric.note }}</small>
-                            </div>
-                        </div>
+                <section v-if="activeSection === 'dashboard'" class="dashboard-grid">
+                    <article v-for="metric in dashboardCards" :key="metric.key" class="metric-tile">
+                        <span>{{ metric.label }}</span>
+                        <strong>{{ formatMetricValue(metric) }}</strong>
                     </article>
-                    <article v-if="dashboardGroups.length === 0" class="module-panel">
+                    <article v-if="dashboardCards.length === 0" class="module-panel">
                         <div>
                             <h2>Aucune donnee disponible</h2>
                             <p>Votre role ne donne pas encore acces aux indicateurs du dashboard.</p>
@@ -311,108 +300,15 @@ const navigation = [
 const activeNav = computed(() => navigation.find((item) => item.key === activeSection.value));
 
 const dashboardBlueprint = [
-    {
-        key: 'content',
-        title: 'Messages',
-        eyebrow: 'Contenu',
-        metrics: [
-            { key: 'messages_count', label: 'Messages' },
-            { key: 'published_messages_count', label: 'Publies' },
-            { key: 'draft_messages_count', label: 'Brouillons' },
-            { key: 'featured_messages_count', label: 'Mis en avant' },
-            { key: 'preachers_count', label: 'Predicateurs' },
-            { key: 'message_categories_count', label: 'Categories' },
-            { key: 'message_series_count', label: 'Series' },
-        ],
-    },
-    {
-        key: 'emec',
-        title: 'Vie EMEC',
-        eyebrow: 'Eglise',
-        metrics: [
-            { key: 'churches_count', label: 'Eglises' },
-            { key: 'active_churches_count', label: 'Eglises actives' },
-            { key: 'published_churches_count', label: 'Eglises publiees' },
-            { key: 'groups_count', label: 'Groupes' },
-            { key: 'active_groups_count', label: 'Groupes actifs' },
-            { key: 'events_count', label: 'Evenements' },
-            { key: 'published_events_count', label: 'Evenements publies' },
-            { key: 'upcoming_events_count', label: 'A venir' },
-            { key: 'weekly_programs_count', label: 'Programmes' },
-            { key: 'active_weekly_programs_count', label: 'Programmes actifs' },
-        ],
-    },
-    {
-        key: 'dosc',
-        title: 'DOSC',
-        eyebrow: 'Social',
-        metrics: [
-            { key: 'social_projects_count', label: 'Projets' },
-            { key: 'active_social_projects_count', label: 'Projets actifs' },
-            { key: 'featured_social_projects_count', label: 'Mis en avant' },
-            { key: 'social_projects_goal_amount', label: 'Objectif projets', format: 'money' },
-            { key: 'social_projects_raised_amount', label: 'Collecte projets', format: 'money' },
-            { key: 'social_actions_count', label: 'Actions' },
-            { key: 'published_social_actions_count', label: 'Actions publiees' },
-            { key: 'social_actions_beneficiaries_count', label: 'Beneficiaires' },
-            { key: 'impact_stats_count', label: 'Stats impact' },
-            { key: 'active_impact_stats_count', label: 'Stats actives' },
-            { key: 'testimonials_count', label: 'Temoignages' },
-            { key: 'published_testimonials_count', label: 'Temoignages publies' },
-        ],
-    },
-    {
-        key: 'donations',
-        title: 'Dons',
-        eyebrow: 'Finance',
-        metrics: [
-            { key: 'donation_campaigns_count', label: 'Campagnes' },
-            { key: 'active_donation_campaigns_count', label: 'Campagnes actives' },
-            { key: 'donation_methods_count', label: 'Methodes' },
-            { key: 'active_donation_methods_count', label: 'Methodes actives' },
-            { key: 'donations_count', label: 'Dons' },
-            { key: 'paid_donations_count', label: 'Payes' },
-            { key: 'pending_donations_count', label: 'En attente' },
-            { key: 'paid_donations_amount', label: 'Montant paye', format: 'money' },
-        ],
-    },
-    {
-        key: 'communication',
-        title: 'Communication',
-        eyebrow: 'Relations',
-        metrics: [
-            { key: 'contact_messages_count', label: 'Messages contact' },
-            { key: 'new_contact_messages_count', label: 'Nouveaux messages' },
-            { key: 'answered_contact_messages_count', label: 'Repondus' },
-            { key: 'newsletter_subscribers_count', label: 'Abonnes newsletter' },
-            { key: 'active_newsletter_subscribers_count', label: 'Abonnes actifs' },
-        ],
-    },
-    {
-        key: 'operations',
-        title: 'Administration',
-        eyebrow: 'Systeme',
-        metrics: [
-            { key: 'media_count', label: 'Medias' },
-            { key: 'image_media_count', label: 'Images' },
-            { key: 'document_media_count', label: 'Documents' },
-            { key: 'site_settings_count', label: 'Parametres' },
-            { key: 'users_count', label: 'Utilisateurs' },
-            { key: 'active_users_count', label: 'Utilisateurs actifs' },
-            { key: 'roles_count', label: 'Roles' },
-            { key: 'permissions_count', label: 'Permissions' },
-            { key: 'notifications_count', label: 'Notifications' },
-            { key: 'unread_notifications_count', label: 'Non lues' },
-        ],
-    },
+    { key: 'messages_count', label: 'Nombre message' },
+    { key: 'main_site_publications_count', label: 'Publication site principal' },
+    { key: 'churches_count', label: 'Nombre d eglise' },
+    { key: 'preachings_count', label: 'Nombre de predication' },
+    { key: 'paid_donations_amount', label: 'Montant dons', format: 'money' },
 ];
 
-const dashboardGroups = computed(() => dashboardBlueprint
-    .map((group) => ({
-        ...group,
-        metrics: group.metrics.filter((metric) => Object.hasOwn(dashboard.value, metric.key)),
-    }))
-    .filter((group) => group.metrics.length > 0));
+const dashboardCards = computed(() => dashboardBlueprint
+    .filter((metric) => Object.hasOwn(dashboard.value, metric.key)));
 
 const messageResources = [
     {

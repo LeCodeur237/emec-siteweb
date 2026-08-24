@@ -82,8 +82,8 @@ class AdminAuthorizationTest extends TestCase
 
     public function test_dashboard_exposes_detailed_metrics_for_authorized_modules(): void
     {
-        Message::factory()->create(['status' => 'published', 'featured' => true]);
-        Message::factory()->create(['status' => 'draft', 'featured' => false]);
+        Message::factory()->create(['status' => 'published', 'featured' => true, 'preached_at' => now()]);
+        Message::factory()->create(['status' => 'draft', 'featured' => false, 'preached_at' => null]);
         Event::factory()->create(['status' => 'published', 'start_at' => now()->addDay()]);
         Event::factory()->create(['status' => 'draft', 'start_at' => now()->subDay()]);
         WeeklyProgram::create([
@@ -142,11 +142,13 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.published_messages_count', 1)
             ->assertJsonPath('data.draft_messages_count', 1)
             ->assertJsonPath('data.featured_messages_count', 1)
+            ->assertJsonPath('data.preachings_count', 1)
             ->assertJsonPath('data.events_count', 2)
             ->assertJsonPath('data.published_events_count', 1)
             ->assertJsonPath('data.upcoming_events_count', 1)
             ->assertJsonPath('data.active_weekly_programs_count', 1)
             ->assertJsonPath('data.active_social_projects_count', 1)
+            ->assertJsonPath('data.main_site_publications_count', 5)
             ->assertJsonPath('data.social_projects_goal_amount', 100000)
             ->assertJsonPath('data.social_projects_raised_amount', 25000)
             ->assertJsonPath('data.published_social_actions_count', 1)

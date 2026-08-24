@@ -351,42 +351,9 @@ button:disabled {
     font-size: 30px;
 }
 
-.dashboard-sections {
-    display: grid;
-    gap: 16px;
-}
-
-.dashboard-section {
-    display: grid;
-    gap: 14px;
-    border: 1px solid var(--admin-line);
-    border-radius: 8px;
-    padding: 18px;
-    background: var(--admin-panel);
-}
-
-.dashboard-section header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-}
-
-.dashboard-section header span {
-    color: #d9b35f;
-    font-size: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.dashboard-section header h2 {
-    margin: 4px 0 0;
-    font-size: 20px;
-}
-
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 14px;
 }
 

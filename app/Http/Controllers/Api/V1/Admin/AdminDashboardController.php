@@ -40,6 +40,7 @@ class AdminDashboardController extends ApiController
             $counts['published_messages_count'] = Message::where('status', 'published')->count();
             $counts['draft_messages_count'] = Message::where('status', 'draft')->count();
             $counts['featured_messages_count'] = Message::where('featured', true)->count();
+            $counts['preachings_count'] = Message::whereNotNull('preached_at')->count();
             $counts['preachers_count'] = Preacher::count();
             $counts['message_categories_count'] = MessageCategory::count();
             $counts['message_series_count'] = MessageSeries::count();
@@ -124,6 +125,23 @@ class AdminDashboardController extends ApiController
         if ($user->hasPermission('notifications.view')) {
             $counts['notifications_count'] = $user->notifications()->count();
             $counts['unread_notifications_count'] = $user->unreadNotifications()->count();
+        }
+
+        if ($this->canAny($user, [
+            'messages.view',
+            'messages.manage',
+            'events.view',
+            'events.manage',
+            'dosc.projects.view',
+            'dosc.actions.view',
+            'dosc.manage',
+        ])) {
+            $counts['main_site_publications_count'] =
+                Message::where('status', 'published')->count()
+                + Event::where('status', 'published')->count()
+                + SocialProject::where('status', 'active')->count()
+                + SocialAction::where('status', 'published')->count()
+                + Testimonial::where('published', true)->count();
         }
 
         return response()->json(['data' => $counts]);
