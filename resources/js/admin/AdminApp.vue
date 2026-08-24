@@ -2,13 +2,22 @@
     <main class="admin-shell">
         <section v-if="!token" class="auth-view">
             <div class="brand-panel">
-                <span class="brand-mark">EMEC</span>
-                <h1>Administration</h1>
-                <p>Gestion du contenu, des dons, de DOSC, des communications et des acces.</p>
+                <img class="auth-logo auth-logo-white" :src="whiteLogo" alt="EMEC">
+                <div class="brand-copy">
+                    <span>Back-office officiel</span>
+                    <h1>Administration EMEC</h1>
+                    <p>Gestion du contenu, des dons, de DOSC, des communications et des acces.</p>
+                </div>
             </div>
 
             <form class="login-panel" @submit.prevent="login">
-                <h2>Connexion</h2>
+                <div class="login-heading">
+                    <img class="auth-logo auth-logo-dark" :src="darkLogo" alt="EMEC">
+                    <div>
+                        <span>Acces securise</span>
+                        <h2>Connexion</h2>
+                    </div>
+                </div>
                 <label>
                     Email
                     <input v-model="credentials.email" type="email" autocomplete="email" required>
@@ -222,6 +231,8 @@ import AdminNotifications from './components/AdminNotifications.vue';
 
 const storageKey = 'emec_admin_token';
 const userKey = 'emec_admin_user';
+const whiteLogo = '/logo/emec-logo-white.png';
+const darkLogo = '/logo/emec-logo-black.png';
 
 const token = ref(localStorage.getItem(storageKey) || '');
 const user = ref(readStoredUser());
