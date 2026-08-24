@@ -127,18 +127,18 @@
                     </article>
                 </section>
                 <section v-if="activeSection === 'dashboard'" class="dashboard-lists">
-                    <article v-if="latestMessages.length > 0" class="list-panel list-panel-wide">
+                    <article class="list-panel list-panel-wide">
                         <header>
                             <div>
                                 <span>Messages</span>
                                 <h2>Liste recente des messages</h2>
                             </div>
                         </header>
-                        <div class="dashboard-list">
+                        <div v-if="latestMessages.length > 0" class="dashboard-list">
                             <div v-for="message in latestMessages" :key="message.id" class="dashboard-list-row">
                                 <div>
                                     <strong>{{ message.title }}</strong>
-                                    <small>{{ message.preacher_name || 'Predicateur non defini' }} · {{ formatDate(message.preached_at) }}</small>
+                                    <small>{{ message.preacher_name || 'Predicateur non defini' }} - {{ formatDate(message.preached_at) }}</small>
                                 </div>
                                 <div class="list-row-meta">
                                     <span class="status-badge">{{ message.status }}</span>
@@ -146,15 +146,16 @@
                                 </div>
                             </div>
                         </div>
+                        <p v-else class="empty-state">Aucun message recent disponible.</p>
                     </article>
-                    <article v-if="dashboardPreachers.length > 0" class="list-panel">
+                    <article class="list-panel">
                         <header>
                             <div>
                                 <span>Predicateurs</span>
                                 <h2>Liste des predicateurs</h2>
                             </div>
                         </header>
-                        <div class="dashboard-list compact">
+                        <div v-if="dashboardPreachers.length > 0" class="dashboard-list compact">
                             <div v-for="preacher in dashboardPreachers" :key="preacher.id" class="dashboard-list-row">
                                 <div>
                                     <strong>{{ preacher.name }}</strong>
@@ -165,6 +166,7 @@
                                 </div>
                             </div>
                         </div>
+                        <p v-else class="empty-state">Aucun predicateur disponible.</p>
                     </article>
                 </section>
 

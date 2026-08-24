@@ -378,10 +378,6 @@ button:disabled {
     margin-top: 14px;
 }
 
-.dashboard-lists:empty {
-    display: none;
-}
-
 .metric-tile,
 .chart-panel,
 .list-panel,
@@ -565,6 +561,16 @@ button:disabled {
 
 .dashboard-list.compact .list-row-meta {
     justify-items: start;
+}
+
+.empty-state {
+    margin: 0;
+    border: 1px dashed var(--admin-line);
+    border-radius: 6px;
+    padding: 18px;
+    color: var(--admin-muted);
+    background: #fbfcfb;
+    font-size: 14px;
 }
 
 .module-panel {
