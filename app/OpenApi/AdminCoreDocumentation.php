@@ -39,6 +39,31 @@ namespace App\OpenApi;
  *     type="object",
  *     @OA\Property(property="messages_count", type="integer", example=12),
  *     @OA\Property(
+ *         property="latest_messages",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="title", type="string", example="Vivre par la foi"),
+ *             @OA\Property(property="status", type="string", example="published"),
+ *             @OA\Property(property="views", type="integer", example=120),
+ *             @OA\Property(property="preached_at", type="string", format="date", nullable=true, example="2026-08-24"),
+ *             @OA\Property(property="preacher_name", type="string", nullable=true, example="Pasteur Alpha")
+ *         )
+ *     ),
+ *     @OA\Property(
+ *         property="dashboard_preachers",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="name", type="string", example="Pasteur Alpha"),
+ *             @OA\Property(property="role", type="string", nullable=true, example="Predicateur"),
+ *             @OA\Property(property="active", type="boolean", example=true),
+ *             @OA\Property(property="messages_count", type="integer", example=8)
+ *         )
+ *     ),
+ *     @OA\Property(
  *         property="daily_message_views",
  *         type="array",
  *         @OA\Items(

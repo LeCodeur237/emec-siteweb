@@ -46,6 +46,36 @@ class AdminDashboardController extends ApiController
             $counts['message_categories_count'] = MessageCategory::count();
             $counts['message_series_count'] = MessageSeries::count();
             $counts['daily_message_views'] = $this->dailyMessageViews();
+            $counts['latest_messages'] = Message::query()
+                ->with('preacher:id,name')
+                ->latest()
+                ->limit(5)
+                ->get()
+                ->map(fn (Message $message) => [
+                    'id' => $message->id,
+                    'title' => $message->title,
+                    'status' => $message->status,
+                    'views' => $message->views,
+                    'preached_at' => $message->preached_at?->toDateString(),
+                    'preacher_name' => $message->preacher?->name,
+                ])
+                ->values()
+                ->all();
+            $counts['dashboard_preachers'] = Preacher::query()
+                ->withCount('messages')
+                ->orderByDesc('messages_count')
+                ->orderBy('name')
+                ->limit(6)
+                ->get()
+                ->map(fn (Preacher $preacher) => [
+                    'id' => $preacher->id,
+                    'name' => $preacher->name,
+                    'role' => $preacher->role,
+                    'active' => $preacher->active,
+                    'messages_count' => $preacher->messages_count,
+                ])
+                ->values()
+                ->all();
         }
 
         if ($this->canAny($user, ['events.view', 'events.manage'])) {

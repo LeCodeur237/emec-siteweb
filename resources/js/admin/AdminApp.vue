@@ -61,7 +61,7 @@
         <section v-else class="workspace">
             <aside class="sidebar">
                 <div class="sidebar-brand">
-                    <span class="brand-mark">EMEC</span>
+                    <img class="sidebar-logo" :src="whiteLogo" alt="EMEC">
                     <div>
                         <strong>Admin</strong>
                         <small>{{ user?.name || 'Utilisateur' }}</small>
@@ -122,6 +122,47 @@
                                     <span :style="{ height: barHeight(point.value, chartMax(chart)) }"></span>
                                 </div>
                                 <small>{{ point.label }}</small>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+                <section v-if="activeSection === 'dashboard'" class="dashboard-lists">
+                    <article v-if="latestMessages.length > 0" class="list-panel list-panel-wide">
+                        <header>
+                            <div>
+                                <span>Messages</span>
+                                <h2>Liste recente des messages</h2>
+                            </div>
+                        </header>
+                        <div class="dashboard-list">
+                            <div v-for="message in latestMessages" :key="message.id" class="dashboard-list-row">
+                                <div>
+                                    <strong>{{ message.title }}</strong>
+                                    <small>{{ message.preacher_name || 'Predicateur non defini' }} · {{ formatDate(message.preached_at) }}</small>
+                                </div>
+                                <div class="list-row-meta">
+                                    <span class="status-badge">{{ message.status }}</span>
+                                    <small>{{ formatNumber(message.views) }} lectures</small>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article v-if="dashboardPreachers.length > 0" class="list-panel">
+                        <header>
+                            <div>
+                                <span>Predicateurs</span>
+                                <h2>Liste des predicateurs</h2>
+                            </div>
+                        </header>
+                        <div class="dashboard-list compact">
+                            <div v-for="preacher in dashboardPreachers" :key="preacher.id" class="dashboard-list-row">
+                                <div>
+                                    <strong>{{ preacher.name }}</strong>
+                                    <small>{{ preacher.role || 'Role non defini' }}</small>
+                                </div>
+                                <div class="list-row-meta">
+                                    <small>{{ formatNumber(preacher.messages_count) }} messages</small>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -282,6 +323,7 @@ import AdminNotifications from './components/AdminNotifications.vue';
 const storageKey = 'emec_admin_token';
 const userKey = 'emec_admin_user';
 const darkLogo = '/logo/emec-logo-black.png';
+const whiteLogo = '/logo/emec-logo-white.png';
 
 const token = ref(localStorage.getItem(storageKey) || '');
 const user = ref(readStoredUser());
@@ -344,6 +386,13 @@ const dashboardCharts = computed(() => [
         points: dashboard.value.daily_paid_donations ?? [],
     },
 ].filter((chart) => chart.points.length > 0));
+
+const latestMessages = computed(() => dashboard.value.latest_messages ?? []);
+const dashboardPreachers = computed(() => dashboard.value.dashboard_preachers ?? []);
+const dashboardLists = computed(() => [
+    latestMessages.value,
+    dashboardPreachers.value,
+].filter((items) => items.length > 0));
 
 const messageResources = [
     {
@@ -1334,6 +1383,22 @@ function formatMetricValue(metric) {
     }
 
     return value;
+}
+
+function formatNumber(value) {
+    return new Intl.NumberFormat('fr-FR').format(Number(value) || 0);
+}
+
+function formatDate(value) {
+    if (!value) {
+        return 'Date non definie';
+    }
+
+    return new Intl.DateTimeFormat('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    }).format(new Date(value));
 }
 
 function chartTotal(chart) {

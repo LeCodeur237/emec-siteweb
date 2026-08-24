@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\ImpactStat;
 use App\Models\Media;
 use App\Models\NewsletterSubscriber;
+use App\Models\Preacher;
 use App\Models\Role;
 use App\Models\SiteSetting;
 use App\Models\SocialAction;
@@ -82,8 +83,23 @@ class AdminAuthorizationTest extends TestCase
 
     public function test_dashboard_exposes_detailed_metrics_for_authorized_modules(): void
     {
-        Message::factory()->create(['status' => 'published', 'featured' => true, 'preached_at' => now(), 'views' => 12]);
-        Message::factory()->create(['status' => 'draft', 'featured' => false, 'preached_at' => null]);
+        $preacher = Preacher::factory()->create(['name' => 'Pasteur Alpha', 'role' => 'Predicateur']);
+        Message::factory()->create([
+            'preacher_id' => $preacher->id,
+            'status' => 'published',
+            'featured' => true,
+            'preached_at' => now(),
+            'views' => 12,
+            'title' => 'Message recent',
+            'created_at' => now(),
+        ]);
+        Message::factory()->create([
+            'preacher_id' => $preacher->id,
+            'status' => 'draft',
+            'featured' => false,
+            'preached_at' => null,
+            'created_at' => now()->subMinutes(5),
+        ]);
         Event::factory()->create(['status' => 'published', 'start_at' => now()->addDay()]);
         Event::factory()->create(['status' => 'draft', 'start_at' => now()->subDay()]);
         WeeklyProgram::create([
@@ -145,6 +161,10 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.preachings_count', 1)
             ->assertJsonCount(7, 'data.daily_message_views')
             ->assertJsonPath('data.daily_message_views.6.value', 12)
+            ->assertJsonPath('data.latest_messages.0.title', 'Message recent')
+            ->assertJsonPath('data.latest_messages.0.preacher_name', 'Pasteur Alpha')
+            ->assertJsonPath('data.dashboard_preachers.0.name', 'Pasteur Alpha')
+            ->assertJsonPath('data.dashboard_preachers.0.messages_count', 2)
             ->assertJsonPath('data.events_count', 2)
             ->assertJsonPath('data.published_events_count', 1)
             ->assertJsonPath('data.upcoming_events_count', 1)
@@ -182,6 +202,8 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonCount(7, 'data.daily_paid_donations')
             ->assertJsonMissingPath('data.messages_count')
             ->assertJsonMissingPath('data.daily_message_views')
+            ->assertJsonMissingPath('data.latest_messages')
+            ->assertJsonMissingPath('data.dashboard_preachers')
             ->assertJsonMissingPath('data.contact_messages_count')
             ->assertJsonMissingPath('data.users_count');
     }

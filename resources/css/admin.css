@@ -276,6 +276,13 @@ button:disabled {
     gap: 12px;
 }
 
+.sidebar-logo {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
 .sidebar-brand strong,
 .sidebar-brand small {
     display: block;
@@ -364,8 +371,20 @@ button:disabled {
     margin-top: 14px;
 }
 
+.dashboard-lists {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(280px, 3fr);
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.dashboard-lists:empty {
+    display: none;
+}
+
 .metric-tile,
 .chart-panel,
+.list-panel,
 .module-panel {
     border: 1px solid var(--admin-line);
     border-radius: 8px;
@@ -469,6 +488,83 @@ button:disabled {
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.list-panel {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-height: 260px;
+    padding: 18px;
+}
+
+.list-panel header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.list-panel header span {
+    color: #d9b35f;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.list-panel header h2 {
+    margin: 4px 0 0;
+    font-size: 20px;
+}
+
+.dashboard-list {
+    display: grid;
+    gap: 10px;
+}
+
+.dashboard-list-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    min-height: 58px;
+    border: 1px solid #edf2ef;
+    border-radius: 6px;
+    padding: 11px 12px;
+    background: #fbfcfb;
+}
+
+.dashboard-list-row strong,
+.dashboard-list-row small {
+    display: block;
+}
+
+.dashboard-list-row strong {
+    overflow: hidden;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-list-row small {
+    margin-top: 4px;
+    color: var(--admin-muted);
+    font-size: 12px;
+}
+
+.list-row-meta {
+    display: grid;
+    justify-items: end;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.dashboard-list.compact .dashboard-list-row {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.dashboard-list.compact .list-row-meta {
+    justify-items: start;
 }
 
 .module-panel {
@@ -774,6 +870,10 @@ button:disabled {
     .dashboard-analytics {
         grid-template-columns: 1fr;
     }
+
+    .dashboard-lists {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 620px) {
@@ -806,8 +906,18 @@ button:disabled {
     .sidebar nav,
     .dashboard-grid,
     .dashboard-analytics,
+    .dashboard-lists,
     .crud-toolbar,
     .form-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dashboard-list-row {
+        grid-template-columns: 1fr;
+    }
+
+    .list-row-meta {
+        justify-items: start;
+        white-space: normal;
     }
 }
