@@ -9,12 +9,15 @@
         </header>
 
         <div class="crud-toolbar">
-            <input
-                v-model="filters.search"
-                type="search"
-                :placeholder="`Rechercher ${resource.title.toLowerCase()}`"
-                @keyup.enter="loadItems(1)"
-            >
+            <label class="toolbar-search">
+                <i class="ti ti-search" aria-hidden="true"></i>
+                <input
+                    v-model="filters.search"
+                    type="search"
+                    :placeholder="`Rechercher ${resource.title.toLowerCase()}`"
+                    @keyup.enter="loadItems(1)"
+                >
+            </label>
             <select v-if="hasStatusFilter" v-model="filters.status" @change="loadItems(1)">
                 <option value="">Tous les statuts</option>
                 <option v-for="option in availableStatusOptions" :key="option.value" :value="option.value">
@@ -37,15 +40,20 @@
                         {{ option.label }}
                     </option>
                 </select>
-                <input
-                    v-else
-                    v-model="filters.custom[filter.key]"
-                    :type="filter.type || 'text'"
-                    :placeholder="filter.placeholder || filter.label"
-                    @keyup.enter="loadItems(1)"
-                >
+                <label v-else class="toolbar-search">
+                    <i class="ti ti-filter" aria-hidden="true"></i>
+                    <input
+                        v-model="filters.custom[filter.key]"
+                        :type="filter.type || 'text'"
+                        :placeholder="filter.placeholder || filter.label"
+                        @keyup.enter="loadItems(1)"
+                    >
+                </label>
             </template>
-            <button type="button" @click="loadItems(1)">Filtrer</button>
+            <button type="button" @click="loadItems(1)">
+                <i class="ti ti-adjustments-horizontal" aria-hidden="true"></i>
+                Filtrer
+            </button>
         </div>
 
         <div class="crud-table-wrap">
@@ -58,10 +66,20 @@
                 </thead>
                 <tbody>
                     <tr v-if="loading">
-                        <td :colspan="resource.columns.length + 1">Chargement...</td>
+                        <td :colspan="resource.columns.length + 1">
+                            <span class="table-state">
+                                <i class="ti ti-loader-2" aria-hidden="true"></i>
+                                Chargement...
+                            </span>
+                        </td>
                     </tr>
                     <tr v-else-if="items.length === 0">
-                        <td :colspan="resource.columns.length + 1">Aucun resultat.</td>
+                        <td :colspan="resource.columns.length + 1">
+                            <span class="table-state">
+                                <i class="ti ti-database-off" aria-hidden="true"></i>
+                                Aucun resultat.
+                            </span>
+                        </td>
                     </tr>
                     <template v-else>
                         <tr v-for="item in items" :key="item.id">
@@ -71,8 +89,14 @@
                             </td>
                             <td>
                                 <div class="row-actions">
-                                    <button type="button" @click="startEdit(item)">Editer</button>
-                                    <button type="button" class="danger" @click="deleteItem(item)">Supprimer</button>
+                                    <button type="button" @click="startEdit(item)">
+                                        <i class="ti ti-edit" aria-hidden="true"></i>
+                                        Editer
+                                    </button>
+                                    <button type="button" class="danger" @click="deleteItem(item)">
+                                        <i class="ti ti-trash" aria-hidden="true"></i>
+                                        Supprimer
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -84,8 +108,14 @@
         <footer class="crud-footer">
             <span>Page {{ meta.current_page || 1 }} / {{ meta.last_page || 1 }}</span>
             <div>
-                <button type="button" :disabled="!links.prev" @click="loadItems(meta.current_page - 1)">Precedent</button>
-                <button type="button" :disabled="!links.next" @click="loadItems(meta.current_page + 1)">Suivant</button>
+                <button type="button" :disabled="!links.prev" @click="loadItems(meta.current_page - 1)">
+                    <i class="ti ti-chevron-left" aria-hidden="true"></i>
+                    Precedent
+                </button>
+                <button type="button" :disabled="!links.next" @click="loadItems(meta.current_page + 1)">
+                    Suivant
+                    <i class="ti ti-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
         </footer>
 
