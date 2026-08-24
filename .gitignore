@@ -4,10 +4,13 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/api-docs
 /vendor
 .env
 .env.backup
 .env.production
+emec-back-github-actions
+emec-back-github-actions.pub
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml

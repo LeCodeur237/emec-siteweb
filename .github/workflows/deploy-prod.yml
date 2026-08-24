@@ -25,6 +25,7 @@ jobs:
             --exclude='vendor' \
             --exclude='node_modules' \
             --exclude='storage/logs/*' \
+            --exclude='storage/api-docs/*' \
             --exclude='emec-back-github-actions' \
             --exclude='emec-back-github-actions.pub' \
             ./ deploy-package/
@@ -69,6 +70,7 @@ jobs:
             php artisan storage:link || true
 
             php artisan optimize:clear
+            php artisan l5-swagger:generate
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
