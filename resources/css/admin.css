@@ -940,6 +940,31 @@ button:disabled {
     white-space: nowrap;
 }
 
+.rich-editor {
+    overflow: hidden;
+    border: 1px solid var(--admin-line);
+    border-radius: 6px;
+    background: #ffffff;
+}
+
+.rich-editor .ql-toolbar.ql-snow {
+    border: 0;
+    border-bottom: 1px solid var(--admin-line);
+}
+
+.rich-editor .ql-container.ql-snow {
+    min-height: 240px;
+    border: 0;
+    color: var(--admin-ink);
+    font: inherit;
+}
+
+.rich-editor .ql-editor {
+    min-height: 240px;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
 .form-error,
 .api-error {
     margin: 0;

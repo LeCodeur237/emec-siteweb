@@ -437,7 +437,7 @@ const messageResources = [
             { key: 'message_category_id', label: 'Categorie', type: 'select', nullable: true, optionsEndpoint: '/admin/message-categories' },
             { key: 'message_series_id', label: 'Serie', type: 'select', nullable: true, optionsEndpoint: '/admin/message-series' },
             { key: 'excerpt', label: 'Resume', type: 'textarea', nullable: true },
-            { key: 'content', label: 'Contenu', type: 'textarea', nullable: true },
+            { key: 'content', label: 'Contenu', type: 'richtext', nullable: true },
             { key: 'preached_at', label: 'Date de predication', type: 'date', nullable: true },
             { key: 'duration', label: 'Duree', nullable: true },
             { key: 'youtube_video_id', label: 'ID YouTube', nullable: true },

@@ -99,12 +99,16 @@
                 </header>
 
                 <div class="form-grid">
-                    <label v-for="field in resource.fields" :key="field.key" :class="{ wide: field.type === 'textarea' || field.type === 'image-upload' }">
+                    <label v-for="field in resource.fields" :key="field.key" :class="{ wide: ['textarea', 'richtext', 'image-upload'].includes(field.type) }">
                         {{ field.label }}
                         <textarea
                             v-if="field.type === 'textarea'"
                             v-model="form[field.key]"
                             rows="4"
+                        />
+                        <AdminRichTextEditor
+                            v-else-if="field.type === 'richtext'"
+                            v-model="form[field.key]"
                         />
                         <span v-else-if="field.type === 'image-upload'" class="upload-field">
                             <img v-if="form[field.key]" :src="form[field.key]" :alt="field.label">
@@ -156,6 +160,7 @@
 
 <script setup>
 import { computed, onMounted, reactive, ref, watch } from 'vue';
+import AdminRichTextEditor from './AdminRichTextEditor.vue';
 
 const props = defineProps({
     api: {
