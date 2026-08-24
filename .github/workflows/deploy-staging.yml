@@ -37,6 +37,9 @@ jobs:
             vendor
             node_modules
             storage/logs/*
+            storage/api-docs/*
+            emec-back-github-actions
+            emec-back-github-actions.pub
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.3
@@ -74,8 +77,10 @@ jobs:
             php artisan storage:link || true
 
             php artisan optimize:clear
+            php artisan l5-swagger:generate
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
 
-            chmod -R ug+rw storage bootstrap/cache
+            mkdir -p storage/logs bootstrap/cache
+            chmod -R 775 storage bootstrap/cache
