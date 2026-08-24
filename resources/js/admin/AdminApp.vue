@@ -2,7 +2,7 @@
     <main class="admin-shell">
         <section v-if="!token" class="auth-view">
             <div class="brand-panel">
-                <img class="auth-logo auth-logo-white" :src="whiteLogo" alt="EMEC">
+                <img class="auth-logo auth-logo-brand" :src="darkLogo" alt="EMEC">
                 <div class="brand-copy">
                     <span>Back-office officiel</span>
                     <h1>Administration EMEC</h1>
@@ -231,7 +231,6 @@ import AdminNotifications from './components/AdminNotifications.vue';
 
 const storageKey = 'emec_admin_token';
 const userKey = 'emec_admin_user';
-const whiteLogo = '/logo/emec-logo-white.png';
 const darkLogo = '/logo/emec-logo-black.png';
 
 const token = ref(localStorage.getItem(storageKey) || '');
