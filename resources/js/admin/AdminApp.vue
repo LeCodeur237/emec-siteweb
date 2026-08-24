@@ -66,9 +66,18 @@
                         <strong>Admin</strong>
                         <small>{{ user?.name || 'Utilisateur' }}</small>
                     </div>
+                    <button
+                        class="sidebar-toggle"
+                        type="button"
+                        :aria-expanded="mobileNavigationOpen"
+                        :aria-label="mobileNavigationOpen ? 'Masquer le menu' : 'Afficher le menu'"
+                        @click="mobileNavigationOpen = !mobileNavigationOpen"
+                    >
+                        <i :class="mobileNavigationOpen ? 'ti ti-x' : 'ti ti-menu-2'" aria-hidden="true"></i>
+                    </button>
                 </div>
 
-                <nav>
+                <nav :class="{ open: mobileNavigationOpen }">
                     <div v-for="group in navigationGroups" :key="group.label" class="nav-section">
                         <span v-if="group.label" class="nav-section-title">{{ group.label }}</span>
                         <button
@@ -76,7 +85,7 @@
                             :key="item.key"
                             type="button"
                             :class="{ active: activeSection === item.key }"
-                            @click="activeSection = item.key"
+                            @click="setActiveSection(item.key)"
                         >
                             <i :class="item.icon" aria-hidden="true"></i>
                             {{ item.label }}
@@ -347,6 +356,7 @@ const loading = ref(false);
 const authError = ref('');
 const apiError = ref('');
 const showPassword = ref(false);
+const mobileNavigationOpen = ref(false);
 const activeSection = ref('dashboard');
 const activeMessageResource = ref('messages');
 const activeEmecResource = ref('churches');
@@ -1455,7 +1465,12 @@ function formatChartValue(chart, value) {
 
 function openMessageResource(resourceKey) {
     activeMessageResource.value = resourceKey;
-    activeSection.value = 'messages';
+    setActiveSection('messages');
+}
+
+function setActiveSection(section) {
+    activeSection.value = section;
+    mobileNavigationOpen.value = false;
 }
 
 function clearSession() {
