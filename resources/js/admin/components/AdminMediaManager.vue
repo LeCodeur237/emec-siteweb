@@ -11,7 +11,10 @@
         <div v-if="showUpload" class="modal-backdrop" @click.self="closeUpload">
             <form class="crud-form modal-panel" @submit.prevent="uploadMedia">
                 <header>
-                    <h3>Nouveau media</h3>
+                    <div class="modal-title">
+                        <span>Bibliotheque media</span>
+                        <h3>Nouveau media</h3>
+                    </div>
                     <button class="modal-close" type="button" aria-label="Fermer" @click="closeUpload">
                         <i class="ti ti-x" aria-hidden="true"></i>
                     </button>
@@ -19,19 +22,19 @@
 
                 <div class="form-grid">
                     <label>
-                        Fichier
+                        <span class="form-label-text">Fichier</span>
                         <input type="file" required @change="onFileChange">
                     </label>
                     <label>
-                        Titre
+                        <span class="form-label-text">Titre</span>
                         <input v-model="upload.title" type="text">
                     </label>
                     <label>
-                        Texte alternatif
+                        <span class="form-label-text">Texte alternatif</span>
                         <input v-model="upload.alt_text" type="text">
                     </label>
                     <label>
-                        Type rattachement
+                        <span class="form-label-text">Type rattachement</span>
                         <select v-model="upload.mediaable_type">
                             <option value="">Aucun</option>
                             <option value="message">Message</option>
@@ -43,19 +46,25 @@
                         </select>
                     </label>
                     <label>
-                        ID rattachement
+                        <span class="form-label-text">ID rattachement</span>
                         <input v-model="upload.mediaable_id" type="number" min="1">
                     </label>
                     <label class="wide">
-                        Description
+                        <span class="form-label-text">Description</span>
                         <textarea v-model="upload.description" rows="3" />
                     </label>
                 </div>
 
                 <p v-if="error" class="form-error">{{ error }}</p>
                 <div class="form-actions">
-                    <button type="button" @click="closeUpload">Annuler</button>
-                    <button type="submit" :disabled="saving">{{ saving ? 'Upload...' : 'Uploader' }}</button>
+                    <button type="button" @click="closeUpload">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                        Annuler
+                    </button>
+                    <button type="submit" :disabled="saving">
+                        <i :class="saving ? 'ti ti-loader-2' : 'ti ti-upload'" aria-hidden="true"></i>
+                        {{ saving ? 'Upload...' : 'Uploader' }}
+                    </button>
                 </div>
             </form>
         </div>
@@ -123,7 +132,10 @@
         <div v-if="editing" class="modal-backdrop" @click.self="closeEdit">
             <form class="crud-form modal-panel" @submit.prevent="updateMedia">
                 <header>
-                    <h3>Modifier media</h3>
+                    <div class="modal-title">
+                        <span>Bibliotheque media</span>
+                        <h3>Modifier media</h3>
+                    </div>
                     <button class="modal-close" type="button" aria-label="Fermer" @click="closeEdit">
                         <i class="ti ti-x" aria-hidden="true"></i>
                     </button>
@@ -131,23 +143,29 @@
 
                 <div class="form-grid">
                     <label>
-                        Titre
+                        <span class="form-label-text">Titre</span>
                         <input v-model="editForm.title" type="text">
                     </label>
                     <label>
-                        Texte alternatif
+                        <span class="form-label-text">Texte alternatif</span>
                         <input v-model="editForm.alt_text" type="text">
                     </label>
                     <label class="wide">
-                        Description
+                        <span class="form-label-text">Description</span>
                         <textarea v-model="editForm.description" rows="3" />
                     </label>
                 </div>
 
                 <p v-if="error" class="form-error">{{ error }}</p>
                 <div class="form-actions">
-                    <button type="button" @click="closeEdit">Annuler</button>
-                    <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
+                    <button type="button" @click="closeEdit">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                        Annuler
+                    </button>
+                    <button type="submit" :disabled="saving">
+                        <i :class="saving ? 'ti ti-loader-2' : 'ti ti-device-floppy'" aria-hidden="true"></i>
+                        {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+                    </button>
                 </div>
             </form>
         </div>

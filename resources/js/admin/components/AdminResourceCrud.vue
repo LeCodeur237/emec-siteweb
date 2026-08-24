@@ -122,7 +122,10 @@
         <div v-if="editing" class="modal-backdrop" @click.self="cancelEdit">
             <form class="crud-form modal-panel" @submit.prevent="save">
                 <header>
-                    <h3>{{ editing.id ? 'Modifier' : 'Creer' }} {{ resource.singular }}</h3>
+                    <div class="modal-title">
+                        <span>{{ resource.title }}</span>
+                        <h3>{{ editing.id ? 'Modifier' : 'Creer' }} {{ resource.singular }}</h3>
+                    </div>
                     <button class="modal-close" type="button" aria-label="Fermer" @click="cancelEdit">
                         <i class="ti ti-x" aria-hidden="true"></i>
                     </button>
@@ -130,7 +133,7 @@
 
                 <div class="form-grid">
                     <label v-for="field in resource.fields" :key="field.key" :class="{ wide: ['textarea', 'richtext', 'image-upload'].includes(field.type) }">
-                        {{ field.label }}
+                        <span class="form-label-text">{{ field.label }}</span>
                         <textarea
                             v-if="field.type === 'textarea'"
                             v-model="form[field.key]"
@@ -141,8 +144,15 @@
                             v-model="form[field.key]"
                         />
                         <span v-else-if="field.type === 'image-upload'" class="upload-field">
-                            <img v-if="form[field.key]" :src="form[field.key]" :alt="field.label">
-                            <small v-if="form[field.key]">{{ form[field.key] }}</small>
+                            <span class="upload-preview">
+                                <img v-if="form[field.key]" :src="form[field.key]" :alt="field.label">
+                                <i v-else class="ti ti-photo-plus" aria-hidden="true"></i>
+                            </span>
+                            <span class="upload-meta">
+                                <strong>{{ uploadFiles[field.key]?.name || 'Choisir une image' }}</strong>
+                                <small v-if="form[field.key]">{{ form[field.key] }}</small>
+                                <small v-else>PNG, JPG ou WebP selon les regles serveur.</small>
+                            </span>
                             <input
                                 type="file"
                                 accept="image/*"
@@ -180,8 +190,14 @@
 
                 <p v-if="formError" class="form-error">{{ formError }}</p>
                 <div class="form-actions">
-                    <button type="button" @click="cancelEdit">Annuler</button>
-                    <button type="submit" :disabled="saving">{{ saving ? 'Enregistrement...' : 'Enregistrer' }}</button>
+                    <button type="button" @click="cancelEdit">
+                        <i class="ti ti-x" aria-hidden="true"></i>
+                        Annuler
+                    </button>
+                    <button type="submit" :disabled="saving">
+                        <i :class="saving ? 'ti ti-loader-2' : 'ti ti-device-floppy'" aria-hidden="true"></i>
+                        {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+                    </button>
                 </div>
             </form>
         </div>
