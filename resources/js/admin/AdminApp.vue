@@ -1,15 +1,6 @@
 <template>
     <main class="admin-shell">
         <section v-if="!token" class="auth-view">
-            <div class="brand-panel">
-                <img class="auth-logo auth-logo-brand" :src="darkLogo" alt="EMEC">
-                <div class="brand-copy">
-                    <span>Back-office officiel</span>
-                    <h1>Administration EMEC</h1>
-                    <p>Gestion du contenu, des dons, de DOSC, des communications et des acces.</p>
-                </div>
-            </div>
-
             <form class="login-panel" @submit.prevent="login">
                 <div class="login-heading">
                     <img class="auth-logo auth-logo-dark" :src="darkLogo" alt="EMEC">
@@ -20,11 +11,45 @@
                 </div>
                 <label>
                     Email
-                    <input v-model="credentials.email" type="email" autocomplete="email" required>
+                    <span class="input-shell">
+                        <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 6h16v12H4z" />
+                            <path d="m4 7 8 6 8-6" />
+                        </svg>
+                        <input v-model="credentials.email" type="email" autocomplete="email" required>
+                    </span>
                 </label>
                 <label>
                     Mot de passe
-                    <input v-model="credentials.password" type="password" autocomplete="current-password" required>
+                    <span class="input-shell">
+                        <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="5" y="11" width="14" height="9" rx="2" />
+                            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                        </svg>
+                        <input
+                            v-model="credentials.password"
+                            :type="showPassword ? 'text' : 'password'"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button
+                            class="password-toggle"
+                            type="button"
+                            :aria-label="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+                            @click="showPassword = !showPassword"
+                        >
+                            <svg v-if="!showPassword" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <svg v-else viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M3 3l18 18" />
+                                <path d="M10.6 10.6A3 3 0 0 0 13.4 13.4" />
+                                <path d="M9.9 5.4A10 10 0 0 1 12 5c6 0 9.5 7 9.5 7a15.4 15.4 0 0 1-3 3.8" />
+                                <path d="M6.3 6.9C3.8 8.6 2.5 12 2.5 12s3.5 7 9.5 7a9.9 9.9 0 0 0 4-.8" />
+                            </svg>
+                        </button>
+                    </span>
                 </label>
                 <p v-if="authError" class="form-error">{{ authError }}</p>
                 <button type="submit" :disabled="loading">
@@ -238,6 +263,7 @@ const user = ref(readStoredUser());
 const loading = ref(false);
 const authError = ref('');
 const apiError = ref('');
+const showPassword = ref(false);
 const activeSection = ref('dashboard');
 const activeMessageResource = ref('messages');
 const activeEmecResource = ref('churches');
