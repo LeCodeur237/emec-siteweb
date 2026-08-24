@@ -3,13 +3,17 @@
 
 :root {
     --admin-bg: #f5f7fb;
+    --admin-bg-soft: #eef3fb;
     --admin-ink: #101828;
     --admin-muted: #64748b;
     --admin-line: #d7deea;
+    --admin-line-strong: #c8d3e4;
     --admin-panel: #ffffff;
     --admin-primary: #142857;
     --admin-primary-dark: #0f1b3d;
     --admin-primary-soft: #e8eefc;
+    --admin-primary-hover: #1d3469;
+    --admin-primary-ring: rgba(29, 78, 216, .14);
     --admin-warn: #b42318;
 }
 
@@ -23,6 +27,8 @@ body {
     background: var(--admin-bg);
     color: var(--admin-ink);
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 button,
@@ -33,6 +39,7 @@ input {
 button {
     border: 0;
     cursor: pointer;
+    transition: background-color .16s ease, border-color .16s ease, color .16s ease, box-shadow .16s ease, transform .16s ease;
 }
 
 button:disabled {
@@ -42,6 +49,9 @@ button:disabled {
 
 .admin-shell {
     min-height: 100vh;
+    background:
+        linear-gradient(180deg, #ffffff 0, var(--admin-bg) 210px),
+        var(--admin-bg);
 }
 
 .auth-view {
@@ -261,29 +271,40 @@ button:disabled {
 
 .workspace {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-columns: 292px minmax(0, 1fr);
     min-height: 100vh;
+    background: var(--admin-bg);
 }
 
 .sidebar {
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    padding: 22px;
+    gap: 26px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 18px;
     background: var(--admin-primary-dark);
     color: #ffffff;
+    box-shadow: 12px 0 32px rgba(15, 27, 61, .12);
 }
 
 .sidebar-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+    min-height: 78px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 8px;
+    padding: 12px;
+    background: rgba(255, 255, 255, .05);
 }
 
 .sidebar-logo {
     display: block;
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
     object-fit: contain;
 }
 
@@ -295,46 +316,53 @@ button:disabled {
 .sidebar-brand small {
     max-width: 160px;
     overflow: hidden;
-    color: #b8c7c1;
+    color: #b9c5da;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .sidebar nav {
     display: grid;
-    gap: 18px;
+    gap: 20px;
 }
 
 .nav-section {
     display: grid;
-    gap: 6px;
+    gap: 7px;
 }
 
 .nav-section-title {
-    padding: 0 12px;
+    padding: 0 12px 4px;
     color: #d9b35f;
     font-size: 11px;
     font-weight: 800;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
 .sidebar nav button,
 .logout-button {
     display: flex;
-    min-height: 42px;
+    min-height: 44px;
     align-items: center;
     gap: 10px;
-    border-radius: 6px;
-    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0 13px;
     background: transparent;
-    color: #d7e3de;
+    color: #dbe4f3;
     text-align: left;
 }
 
 .sidebar nav button.active,
 .sidebar nav button:hover {
-    background: #1d3469;
+    border-color: rgba(217, 179, 95, .2);
+    background: var(--admin-primary-hover);
     color: #ffffff;
+}
+
+.sidebar nav button.active {
+    box-shadow: inset 3px 0 0 #d9b35f;
 }
 
 .sidebar nav button i {
@@ -353,13 +381,18 @@ button:disabled {
 
 .logout-button {
     margin-top: auto;
+    border-color: rgba(255, 255, 255, .08);
     background: #2f1f1d;
     color: #ffd9d5;
 }
 
+.logout-button:hover {
+    background: #4a2521;
+}
+
 .content {
     min-width: 0;
-    padding: 28px;
+    padding: clamp(24px, 3vw, 38px);
 }
 
 .topbar {
@@ -367,11 +400,14 @@ button:disabled {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 24px;
+    min-height: 84px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid var(--admin-line);
+    padding-bottom: 20px;
 }
 
 .topbar p {
-    margin: 0 0 6px;
+    margin: 0 0 7px;
     color: var(--admin-muted);
     font-size: 13px;
     font-weight: 700;
@@ -380,27 +416,39 @@ button:disabled {
 
 .topbar h1 {
     margin: 0;
-    font-size: 30px;
+    color: var(--admin-primary-dark);
+    font-size: 32px;
+    line-height: 1.1;
+}
+
+.topbar button:hover,
+.module-actions button:hover,
+.crud-header button:hover,
+.crud-toolbar button:hover,
+.crud-footer button:hover,
+.form-actions button:hover {
+    background: var(--admin-primary-hover);
+    box-shadow: 0 10px 22px var(--admin-primary-ring);
 }
 
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 14px;
+    gap: 16px;
 }
 
 .dashboard-analytics {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 14px;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 .dashboard-lists {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(280px, 3fr);
-    gap: 14px;
-    margin-top: 14px;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 .metric-tile,
@@ -410,6 +458,7 @@ button:disabled {
     border: 1px solid var(--admin-line);
     border-radius: 8px;
     background: var(--admin-panel);
+    box-shadow: 0 14px 34px rgba(15, 27, 61, .05);
 }
 
 .metric-tile {
@@ -618,7 +667,7 @@ button:disabled {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: 22px;
+    padding: 24px;
 }
 
 .module-panel h2 {
@@ -633,32 +682,41 @@ button:disabled {
 
 .module-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
 .module-actions button {
-    background: #718079;
+    background: var(--admin-primary);
 }
 
 .module-stack {
     display: grid;
-    gap: 14px;
+    gap: 16px;
 }
 
 .module-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    border-bottom: 1px solid var(--admin-line);
+    padding-bottom: 14px;
 }
 
 .module-tabs button {
-    min-height: 38px;
+    min-height: 40px;
     border: 1px solid var(--admin-line);
-    border-radius: 6px;
-    padding: 0 13px;
+    border-radius: 8px;
+    padding: 0 14px;
     background: var(--admin-panel);
     color: var(--admin-muted);
     font-weight: 700;
+}
+
+.module-tabs button:hover {
+    border-color: var(--admin-line-strong);
+    background: var(--admin-primary-soft);
+    color: var(--admin-primary-dark);
 }
 
 .module-tabs button.active {
@@ -669,7 +727,7 @@ button:disabled {
 
 .crud-panel {
     display: grid;
-    gap: 14px;
+    gap: 16px;
 }
 
 .crud-header,
@@ -679,6 +737,7 @@ button:disabled {
     border: 1px solid var(--admin-line);
     border-radius: 8px;
     background: var(--admin-panel);
+    box-shadow: 0 12px 28px rgba(15, 27, 61, .04);
 }
 
 .crud-header {
@@ -686,7 +745,7 @@ button:disabled {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 18px;
+    padding: 20px;
 }
 
 .crud-header h2,
@@ -714,8 +773,8 @@ button:disabled {
 .crud-toolbar {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 10px;
-    padding: 12px;
+    gap: 12px;
+    padding: 14px;
 }
 
 .crud-toolbar input,
@@ -734,7 +793,7 @@ button:disabled {
 .crud-toolbar select,
 .crud-form input,
 .crud-form select {
-    height: 40px;
+    height: 42px;
     padding: 0 12px;
 }
 
@@ -765,7 +824,7 @@ button:disabled {
 .crud-table th,
 .crud-table td {
     border-bottom: 1px solid var(--admin-line);
-    padding: 12px;
+    padding: 14px;
     text-align: left;
     vertical-align: middle;
 }
@@ -804,11 +863,12 @@ button:disabled {
 
 .row-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
 .row-actions button {
-    min-height: 32px;
+    min-height: 34px;
     border-radius: 6px;
     padding: 0 10px;
     background: var(--admin-primary-soft);
@@ -826,7 +886,7 @@ button:disabled {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 12px;
+    padding: 14px;
     color: var(--admin-muted);
 }
 
@@ -837,13 +897,13 @@ button:disabled {
 }
 
 .crud-footer button:disabled {
-    background: #c9d2ce;
+    background: #c8d3e4;
 }
 
 .crud-form {
     display: grid;
     gap: 16px;
-    padding: 18px;
+    padding: 20px;
 }
 
 .modal-backdrop {
@@ -862,6 +922,7 @@ button:disabled {
     width: min(980px, 100%);
     max-height: min(86vh, 900px);
     overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, .28);
     box-shadow: 0 24px 90px rgba(15, 27, 61, .28);
 }
 
@@ -896,13 +957,13 @@ button:disabled {
 
 .crud-form header button,
 .form-actions button:first-child {
-    background: #718079;
+    background: #5f6f89;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px;
 }
 
 .form-grid label {
@@ -992,6 +1053,9 @@ button:disabled {
 
     .sidebar {
         position: static;
+        height: auto;
+        overflow: visible;
+        box-shadow: none;
     }
 
     .sidebar nav {
@@ -1036,6 +1100,14 @@ button:disabled {
     .crud-form header {
         align-items: stretch;
         flex-direction: column;
+    }
+
+    .topbar button,
+    .module-actions button,
+    .crud-header button,
+    .crud-footer button,
+    .form-actions button {
+        width: 100%;
     }
 
     .sidebar nav,
