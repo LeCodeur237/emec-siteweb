@@ -23,6 +23,7 @@ class AdminAuthenticationTest extends TestCase
 
     public function test_active_user_can_login_and_receives_sanctum_token(): void
     {
+        $ip = $this->uniqueTestIp();
         $user = User::factory()->create([
             'email' => 'admin@example.test',
             'password' => Hash::make('secret-password'),
@@ -30,10 +31,11 @@ class AdminAuthenticationTest extends TestCase
         ]);
         $user->roles()->attach(Role::where('slug', 'messages_editor')->firstOrFail());
 
-        $this->postJson('/api/v1/auth/login', [
-            'email' => 'admin@example.test',
-            'password' => 'secret-password',
-        ])
+        $this->withServerVariables(['REMOTE_ADDR' => $ip])
+            ->postJson('/api/v1/auth/login', [
+                'email' => 'admin@example.test',
+                'password' => 'secret-password',
+            ])
             ->assertOk()
             ->assertJsonPath('message', 'Authenticated.')
             ->assertJsonPath('token_type', 'Bearer')
@@ -57,6 +59,8 @@ class AdminAuthenticationTest extends TestCase
 
     public function test_login_rejects_bad_password_missing_user_and_inactive_user_generically(): void
     {
+        $ip = $this->uniqueTestIp();
+
         User::factory()->create([
             'email' => 'known@example.test',
             'password' => Hash::make('secret-password'),
@@ -74,7 +78,8 @@ class AdminAuthenticationTest extends TestCase
             ['email' => 'missing@example.test', 'password' => 'secret-password'],
             ['email' => 'inactive@example.test', 'password' => 'secret-password'],
         ] as $payload) {
-            $this->postJson('/api/v1/auth/login', $payload)
+            $this->withServerVariables(['REMOTE_ADDR' => $ip])
+                ->postJson('/api/v1/auth/login', $payload)
                 ->assertUnprocessable()
                 ->assertJsonPath('message', 'Validation failed.')
                 ->assertJsonPath('errors.email.0', 'The provided credentials are invalid.');
@@ -115,5 +120,10 @@ class AdminAuthenticationTest extends TestCase
         $this->withToken($token)
             ->getJson('/api/v1/auth/me')
             ->assertUnauthorized();
+    }
+
+    private function uniqueTestIp(): string
+    {
+        return sprintf('10.%d.%d.%d', random_int(0, 255), random_int(0, 255), random_int(1, 254));
     }
 }
