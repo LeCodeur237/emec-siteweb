@@ -82,7 +82,7 @@ class AdminAuthorizationTest extends TestCase
 
     public function test_dashboard_exposes_detailed_metrics_for_authorized_modules(): void
     {
-        Message::factory()->create(['status' => 'published', 'featured' => true, 'preached_at' => now()]);
+        Message::factory()->create(['status' => 'published', 'featured' => true, 'preached_at' => now(), 'views' => 12]);
         Message::factory()->create(['status' => 'draft', 'featured' => false, 'preached_at' => null]);
         Event::factory()->create(['status' => 'published', 'start_at' => now()->addDay()]);
         Event::factory()->create(['status' => 'draft', 'start_at' => now()->subDay()]);
@@ -143,6 +143,8 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.draft_messages_count', 1)
             ->assertJsonPath('data.featured_messages_count', 1)
             ->assertJsonPath('data.preachings_count', 1)
+            ->assertJsonCount(7, 'data.daily_message_views')
+            ->assertJsonPath('data.daily_message_views.6.value', 12)
             ->assertJsonPath('data.events_count', 2)
             ->assertJsonPath('data.published_events_count', 1)
             ->assertJsonPath('data.upcoming_events_count', 1)
@@ -161,6 +163,8 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.paid_donations_count', 1)
             ->assertJsonPath('data.pending_donations_count', 1)
             ->assertJsonPath('data.paid_donations_amount', 15000)
+            ->assertJsonCount(7, 'data.daily_paid_donations')
+            ->assertJsonPath('data.daily_paid_donations.6.value', 15000)
             ->assertJsonPath('data.new_contact_messages_count', 1)
             ->assertJsonPath('data.active_newsletter_subscribers_count', 1)
             ->assertJsonPath('data.image_media_count', 1)
@@ -175,7 +179,9 @@ class AdminAuthorizationTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.donations_count', 2)
             ->assertJsonPath('data.paid_donations_amount', 15000)
+            ->assertJsonCount(7, 'data.daily_paid_donations')
             ->assertJsonMissingPath('data.messages_count')
+            ->assertJsonMissingPath('data.daily_message_views')
             ->assertJsonMissingPath('data.contact_messages_count')
             ->assertJsonMissingPath('data.users_count');
     }

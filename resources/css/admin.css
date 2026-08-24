@@ -357,7 +357,15 @@ button:disabled {
     gap: 14px;
 }
 
+.dashboard-analytics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+}
+
 .metric-tile,
+.chart-panel,
 .module-panel {
     border: 1px solid var(--admin-line);
     border-radius: 8px;
@@ -387,6 +395,80 @@ button:disabled {
 .metric-tile small {
     color: var(--admin-muted);
     font-size: 12px;
+}
+
+.chart-panel {
+    display: grid;
+    gap: 18px;
+    min-height: 260px;
+    padding: 18px;
+}
+
+.chart-panel header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.chart-panel header span {
+    color: #d9b35f;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.chart-panel header h2 {
+    margin: 4px 0 0;
+    font-size: 20px;
+}
+
+.chart-panel header strong {
+    color: var(--admin-primary-dark);
+    font-size: 22px;
+    line-height: 1.1;
+    text-align: right;
+}
+
+.bar-chart {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 156px;
+    align-items: end;
+}
+
+.bar-column {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+}
+
+.bar-track {
+    position: relative;
+    display: flex;
+    height: 126px;
+    align-items: end;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #edf2ef;
+}
+
+.bar-track span {
+    display: block;
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    background: var(--admin-primary);
+}
+
+.bar-column small {
+    overflow: hidden;
+    color: var(--admin-muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .module-panel {
@@ -688,6 +770,10 @@ button:disabled {
     .dashboard-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .dashboard-analytics {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 620px) {
@@ -719,6 +805,7 @@ button:disabled {
 
     .sidebar nav,
     .dashboard-grid,
+    .dashboard-analytics,
     .crud-toolbar,
     .form-grid {
         grid-template-columns: 1fr;

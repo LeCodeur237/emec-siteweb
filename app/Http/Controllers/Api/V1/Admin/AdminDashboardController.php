@@ -27,6 +27,7 @@ use App\Models\User;
 use App\Models\WeeklyProgram;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class AdminDashboardController extends ApiController
 {
@@ -44,6 +45,7 @@ class AdminDashboardController extends ApiController
             $counts['preachers_count'] = Preacher::count();
             $counts['message_categories_count'] = MessageCategory::count();
             $counts['message_series_count'] = MessageSeries::count();
+            $counts['daily_message_views'] = $this->dailyMessageViews();
         }
 
         if ($this->canAny($user, ['events.view', 'events.manage'])) {
@@ -92,6 +94,7 @@ class AdminDashboardController extends ApiController
             $counts['paid_donations_count'] = Donation::where('status', 'paid')->count();
             $counts['pending_donations_count'] = Donation::where('status', 'pending')->count();
             $counts['paid_donations_amount'] = (float) Donation::where('status', 'paid')->sum('amount');
+            $counts['daily_paid_donations'] = $this->dailyPaidDonations();
         }
 
         if ($user->hasPermission('communication.manage')) {
@@ -156,5 +159,65 @@ class AdminDashboardController extends ApiController
         }
 
         return false;
+    }
+
+    /**
+     * @return array<int, array{date: string, label: string, value: int}>
+     */
+    private function dailyMessageViews(): array
+    {
+        $days = $this->lastSevenDays();
+        $totals = Message::query()
+            ->selectRaw('DATE(COALESCE(preached_at, created_at)) as day, SUM(views) as total')
+            ->where('status', 'published')
+            ->whereRaw('DATE(COALESCE(preached_at, created_at)) >= ?', [$days->first()['date']])
+            ->groupBy('day')
+            ->pluck('total', 'day');
+
+        return $days
+            ->map(fn (array $day) => [
+                ...$day,
+                'value' => (int) ($totals[$day['date']] ?? 0),
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return array<int, array{date: string, label: string, value: float}>
+     */
+    private function dailyPaidDonations(): array
+    {
+        $days = $this->lastSevenDays();
+        $totals = Donation::query()
+            ->selectRaw('DATE(paid_at) as day, SUM(amount) as total')
+            ->where('status', 'paid')
+            ->whereNotNull('paid_at')
+            ->whereDate('paid_at', '>=', $days->first()['date'])
+            ->groupBy('day')
+            ->pluck('total', 'day');
+
+        return $days
+            ->map(fn (array $day) => [
+                ...$day,
+                'value' => (float) ($totals[$day['date']] ?? 0),
+            ])
+            ->values()
+            ->all();
+    }
+
+    /**
+     * @return Collection<int, array{date: string, label: string}>
+     */
+    private function lastSevenDays(): Collection
+    {
+        return collect(range(6, 0))->map(function (int $offset) {
+            $date = now()->subDays($offset);
+
+            return [
+                'date' => $date->toDateString(),
+                'label' => $date->format('d/m'),
+            ];
+        });
     }
 }

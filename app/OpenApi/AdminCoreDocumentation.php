@@ -38,6 +38,26 @@ namespace App\OpenApi;
  *     schema="AdminDashboard",
  *     type="object",
  *     @OA\Property(property="messages_count", type="integer", example=12),
+ *     @OA\Property(
+ *         property="daily_message_views",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="date", type="string", format="date", example="2026-08-24"),
+ *             @OA\Property(property="label", type="string", example="24/08"),
+ *             @OA\Property(property="value", type="integer", example=120)
+ *         )
+ *     ),
+ *     @OA\Property(
+ *         property="daily_paid_donations",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="date", type="string", format="date", example="2026-08-24"),
+ *             @OA\Property(property="label", type="string", example="24/08"),
+ *             @OA\Property(property="value", type="number", format="float", example=50000)
+ *         )
+ *     ),
  *     @OA\Property(property="published_messages_count", type="integer", example=9),
  *     @OA\Property(property="draft_messages_count", type="integer", example=3),
  *     @OA\Property(property="featured_messages_count", type="integer", example=2),

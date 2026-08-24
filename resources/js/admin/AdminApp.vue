@@ -107,6 +107,25 @@
                         </div>
                     </article>
                 </section>
+                <section v-if="activeSection === 'dashboard' && dashboardCharts.length > 0" class="dashboard-analytics">
+                    <article v-for="chart in dashboardCharts" :key="chart.key" class="chart-panel">
+                        <header>
+                            <div>
+                                <span>{{ chart.eyebrow }}</span>
+                                <h2>{{ chart.title }}</h2>
+                            </div>
+                            <strong>{{ formatChartValue(chart, chartTotal(chart)) }}</strong>
+                        </header>
+                        <div class="bar-chart">
+                            <div v-for="point in chart.points" :key="point.date" class="bar-column">
+                                <div class="bar-track">
+                                    <span :style="{ height: barHeight(point.value, chartMax(chart)) }"></span>
+                                </div>
+                                <small>{{ point.label }}</small>
+                            </div>
+                        </div>
+                    </article>
+                </section>
 
                 <section v-else-if="activeSection === 'messages'" class="module-stack">
                     <div class="module-tabs">
@@ -309,6 +328,22 @@ const dashboardBlueprint = [
 
 const dashboardCards = computed(() => dashboardBlueprint
     .filter((metric) => Object.hasOwn(dashboard.value, metric.key)));
+
+const dashboardCharts = computed(() => [
+    {
+        key: 'daily_message_views',
+        title: 'Lectures par jour',
+        eyebrow: 'Messages',
+        points: dashboard.value.daily_message_views ?? [],
+    },
+    {
+        key: 'daily_paid_donations',
+        title: 'Dons payes par jour',
+        eyebrow: 'Finance',
+        format: 'money',
+        points: dashboard.value.daily_paid_donations ?? [],
+    },
+].filter((chart) => chart.points.length > 0));
 
 const messageResources = [
     {
@@ -1299,6 +1334,32 @@ function formatMetricValue(metric) {
     }
 
     return value;
+}
+
+function chartTotal(chart) {
+    return chart.points.reduce((total, point) => total + Number(point.value || 0), 0);
+}
+
+function chartMax(chart) {
+    return Math.max(...chart.points.map((point) => Number(point.value || 0)), 0);
+}
+
+function barHeight(value, max) {
+    if (!max) {
+        return '0%';
+    }
+
+    return `${Math.max((Number(value || 0) / max) * 100, 6)}%`;
+}
+
+function formatChartValue(chart, value) {
+    if (chart.format === 'money') {
+        return new Intl.NumberFormat('fr-FR', {
+            maximumFractionDigits: 0,
+        }).format(Number(value) || 0) + ' XAF';
+    }
+
+    return new Intl.NumberFormat('fr-FR').format(Number(value) || 0);
 }
 
 function clearSession() {
