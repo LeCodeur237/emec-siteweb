@@ -49,7 +49,7 @@ class AdminDashboardController extends ApiController
             $counts['latest_messages'] = Message::query()
                 ->with('preacher:id,name')
                 ->latest()
-                ->limit(5)
+                ->limit(10)
                 ->get()
                 ->map(fn (Message $message) => [
                     'id' => $message->id,
@@ -65,7 +65,7 @@ class AdminDashboardController extends ApiController
                 ->withCount('messages')
                 ->orderByDesc('messages_count')
                 ->orderBy('name')
-                ->limit(6)
+                ->limit(10)
                 ->get()
                 ->map(fn (Preacher $preacher) => [
                     'id' => $preacher->id,

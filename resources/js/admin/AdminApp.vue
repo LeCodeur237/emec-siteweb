@@ -133,6 +133,7 @@
                                 <span>Messages</span>
                                 <h2>Liste recente des messages</h2>
                             </div>
+                            <button type="button" @click="openMessageResource('messages')">Voir tout</button>
                         </header>
                         <div v-if="latestMessages.length > 0" class="dashboard-list">
                             <div v-for="message in latestMessages" :key="message.id" class="dashboard-list-row">
@@ -154,6 +155,7 @@
                                 <span>Predicateurs</span>
                                 <h2>Liste des predicateurs</h2>
                             </div>
+                            <button type="button" @click="openMessageResource('preachers')">Voir tout</button>
                         </header>
                         <div v-if="dashboardPreachers.length > 0" class="dashboard-list compact">
                             <div v-for="preacher in dashboardPreachers" :key="preacher.id" class="dashboard-list-row">
@@ -1427,6 +1429,11 @@ function formatChartValue(chart, value) {
     }
 
     return new Intl.NumberFormat('fr-FR').format(Number(value) || 0);
+}
+
+function openMessageResource(resourceKey) {
+    activeMessageResource.value = resourceKey;
+    activeSection.value = 'messages';
 }
 
 function clearSession() {

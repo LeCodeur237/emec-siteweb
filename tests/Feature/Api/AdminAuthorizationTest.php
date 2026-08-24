@@ -100,6 +100,14 @@ class AdminAuthorizationTest extends TestCase
             'preached_at' => null,
             'created_at' => now()->subMinutes(5),
         ]);
+        Message::factory()
+            ->count(10)
+            ->create([
+                'status' => 'published',
+                'featured' => false,
+                'preached_at' => null,
+                'created_at' => now()->subDay(),
+            ]);
         Event::factory()->create(['status' => 'published', 'start_at' => now()->addDay()]);
         Event::factory()->create(['status' => 'draft', 'start_at' => now()->subDay()]);
         WeeklyProgram::create([
@@ -154,13 +162,14 @@ class AdminAuthorizationTest extends TestCase
 
         $this->getJson('/api/v1/admin/dashboard')
             ->assertOk()
-            ->assertJsonPath('data.messages_count', 2)
-            ->assertJsonPath('data.published_messages_count', 1)
+            ->assertJsonPath('data.messages_count', 12)
+            ->assertJsonPath('data.published_messages_count', 11)
             ->assertJsonPath('data.draft_messages_count', 1)
             ->assertJsonPath('data.featured_messages_count', 1)
             ->assertJsonPath('data.preachings_count', 1)
             ->assertJsonCount(7, 'data.daily_message_views')
             ->assertJsonPath('data.daily_message_views.6.value', 12)
+            ->assertJsonCount(10, 'data.latest_messages')
             ->assertJsonPath('data.latest_messages.0.title', 'Message recent')
             ->assertJsonPath('data.latest_messages.0.preacher_name', 'Pasteur Alpha')
             ->assertJsonPath('data.dashboard_preachers.0.name', 'Pasteur Alpha')
@@ -170,7 +179,7 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.upcoming_events_count', 1)
             ->assertJsonPath('data.active_weekly_programs_count', 1)
             ->assertJsonPath('data.active_social_projects_count', 1)
-            ->assertJsonPath('data.main_site_publications_count', 5)
+            ->assertJsonPath('data.main_site_publications_count', 15)
             ->assertJsonPath('data.social_projects_goal_amount', 100000)
             ->assertJsonPath('data.social_projects_raised_amount', 25000)
             ->assertJsonPath('data.published_social_actions_count', 1)

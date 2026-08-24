@@ -501,6 +501,21 @@ button:disabled {
     gap: 14px;
 }
 
+.list-panel header button {
+    min-height: 34px;
+    border-radius: 6px;
+    padding: 0 12px;
+    background: #edf2ef;
+    color: var(--admin-primary-dark);
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.list-panel header button:hover {
+    background: #dce9e4;
+}
+
 .list-panel header span {
     color: #d9b35f;
     font-size: 12px;
