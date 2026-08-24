@@ -19,6 +19,11 @@ jobs:
           ls -la
           find . -maxdepth 2 \( -name artisan -o -name composer.json \)
 
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
       - name: Prepare deployment package
         run: |
           rm -rf deploy-package
