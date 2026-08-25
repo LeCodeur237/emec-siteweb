@@ -1,0 +1,103 @@
+name: Deploy EMEC Backend Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Debug repository structure
+        run: |
+          pwd
+          ls -la
+          find . -maxdepth 2 \( -name artisan -o -name composer.json \)
+
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Prepare deployment package
+        run: |
+          rm -rf deploy-package
+          mkdir -p deploy-package
+          rsync -a \
+            --exclude='deploy-package' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.env' \
+            --exclude='vendor' \
+            --exclude='node_modules' \
+            --exclude='storage/logs/*' \
+            --exclude='storage/api-docs/*' \
+            --exclude='emec-back-github-actions' \
+            --exclude='emec-back-github-actions.pub' \
+            ./ deploy-package/
+
+      - name: Upload backend to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "deploy-package/*"
+          target: "/home/projects/emec-projects/emec-siteweb-prod"
+          strip_components: 1
+          overwrite: true
+          rm: false
+
+      - name: Run Laravel deployment commands
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          EMEC_ADMIN_EMAIL: egliseemec.cm@gmail.com
+          EMEC_ADMIN_PASSWORD: ${{ secrets.EMEC_ADMIN_PASSWORD }}
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          port: ${{ secrets.SERVER_PORT }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/projects/emec-projects/emec-siteweb-prod
+
+            if [ ! -f artisan ]; then
+              echo "artisan introuvable apres copie."
+              echo "Contenu du dossier:"
+              ls -la
+              echo "Recherche artisan:"
+              find . -maxdepth 3 -name artisan
+              exit 1
+            fi
+
+            if [ ! -f composer.json ]; then
+              echo "composer.json introuvable apres copie."
+              ls -la
+              exit 1
+            fi
+
+            if [ ! -f .env ]; then
+              echo ".env manquant sur le serveur."
+              exit 1
+            fi
+
+            composer install --no-dev --optimize-autoloader
+
+            php artisan optimize:clear
+            php artisan migrate --force
+            EMEC_ADMIN_EMAIL="$EMEC_ADMIN_EMAIL" EMEC_ADMIN_PASSWORD="$EMEC_ADMIN_PASSWORD" php artisan db:seed --class=AdminUserSeeder --force
+            php artisan storage:link || true
+
+            php artisan l5-swagger:generate
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            mkdir -p storage/logs storage/framework/cache/data storage/framework/sessions storage/framework/views bootstrap/cache
+            chmod 775 storage storage/app storage/framework storage/framework/cache storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache || true
+            find bootstrap/cache storage/logs -type f -user deploy -exec chmod 664 {} \; || true
