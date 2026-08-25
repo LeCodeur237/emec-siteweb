@@ -63,6 +63,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: EMEC_ADMIN_EMAIL,EMEC_ADMIN_PASSWORD
           script: |
             cd /home/projects/emec-projects/emec-siteweb-prod
 
