@@ -7,8 +7,13 @@ if ($allowedOrigins === null || trim($allowedOrigins) === '') {
         env('FRONTEND_URL', 'https://egliseemec.org'),
         env('FRONTEND_WWW_URL', 'https://www.egliseemec.org'),
         env('MESSAGES_FRONTEND_URL', 'https://messages.egliseemec.org'),
+        env('MESSAGES_FRONTEND_WWW_URL', 'https://www.messages.egliseemec.org'),
         env('DOSC_FRONTEND_URL', 'https://dosc.egliseemec.org'),
+        env('DOSC_FRONTEND_WWW_URL', 'https://www.dosc.egliseemec.org'),
         env('ADMIN_FRONTEND_URL'),
+        env('STAGING_FRONTEND_URL'),
+        env('STAGING_MESSAGES_FRONTEND_URL'),
+        env('STAGING_DOSC_FRONTEND_URL'),
         env('LOCAL_FRONTEND_URL', 'http://localhost:5173'),
         env('LOCAL_REACT_FRONTEND_URL', 'http://localhost:3000'),
     ]));
