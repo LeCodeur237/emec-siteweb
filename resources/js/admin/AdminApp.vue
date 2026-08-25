@@ -373,9 +373,9 @@ const credentials = reactive({
 
 const navigation = [
     { key: 'dashboard', label: 'Dashboard', eyebrow: 'Vue globale', icon: 'ti ti-layout-dashboard', description: 'Indicateurs principaux du back-office EMEC.' },
-    { key: 'messages', label: 'Messages', eyebrow: 'Contenu', icon: 'ti ti-message', description: 'Messages, predicateurs, categories et series.', group: 'Sites web' },
-    { key: 'emec', label: 'EMEC', eyebrow: 'Vie de l Eglise', icon: 'ti ti-building-church', description: 'Eglises, responsables, groupes, evenements et programmes.', group: 'Sites web' },
-    { key: 'dosc', label: 'DOSC', eyebrow: 'Action sociale', icon: 'ti ti-heart-handshake', description: 'Projets sociaux, actions, temoignages et statistiques.', group: 'Sites web' },
+    { key: 'messages', label: 'Site Predications', eyebrow: 'Contenu', icon: 'ti ti-message', description: 'Messages, predicateurs, categories et series.', group: 'Sites web' },
+    { key: 'emec', label: 'Site EMEC', eyebrow: 'Vie de l Eglise', icon: 'ti ti-building-church', description: 'Eglises, responsables, groupes, evenements et programmes.', group: 'Sites web' },
+    { key: 'dosc', label: 'Site DOSC', eyebrow: 'Action sociale', icon: 'ti ti-heart-handshake', description: 'Projets sociaux, actions, temoignages et statistiques.', group: 'Sites web' },
     { key: 'donations', label: 'Dons', eyebrow: 'Finance', icon: 'ti ti-cash-banknote', description: 'Campagnes, methodes de don et donations enregistrees.' },
     { key: 'communication', label: 'Communication', eyebrow: 'Relations', icon: 'ti ti-mail', description: 'Messages de contact et abonnes newsletter.' },
     { key: 'settings', label: 'Configuration', eyebrow: 'Parametres', icon: 'ti ti-settings', description: 'Parametres fonctionnels du site et de l API.' },
