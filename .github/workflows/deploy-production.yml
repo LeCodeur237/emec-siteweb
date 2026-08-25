@@ -22,6 +22,7 @@ jobs:
         run: |
           npm ci
           npm run build
+          test -f public/build/manifest.json
 
       - name: Prepare deployment package
         run: |
@@ -63,6 +64,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: EMEC_ADMIN_EMAIL,EMEC_ADMIN_PASSWORD
           script: |
             cd /home/projects/emec-projects/emec-siteweb-prod
 
@@ -83,6 +85,12 @@ jobs:
 
             if [ ! -f .env ]; then
               echo ".env manquant sur le serveur."
+              exit 1
+            fi
+
+            if [ ! -f public/build/manifest.json ]; then
+              echo "public/build/manifest.json introuvable apres copie."
+              echo "Le build Vite admin manque sur le serveur."
               exit 1
             fi
 
