@@ -457,6 +457,43 @@ textarea:focus-visible {
     line-height: 1.1;
 }
 
+.topbar-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    padding: 6px;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(15, 27, 61, .04);
+}
+
+.topbar-actions button {
+    display: inline-flex;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0;
+    background: var(--admin-primary-soft);
+    color: var(--admin-primary-dark);
+}
+
+.topbar-actions button i {
+    font-size: 21px;
+    line-height: 1;
+}
+
+.topbar-actions button:hover {
+    border-color: var(--admin-line-strong);
+    background: var(--admin-primary);
+    color: #ffffff;
+}
+
 .topbar button:hover,
 .module-actions button:hover,
 .crud-header button:hover,
@@ -1462,6 +1499,16 @@ textarea:focus-visible {
     .crud-footer button,
     .form-actions button {
         width: 100%;
+    }
+
+    .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .topbar-actions button {
+        width: 42px;
+        min-width: 42px;
     }
 
     .topbar {

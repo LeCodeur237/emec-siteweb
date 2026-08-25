@@ -102,9 +102,49 @@
                         <p>{{ activeNav?.eyebrow }}</p>
                         <h1>{{ activeNav?.label }}</h1>
                     </div>
-                    <button type="button" @click="refreshDashboard" :disabled="loading">
-                        Actualiser
-                    </button>
+                    <div class="topbar-actions" aria-label="Actions rapides">
+                        <button
+                            type="button"
+                            title="Menu"
+                            aria-label="Menu"
+                            @click="mobileNavigationOpen = !mobileNavigationOpen"
+                        >
+                            <i class="ti ti-menu-2" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            type="button"
+                            title="Profil"
+                            aria-label="Profil"
+                            @click="openProfileSection"
+                        >
+                            <i class="ti ti-user-circle" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            type="button"
+                            title="Notifications"
+                            aria-label="Notifications"
+                            @click="setActiveSection('notifications')"
+                        >
+                            <i class="ti ti-bell" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            type="button"
+                            title="Configuration"
+                            aria-label="Configuration"
+                            @click="setActiveSection('settings')"
+                        >
+                            <i class="ti ti-settings" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            type="button"
+                            title="Actualiser"
+                            aria-label="Actualiser"
+                            @click="refreshDashboard"
+                            :disabled="loading"
+                        >
+                            <i class="ti ti-refresh" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </header>
 
                 <section v-if="activeSection === 'dashboard'" class="dashboard-grid">
@@ -1471,6 +1511,11 @@ function openMessageResource(resourceKey) {
 function setActiveSection(section) {
     activeSection.value = section;
     mobileNavigationOpen.value = false;
+}
+
+function openProfileSection() {
+    activeRbacResource.value = 'users';
+    setActiveSection('rbac');
 }
 
 function clearSession() {
