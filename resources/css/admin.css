@@ -244,7 +244,6 @@ textarea:focus-visible {
 }
 
 .login-panel button,
-.topbar button,
 .module-actions button {
     min-height: 42px;
     border-radius: 6px;
@@ -431,18 +430,29 @@ textarea:focus-visible {
     padding: clamp(24px, 3vw, 38px);
 }
 
-.topbar {
+.admin-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    min-height: 84px;
+    gap: 20px;
+    min-height: 74px;
     margin-bottom: 26px;
-    border-bottom: 1px solid var(--admin-line);
-    padding-bottom: 20px;
+    border: 1px solid var(--admin-line);
+    border-radius: 8px;
+    padding: 10px 12px 10px 18px;
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 0 14px 34px rgba(15, 27, 61, .06);
+    backdrop-filter: blur(8px);
 }
 
-.topbar p {
+.navbar-title {
+    min-width: 0;
+}
+
+.navbar-title p {
     margin: 0 0 7px;
     color: var(--admin-muted);
     font-size: 13px;
@@ -450,25 +460,26 @@ textarea:focus-visible {
     text-transform: uppercase;
 }
 
-.topbar h1 {
+.navbar-title h1 {
     margin: 0;
+    overflow: hidden;
     color: var(--admin-primary-dark);
     font-size: 32px;
     line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.topbar-actions {
+.navbar-menu {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid var(--admin-line);
-    border-radius: 8px;
-    padding: 6px;
-    background: #ffffff;
-    box-shadow: 0 12px 28px rgba(15, 27, 61, .04);
+    min-height: 52px;
+    border-left: 1px solid var(--admin-line);
+    padding-left: 12px;
 }
 
-.topbar-actions button {
+.navbar-menu button {
     display: inline-flex;
     width: 40px;
     min-width: 40px;
@@ -483,18 +494,18 @@ textarea:focus-visible {
     color: var(--admin-primary-dark);
 }
 
-.topbar-actions button i {
+.navbar-menu button i {
     font-size: 21px;
     line-height: 1;
 }
 
-.topbar-actions button:hover {
+.navbar-menu button:hover {
     border-color: var(--admin-line-strong);
     background: var(--admin-primary);
     color: #ffffff;
 }
 
-.topbar button:hover,
+.admin-navbar button:hover,
 .module-actions button:hover,
 .crud-header button:hover,
 .crud-toolbar button:hover,
@@ -1480,11 +1491,11 @@ textarea:focus-visible {
     }
 
     .brand-panel h1,
-    .topbar h1 {
+    .navbar-title h1 {
         font-size: 28px;
     }
 
-    .topbar,
+    .admin-navbar,
     .module-panel,
     .crud-header,
     .crud-footer,
@@ -1493,7 +1504,6 @@ textarea:focus-visible {
         flex-direction: column;
     }
 
-    .topbar button,
     .module-actions button,
     .crud-header button,
     .crud-footer button,
@@ -1501,17 +1511,20 @@ textarea:focus-visible {
         width: 100%;
     }
 
-    .topbar-actions {
+    .navbar-menu {
         width: 100%;
         justify-content: space-between;
+        border-left: 0;
+        border-top: 1px solid var(--admin-line);
+        padding: 10px 0 0;
     }
 
-    .topbar-actions button {
+    .navbar-menu button {
         width: 42px;
         min-width: 42px;
     }
 
-    .topbar {
+    .admin-navbar {
         min-height: auto;
     }
 

@@ -97,12 +97,12 @@
             </aside>
 
             <div class="content">
-                <header class="topbar">
-                    <div>
+                <header class="admin-navbar">
+                    <div class="navbar-title">
                         <p>{{ activeNav?.eyebrow }}</p>
                         <h1>{{ activeNav?.label }}</h1>
                     </div>
-                    <div class="topbar-actions" aria-label="Actions rapides">
+                    <nav class="navbar-menu" aria-label="Navigation rapide">
                         <button
                             type="button"
                             title="Menu"
@@ -144,7 +144,7 @@
                         >
                             <i class="ti ti-refresh" aria-hidden="true"></i>
                         </button>
-                    </div>
+                    </nav>
                 </header>
 
                 <section v-if="activeSection === 'dashboard'" class="dashboard-grid">
