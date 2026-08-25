@@ -1,13 +1,12 @@
-name: Deploy EMEC Backend Staging
+name: Deploy EMEC Backend Production
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  deploy-staging:
+  deploy-production:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout repository
@@ -49,7 +48,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "deploy-package/*"
-          target: "/home/projects/emec-projects/emec-siteweb"
+          target: "/home/projects/emec-projects/emec-siteweb-prod"
           strip_components: 1
           overwrite: true
           rm: false
@@ -65,7 +64,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/projects/emec-projects/emec-siteweb
+            cd /home/projects/emec-projects/emec-siteweb-prod
 
             if [ ! -f artisan ]; then
               echo "artisan introuvable apres copie."

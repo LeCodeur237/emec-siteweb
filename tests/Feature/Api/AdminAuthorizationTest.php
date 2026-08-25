@@ -3,10 +3,22 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Message;
+use App\Models\ContactMessage;
+use App\Models\Donation;
+use App\Models\DonationCampaign;
+use App\Models\DonationMethod;
+use App\Models\Event;
+use App\Models\ImpactStat;
+use App\Models\Media;
+use App\Models\NewsletterSubscriber;
+use App\Models\Preacher;
 use App\Models\Role;
+use App\Models\SiteSetting;
 use App\Models\SocialAction;
 use App\Models\SocialProject;
+use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\WeeklyProgram;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -66,6 +78,142 @@ class AdminAuthorizationTest extends TestCase
             ->assertJsonPath('data.social_projects_count', 3)
             ->assertJsonPath('data.social_actions_count', 4)
             ->assertJsonMissingPath('data.messages_count')
+            ->assertJsonMissingPath('data.users_count');
+    }
+
+    public function test_dashboard_exposes_detailed_metrics_for_authorized_modules(): void
+    {
+        $preacher = Preacher::factory()->create(['name' => 'Pasteur Alpha', 'role' => 'Predicateur']);
+        Message::factory()->create([
+            'preacher_id' => $preacher->id,
+            'status' => 'published',
+            'featured' => true,
+            'preached_at' => now(),
+            'views' => 12,
+            'title' => 'Message recent',
+            'created_at' => now(),
+        ]);
+        Message::factory()->create([
+            'preacher_id' => $preacher->id,
+            'status' => 'draft',
+            'featured' => false,
+            'preached_at' => null,
+            'created_at' => now()->subMinutes(5),
+        ]);
+        Message::factory()
+            ->count(10)
+            ->create([
+                'status' => 'published',
+                'featured' => false,
+                'preached_at' => null,
+                'created_at' => now()->subDay(),
+            ]);
+        Event::factory()->create(['status' => 'published', 'start_at' => now()->addDay()]);
+        Event::factory()->create(['status' => 'draft', 'start_at' => now()->subDay()]);
+        WeeklyProgram::create([
+            'title' => 'Culte dominical',
+            'day_of_week' => 0,
+            'start_time' => '09:00:00',
+            'active' => true,
+        ]);
+        SocialProject::factory()->create([
+            'status' => 'active',
+            'featured' => true,
+            'goal_amount' => 100000,
+            'raised_amount' => 25000,
+        ]);
+        SocialAction::factory()->create([
+            'social_project_id' => null,
+            'status' => 'published',
+            'beneficiaries_count' => 45,
+        ]);
+        ImpactStat::create(['label' => 'Familles', 'value' => '45', 'active' => true]);
+        Testimonial::create(['name' => 'Beneficiaire', 'quote' => 'Merci pour le soutien.', 'published' => true]);
+        $campaign = DonationCampaign::create(['title' => 'Solidarite', 'goal_amount' => 250000, 'active' => true]);
+        $method = DonationMethod::create(['name' => 'Mobile Money', 'type' => 'mobile_money', 'active' => true]);
+        Donation::create([
+            'donation_campaign_id' => $campaign->id,
+            'donation_method_id' => $method->id,
+            'amount' => 15000,
+            'status' => 'paid',
+            'paid_at' => now(),
+        ]);
+        Donation::create([
+            'donation_campaign_id' => $campaign->id,
+            'donation_method_id' => $method->id,
+            'amount' => 5000,
+            'status' => 'pending',
+        ]);
+        ContactMessage::create([
+            'name' => 'Contact EMEC',
+            'email' => 'contact@example.test',
+            'message' => 'Bonjour',
+            'status' => 'new',
+        ]);
+        NewsletterSubscriber::create([
+            'email' => 'newsletter@example.test',
+            'status' => 'subscribed',
+            'subscribed_at' => now(),
+        ]);
+        Media::factory()->create(['file_type' => 'image']);
+        SiteSetting::create(['key' => 'site.name', 'value' => 'EMEC']);
+
+        Sanctum::actingAs($this->userWithRole('super_admin'));
+
+        $this->getJson('/api/v1/admin/dashboard')
+            ->assertOk()
+            ->assertJsonPath('data.messages_count', 12)
+            ->assertJsonPath('data.published_messages_count', 11)
+            ->assertJsonPath('data.draft_messages_count', 1)
+            ->assertJsonPath('data.featured_messages_count', 1)
+            ->assertJsonPath('data.preachings_count', 1)
+            ->assertJsonCount(7, 'data.daily_message_views')
+            ->assertJsonPath('data.daily_message_views.6.value', 12)
+            ->assertJsonCount(10, 'data.latest_messages')
+            ->assertJsonPath('data.latest_messages.0.title', 'Message recent')
+            ->assertJsonPath('data.latest_messages.0.preacher_name', 'Pasteur Alpha')
+            ->assertJsonPath('data.dashboard_preachers.0.name', 'Pasteur Alpha')
+            ->assertJsonPath('data.dashboard_preachers.0.messages_count', 2)
+            ->assertJsonPath('data.events_count', 2)
+            ->assertJsonPath('data.published_events_count', 1)
+            ->assertJsonPath('data.upcoming_events_count', 1)
+            ->assertJsonPath('data.active_weekly_programs_count', 1)
+            ->assertJsonPath('data.active_social_projects_count', 1)
+            ->assertJsonPath('data.main_site_publications_count', 15)
+            ->assertJsonPath('data.social_projects_goal_amount', 100000)
+            ->assertJsonPath('data.social_projects_raised_amount', 25000)
+            ->assertJsonPath('data.published_social_actions_count', 1)
+            ->assertJsonPath('data.social_actions_beneficiaries_count', 45)
+            ->assertJsonPath('data.active_impact_stats_count', 1)
+            ->assertJsonPath('data.published_testimonials_count', 1)
+            ->assertJsonPath('data.active_donation_campaigns_count', 1)
+            ->assertJsonPath('data.active_donation_methods_count', 1)
+            ->assertJsonPath('data.donations_count', 2)
+            ->assertJsonPath('data.paid_donations_count', 1)
+            ->assertJsonPath('data.pending_donations_count', 1)
+            ->assertJsonPath('data.paid_donations_amount', 15000)
+            ->assertJsonCount(7, 'data.daily_paid_donations')
+            ->assertJsonPath('data.daily_paid_donations.6.value', 15000)
+            ->assertJsonPath('data.new_contact_messages_count', 1)
+            ->assertJsonPath('data.active_newsletter_subscribers_count', 1)
+            ->assertJsonPath('data.image_media_count', 1)
+            ->assertJsonPath('data.site_settings_count', 1)
+            ->assertJsonPath('data.roles_count', 7)
+            ->assertJsonPath('data.notifications_count', 0)
+            ->assertJsonPath('data.unread_notifications_count', 0);
+
+        Sanctum::actingAs($this->userWithRole('finance_manager'));
+
+        $this->getJson('/api/v1/admin/dashboard')
+            ->assertOk()
+            ->assertJsonPath('data.donations_count', 2)
+            ->assertJsonPath('data.paid_donations_amount', 15000)
+            ->assertJsonCount(7, 'data.daily_paid_donations')
+            ->assertJsonMissingPath('data.messages_count')
+            ->assertJsonMissingPath('data.daily_message_views')
+            ->assertJsonMissingPath('data.latest_messages')
+            ->assertJsonMissingPath('data.dashboard_preachers')
+            ->assertJsonMissingPath('data.contact_messages_count')
             ->assertJsonMissingPath('data.users_count');
     }
 

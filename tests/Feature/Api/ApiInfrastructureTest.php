@@ -60,10 +60,14 @@ class ApiInfrastructureTest extends TestCase
     public function test_api_rate_limiter_returns_too_many_requests(): void
     {
         Config::set('api.rate_limit.per_minute', 1);
+        $ip = sprintf('10.%d.%d.%d', random_int(0, 255), random_int(0, 255), random_int(1, 254));
 
-        $this->getJson('/api/v1/health')->assertOk();
+        $this->withServerVariables(['REMOTE_ADDR' => $ip])
+            ->getJson('/api/v1/health')
+            ->assertOk();
 
-        $this->getJson('/api/v1/health')
+        $this->withServerVariables(['REMOTE_ADDR' => $ip])
+            ->getJson('/api/v1/health')
             ->assertStatus(429)
             ->assertHeader('content-type', 'application/json')
             ->assertJson([

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::view('/', 'admin.app')->name('admin.entry');
 
 Route::get('/get-connected', function () {
     return view('pages.getconnect');
@@ -60,3 +58,7 @@ Route::get('/our-projects', function () {
 Route::post('/donate', function () {
     // Handle donation logic
 })->name('donate.store');
+
+Route::view('/admin/{path?}', 'admin.app')
+    ->where('path', '.*')
+    ->name('admin.app');

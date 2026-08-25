@@ -38,12 +38,104 @@ namespace App\OpenApi;
  *     schema="AdminDashboard",
  *     type="object",
  *     @OA\Property(property="messages_count", type="integer", example=12),
+ *     @OA\Property(
+ *         property="latest_messages",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="title", type="string", example="Vivre par la foi"),
+ *             @OA\Property(property="status", type="string", example="published"),
+ *             @OA\Property(property="views", type="integer", example=120),
+ *             @OA\Property(property="preached_at", type="string", format="date", nullable=true, example="2026-08-24"),
+ *             @OA\Property(property="preacher_name", type="string", nullable=true, example="Pasteur Alpha")
+ *         )
+ *     ),
+ *     @OA\Property(
+ *         property="dashboard_preachers",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="id", type="integer", example=1),
+ *             @OA\Property(property="name", type="string", example="Pasteur Alpha"),
+ *             @OA\Property(property="role", type="string", nullable=true, example="Predicateur"),
+ *             @OA\Property(property="active", type="boolean", example=true),
+ *             @OA\Property(property="messages_count", type="integer", example=8)
+ *         )
+ *     ),
+ *     @OA\Property(
+ *         property="daily_message_views",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="date", type="string", format="date", example="2026-08-24"),
+ *             @OA\Property(property="label", type="string", example="24/08"),
+ *             @OA\Property(property="value", type="integer", example=120)
+ *         )
+ *     ),
+ *     @OA\Property(
+ *         property="daily_paid_donations",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="date", type="string", format="date", example="2026-08-24"),
+ *             @OA\Property(property="label", type="string", example="24/08"),
+ *             @OA\Property(property="value", type="number", format="float", example=50000)
+ *         )
+ *     ),
+ *     @OA\Property(property="published_messages_count", type="integer", example=9),
+ *     @OA\Property(property="draft_messages_count", type="integer", example=3),
+ *     @OA\Property(property="featured_messages_count", type="integer", example=2),
+ *     @OA\Property(property="preachings_count", type="integer", example=10),
+ *     @OA\Property(property="main_site_publications_count", type="integer", example=21),
+ *     @OA\Property(property="preachers_count", type="integer", example=4),
+ *     @OA\Property(property="message_categories_count", type="integer", example=5),
+ *     @OA\Property(property="message_series_count", type="integer", example=3),
  *     @OA\Property(property="events_count", type="integer", example=4),
+ *     @OA\Property(property="published_events_count", type="integer", example=3),
+ *     @OA\Property(property="upcoming_events_count", type="integer", example=2),
+ *     @OA\Property(property="weekly_programs_count", type="integer", example=4),
+ *     @OA\Property(property="active_weekly_programs_count", type="integer", example=3),
  *     @OA\Property(property="churches_count", type="integer", example=2),
+ *     @OA\Property(property="active_churches_count", type="integer", example=2),
+ *     @OA\Property(property="published_churches_count", type="integer", example=1),
  *     @OA\Property(property="groups_count", type="integer", example=5),
+ *     @OA\Property(property="active_groups_count", type="integer", example=4),
  *     @OA\Property(property="social_projects_count", type="integer", example=3),
+ *     @OA\Property(property="active_social_projects_count", type="integer", example=2),
+ *     @OA\Property(property="featured_social_projects_count", type="integer", example=1),
+ *     @OA\Property(property="social_projects_goal_amount", type="number", format="float", example=2500000),
+ *     @OA\Property(property="social_projects_raised_amount", type="number", format="float", example=850000),
  *     @OA\Property(property="social_actions_count", type="integer", example=8),
- *     @OA\Property(property="users_count", type="integer", example=6)
+ *     @OA\Property(property="published_social_actions_count", type="integer", example=6),
+ *     @OA\Property(property="social_actions_beneficiaries_count", type="integer", example=320),
+ *     @OA\Property(property="impact_stats_count", type="integer", example=5),
+ *     @OA\Property(property="active_impact_stats_count", type="integer", example=4),
+ *     @OA\Property(property="testimonials_count", type="integer", example=7),
+ *     @OA\Property(property="published_testimonials_count", type="integer", example=5),
+ *     @OA\Property(property="donation_campaigns_count", type="integer", example=3),
+ *     @OA\Property(property="active_donation_campaigns_count", type="integer", example=2),
+ *     @OA\Property(property="donation_methods_count", type="integer", example=4),
+ *     @OA\Property(property="active_donation_methods_count", type="integer", example=3),
+ *     @OA\Property(property="donations_count", type="integer", example=12),
+ *     @OA\Property(property="paid_donations_count", type="integer", example=8),
+ *     @OA\Property(property="pending_donations_count", type="integer", example=4),
+ *     @OA\Property(property="paid_donations_amount", type="number", format="float", example=475000),
+ *     @OA\Property(property="contact_messages_count", type="integer", example=14),
+ *     @OA\Property(property="new_contact_messages_count", type="integer", example=3),
+ *     @OA\Property(property="answered_contact_messages_count", type="integer", example=6),
+ *     @OA\Property(property="newsletter_subscribers_count", type="integer", example=150),
+ *     @OA\Property(property="active_newsletter_subscribers_count", type="integer", example=142),
+ *     @OA\Property(property="media_count", type="integer", example=30),
+ *     @OA\Property(property="image_media_count", type="integer", example=24),
+ *     @OA\Property(property="document_media_count", type="integer", example=6),
+ *     @OA\Property(property="site_settings_count", type="integer", example=12),
+ *     @OA\Property(property="users_count", type="integer", example=6),
+ *     @OA\Property(property="active_users_count", type="integer", example=5),
+ *     @OA\Property(property="roles_count", type="integer", example=7),
+ *     @OA\Property(property="permissions_count", type="integer", example=46),
+ *     @OA\Property(property="notifications_count", type="integer", example=5),
+ *     @OA\Property(property="unread_notifications_count", type="integer", example=2)
  * )
  *
  * @OA\Schema(
